@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Suspense } from "react";
+
 const ExamHome = () => {
   const [exams, setExams] = useState([]);
   const [error, setError] = useState(null);
@@ -67,41 +68,34 @@ const ExamHome = () => {
   }
 
   return (
-
     <>
-          <Suspense>
-
-   
-
-   
-    <div className="py-8 bg-zinc-900">
-      <br />
-      <h2 className="text-3xl font-bold mb-4 text-center text-white">Available Exams</h2>
-      <h4 className="text-2xl font-light font-sans mb-4 text-center text-white">
-        بنك أسئلة لاختبارات الهيئة السعودية للتخصصات الصحية
-      </h4>
-      <br />
-      <br />
-      <div className="flex justify-center">
-        <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2 rounded">
-          {exams.map((exam, index) => (
-            <Link key={exam.id} href={`/exams/${encodeURIComponent(exam.initials)}`} legacyBehavior>
-              <a onClick={() => handleExamClick(exam)}>
-                <div
-                  className={`p-6 rounded-lg shadow-lg text-black cursor-pointer w-72 h-40 flex flex-col justify-center items-center ${colors[index % colors.length]} border-2 border-slate-800`}
-                >
-                  <h3 className="text-2xl font-bold">{exam.initials}</h3>
-                  <h3 className="text-2xl font-normal">{exam.name}</h3>
-                </div>
-              </a>
-            </Link>
-          ))}
+      <Suspense>
+        <div className="py-8 bg-zinc-900">
+          <br />
+          <h2 className="text-3xl font-bold mb-4 text-center text-white">Available Exams</h2>
+          <h4 className="text-2xl font-light font-sans mb-4 text-center text-white">
+            بنك أسئلة لاختبارات الهيئة السعودية للتخصصات الصحية
+          </h4>
           <br />
           <br />
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded">
+              {exams.map((exam, index) => (
+                <Link key={exam.id} href={`/exams/${encodeURIComponent(exam.initials)}`} legacyBehavior>
+                  <a onClick={() => handleExamClick(exam)}>
+                    <div
+                      className={`p-6 rounded-lg shadow-lg text-black cursor-pointer w-full flex flex-col justify-center items-center ${colors[index % colors.length]} border-2 border-slate-800`}
+                    >
+                      <h3 className="text-2xl font-bold">{exam.initials}</h3>
+                      <h3 className="text-2xl font-normal">{exam.name}</h3>
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    </Suspense>
+      </Suspense>
     </>
   );
 };
