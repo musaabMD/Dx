@@ -1743,6 +1743,12 @@ const Dashboard = () => {
 
         return (
 
+          <>
+          <Suspense>
+
+
+         
+
          
           <div
             key={index} 
@@ -1776,6 +1782,8 @@ const Dashboard = () => {
               <p className="text-green-900 mt-2">Feedback sent</p>
             )}
           </div>
+          </Suspense>
+          </>
         );
       })}
     </div>
