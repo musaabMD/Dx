@@ -1,10 +1,19 @@
-
 import Link from "next/link";
 import Header from "@/components/Header";
-import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
-import ExamHome from "@/components/ExamHome"; // Import the new component
+import ExamHome from "@/components/ExamHome";
 import Features from "@/components/Features";
+import { Suspense } from 'react';
+
+function HomePageContent() {
+  const searchParams = useSearchParams();
+
+  return (
+    <div>
+      {/* Your page content using searchParams */}
+    </div>
+  );
+}
 
 export default function Page() {
   return (
@@ -22,11 +31,11 @@ export default function Page() {
             </span>
           </Link>
         </section>
-        <ExamHome /> 
+ 
+        <ExamHome />
         <Features />
         <FAQ />
       </main>
     </>
   );
 }
-

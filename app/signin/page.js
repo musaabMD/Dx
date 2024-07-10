@@ -6,8 +6,6 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 import config from "@/config";
 
-// This a login/singup page for Supabase Auth.
-// Successfull login redirects to /api/auth/callback where the Code Exchange is processed (see app/api/auth/callback/route.js).
 export default function Login() {
   const supabase = createClientComponentClient();
   const [email, setEmail] = useState("");
@@ -109,35 +107,7 @@ export default function Login() {
           Sign-up with Google
         </button>
 
-        <div className="divider text-xs text-base-content/50 font-medium">
-          OR
-        </div>
-
-        <form
-          className="form-control w-full space-y-4"
-          onSubmit={(e) => handleSignup(e, { type: "magic_link" })}
-        >
-          <input
-            required
-            type="email"
-            value={email}
-            autoComplete="email"
-            placeholder="tom@cruise.com"
-            className="input input-bordered w-full placeholder:opacity-60"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <button
-            className="btn btn-primary btn-block"
-            disabled={isLoading || isDisabled}
-            type="submit"
-          >
-            {isLoading && (
-              <span className="loading loading-spinner loading-xs"></span>
-            )}
-            Send Magic Link
-          </button>
-        </form>
+    
       </div>
     </main>
   );
