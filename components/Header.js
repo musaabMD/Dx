@@ -5,25 +5,40 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ButtonSignin from "./ButtonSignin";
+// import logo from "@/app/icon.png";
 import logo from "@/app/icon.png";
+
+
+
 import config from "@/config";
 
 const links = [
   {
-    href: "/#pricing",
+    href: "/",
+    label: "Home",
+  }, {
+    href: "/pricing",
     label: "Pricing",
   },
-  {
-    href: "/#testimonials",
-    label: "Reviews",
-  },
+  // {
+  //   href: "/#testimonials",
+  //   label: "Reviews",
+  // },
   {
     href: "/#faq",
     label: "FAQ",
   },
+  {
+    href: "/dashboard",
+    label: "Dashboard",
+  },
+  {
+    href: "/self-assessment",
+    label: "Self Exam",
+  },
 ];
 
-const cta = <ButtonSignin extraStyle="btn-primary" />;
+const cta = <ButtonSignin extraStyle="btn-primary btn-neutral" />;
 
 // A header with a logo on the left, links in the center (like Pricing, etc...), and a CTA (like Get Started or Login) on the right.
 // The header is responsive, and on mobile, the links are hidden behind a burger button.
@@ -37,7 +52,7 @@ const Header = () => {
   }, [searchParams]);
 
   return (
-    <header className="bg-base-200">
+    <header className="bg-base-100">
       <nav
         className="container flex items-center justify-between px-8 py-4 mx-auto"
         aria-label="Global"
@@ -87,7 +102,7 @@ const Header = () => {
         </div>
 
         {/* Your links on large screens */}
-        <div className="hidden lg:flex lg:justify-center lg:gap-12 lg:items-center">
+        <div className="hidden lg:flex lg:justify-center lg:gap-12 lg:items-center text-2xl">
           {links.map((link) => (
             <Link
               href={link.href}
