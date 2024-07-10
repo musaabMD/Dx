@@ -3,12 +3,13 @@
 import React from 'react';
 import Header from '@/components/Header'; // Include this if you want to keep the header
 import { Suspense } from 'react';
+import Header from '@/components/Header';
 
 const PricingPage = () => {
   return (
     <>
     <Suspense> 
-   
+   <Header/>
     <div className="min-h-screen flex flex-col">
       {/* Uncomment the Header component if you want to include the header */}
       {/* <Header /> */}
