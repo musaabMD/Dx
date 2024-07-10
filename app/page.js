@@ -22,7 +22,7 @@ export default function Page() {
             </span>
           </Link>
         </section>
-        <ExamHome /> Include the ExamHome component
+        <ExamHome /> 
         <Features />
         <FAQ />
       </main>
