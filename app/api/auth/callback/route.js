@@ -17,7 +17,9 @@
 
 //   // URL to redirect to after sign in process completes
 //   return NextResponse.redirect(requestUrl.origin + config.auth.callbackUrl);
-// }
+// }// app/api/auth/callback/route.js
+// app/api/auth/callback/route.js
+
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
