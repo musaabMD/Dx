@@ -110,11 +110,11 @@
 // export default Score;
 'use client';
 
-import React, { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Review from './Review';
 import { Suspense } from 'react';
+
 const Score = ({ score, totalQuestions, quizName, time, answers }) => {
   const router = useRouter();
 
