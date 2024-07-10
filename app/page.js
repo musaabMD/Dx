@@ -1,8 +1,9 @@
-import { Suspense } from 'react';
-import ExamHome from "@/components/ExamHome";
+import Link from "next/link";
 import Header from "@/components/Header";
+import ExamHome from "@/components/ExamHome";
+import { Suspense } from 'react';
 
-const Page = () => {
+export default function Page() {
   return (
     <>
       <Header />
@@ -19,6 +20,4 @@ const Page = () => {
       </main>
     </>
   );
-};
-
-export default Page;
+}

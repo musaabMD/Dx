@@ -29,7 +29,7 @@ const CrispChat = () => {
       }
     };
     getUser();
-  }, []);
+  }, [supabase]); // Include supabase in the dependency array
 
   useEffect(() => {
     if (config?.crisp?.id) {
@@ -48,14 +48,14 @@ const CrispChat = () => {
         });
       }
     }
-  }, [pathname]);
+  }, [pathname]); // Include pathname in the dependency array
 
   // Add User Unique ID to Crisp to easily identify users when reaching support (optional)
   useEffect(() => {
     if (data?.user && config?.crisp?.id) {
       Crisp.session.setData({ userId: data.user?.id });
     }
-  }, [data]);
+  }, [data, config?.crisp?.id]); // Include data and config.crisp.id in the dependency array
 
   return null;
 };
