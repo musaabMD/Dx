@@ -4,6 +4,7 @@ import { getSEOTags } from "@/libs/seo";
 import ClientLayout from "@/components/LayoutClient";
 import config from "@/config";
 import "./globals.css";
+import { Suspense } from "react";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,10 @@ export default function RootLayout({ children }) {
         )}
       </head>
       <body>
+        <Suspense>
         <ClientLayout>{children}</ClientLayout>
+
+        </Suspense>
       </body>
     </html>
   );
