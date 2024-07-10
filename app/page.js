@@ -1,9 +1,8 @@
-import Link from "next/link";
-import Header from "@/components/Header";
-import ExamHome from "@/components/ExamHome";
 import { Suspense } from 'react';
+import ExamHome from "@/components/ExamHome";
+import Header from "@/components/Header";
 
-export default function Page() {
+const Page = () => {
   return (
     <>
       <Header />
@@ -13,15 +12,13 @@ export default function Page() {
           <p className="text-3xl opacity-80">
             The #1 Choice for SCFHS Exams
           </p>
-          {/* <Link href="/pricing">
-            <span className="btn btn-error text-white btn-xl sm:btn-sm md:btn-md lg:btn-lg text-3xl">
-              Subscribe 
-            </span>
-          </Link> */}
         </section>
-        <ExamHome />
-   
+        <Suspense fallback={<div>Loading...</div>}>
+          <ExamHome />
+        </Suspense>
       </main>
     </>
   );
-}
+};
+
+export default Page;
