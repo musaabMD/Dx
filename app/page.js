@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 export default function Page() {
   return (
     <>
+      <Suspense>
       <Header />
       <main>
         <section className="flex flex-col items-center justify-center text-center gap-12 px-8 py-24">
@@ -14,10 +15,10 @@ export default function Page() {
             The #1 Choice for SCFHS Exams
           </p>
         </section>
-        <Suspense fallback={<div>Loading...</div>}>
           <ExamHome />
-        </Suspense>
+      
       </main>
+      </Suspense>
     </>
   );
 }

@@ -26,7 +26,8 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Suspense>
-        <ClientLayout>{children}</ClientLayout>
+          
+     {children}
 
         </Suspense>
       </body>

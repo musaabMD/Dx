@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
+import { Suspense } from "react";
 const ExamHome = () => {
   const [exams, setExams] = useState([]);
   const [error, setError] = useState(null);
@@ -67,6 +67,13 @@ const ExamHome = () => {
   }
 
   return (
+
+    <>
+          <Suspense>
+
+   
+
+   
     <div className="py-8 bg-zinc-900">
       <br />
       <h2 className="text-3xl font-bold mb-4 text-center text-white">Available Exams</h2>
@@ -94,6 +101,8 @@ const ExamHome = () => {
         </div>
       </div>
     </div>
+    </Suspense>
+    </>
   );
 };
 
