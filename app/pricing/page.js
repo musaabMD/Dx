@@ -3,7 +3,6 @@
 import React from 'react';
 import Header from '@/components/Header'; // Include this if you want to keep the header
 import { Suspense } from 'react';
-import Header from '@/components/Header';
 
 const PricingPage = () => {
   return (
