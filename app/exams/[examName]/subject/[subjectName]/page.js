@@ -63,15 +63,13 @@
 //     </Suspense>
 //   );
 // }
-// pages/exams/[examName]/subject/[subjectName]/page.js
-// pages/exams/[examName]/subject/[subjectName]/page.js
+
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
-import Header from "@/components/Header";
-import QuizComponent from "@/components/QuizComponent";
+import React, { useState, useEffect } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Link from 'next/link';
+import QuizComponent from '@/components/QuizComponent';
 import Wall from '@/components/Wall';
 
 export default function SubjectQuizPage({ params }) {
@@ -107,24 +105,22 @@ export default function SubjectQuizPage({ params }) {
   if (error) return <div>{error}</div>;
 
   return (
-    <Suspense>
-      <Wall examName={decodeURIComponent(examName)}>
-        <div className="w-full">
-          {questions.length > 0 ? (
-            <QuizComponent
-              questions={questions}
-              quizName={`${decodeURIComponent(subjectName)} (${decodeURIComponent(examName)})`}
-              testTaker="Subject Quiz"
-              isSelfExam={false}
-            />
-          ) : (
-            <p>No questions found for this subject.</p>
-          )}
-          <Link href={`/exams/${encodeURIComponent(examName)}`} className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-            Back to Exam
-          </Link>
-        </div>
-      </Wall>
-    </Suspense>
+    <Wall examName={decodeURIComponent(examName)}>
+      <div className="w-full">
+        {questions.length > 0 ? (
+          <QuizComponent
+            questions={questions}
+            quizName={`${decodeURIComponent(subjectName)} (${decodeURIComponent(examName)})`}
+            testTaker="Subject Quiz"
+            isSelfExam={false}
+          />
+        ) : (
+          <p>No questions found for this subject.</p>
+        )}
+        <Link href={`/exams/${encodeURIComponent(examName)}`} className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
+          Back to Exam
+        </Link>
+      </div>
+    </Wall>
   );
 }
