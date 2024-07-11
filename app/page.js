@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import ExamHome from "@/components/ExamHome";
 import { Suspense } from 'react';
 import FAQ from "@/components/FAQ"; // Correctly importing FAQ
+import Features from "@/components/Features";
 
 export default function Page() {
   return (
@@ -17,6 +18,7 @@ export default function Page() {
             </p>
           </section>
           <ExamHome />
+          <Features/>
           <FAQ /> {/* Correctly using FAQ */}
         </main>
       </Suspense>
