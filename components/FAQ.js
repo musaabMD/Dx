@@ -222,6 +222,7 @@
 // };
 
 // export default FAQ;
+ "use client";
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
