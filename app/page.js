@@ -16,7 +16,7 @@ export default function Page() {
           </p>
         </section>
           <ExamHome />
-      
+        <FAQ/>
       </main>
       </Suspense>
     </>
