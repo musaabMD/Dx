@@ -96,7 +96,9 @@
 //       </div>
 //     </Wall>
 //   );
-// }import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+// }
+
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import QuizComponent from "@/components/QuizComponent";
 import Header from "@/components/Header";
