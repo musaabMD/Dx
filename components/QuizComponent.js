@@ -693,11 +693,11 @@
 // // };
 
 // // export default QuizComponent;
-
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Image from 'next/image';
 import QuizHeader from './QuizHeader';
 import Score from './Score';
 import SubmitExam from './SubmitExam';
@@ -705,7 +705,7 @@ import Sidebar from './Sidebar';
 import Explanation from './Explanation';
 import Feedback from './Feedback';
 import QuizFooter from './QuizFooter';
-import { Suspense } from 'react';
+
 const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -909,112 +909,110 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
 
   return (
     <>
-    <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="flex flex-col min-h-screen bg-white">
+          <QuizHeader 
+            testTaker={testTaker}
+            quizName={quizName}
+            timerRef={timerRef}
+            currentQuestionIndex={currentQuestionIndex}
+            totalQuestions={questions.length}
+            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          />
+          <Sidebar 
+            questions={questions}
+            currentQuestion={currentQuestionIndex}
+            setCurrentQuestion={(index) => {
+              setCurrentQuestionIndex(index);
+              setShowExplanation(false);
+            }}
+            flaggedQuestions={flaggedQuestions}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+          />
+          <div className="flex-grow p-8 pb-20">
+            <div className="mb-4">
+              {currentQuestion.question_image_url && (
+                <Image src={currentQuestion.question_image_url} alt="Question" className="mt-4 max-w-full h-auto" width={500} height={500} />
+              )}
+              <p className="text-4xl text-black font-semibold">{currentQuestion.question_text}</p>
+            </div>
+            <div className="space-y-4">
+              {options.map(({ letter, text }) => {
+                const isSelected = answers[currentQuestionIndex] === letter;
+                const isCorrect = letter === currentQuestion.correct_choice;
+                const isCrossedOut = crossedOutChoices[currentQuestionIndex]?.[letter];
+                
+                let buttonClass = "block w-full text-left p-4 text-3xl border-2 transition-colors ";
+                
+                if (isSelected) {
+                  if (isSelfExam) {
+                    buttonClass += "bg-blue-200 border-blue-500 "; // Show selection without indicating correctness
+                  } else {
+                    buttonClass += isCorrect 
+                      ? "bg-[#e6fff9] border-[#009875] text-[#009875]" 
+                      : "bg-[#ffeded] border-[#DD0000] text-[#DD0000]";
+                  }
+                } else {
+                  buttonClass += "bg-slate-100 border-black hover:bg-slate-200";
+                }
 
-  
-    <div className="flex flex-col min-h-screen bg-white">
-      <QuizHeader 
-        testTaker={testTaker}
-        quizName={quizName}
-        timerRef={timerRef}
-        currentQuestionIndex={currentQuestionIndex}
-        totalQuestions={questions.length}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
-      <Sidebar 
-        questions={questions}
-        currentQuestion={currentQuestionIndex}
-        setCurrentQuestion={(index) => {
-          setCurrentQuestionIndex(index);
-          setShowExplanation(false);
-        }}
-        flaggedQuestions={flaggedQuestions}
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      />
-      <div className="flex-grow p-8 pb-20">
-        <div className="mb-4">
-          {currentQuestion.question_image_url && (
-            <img src={currentQuestion.question_image_url} alt="Question" className="mt-4 max-w-full h-auto" />
-          )}
-          <p className="text-4xl text-black font-semibold">{currentQuestion.question_text}</p>
-        </div>
-        <div className="space-y-4">
-          {options.map(({ letter, text }) => {
-            const isSelected = answers[currentQuestionIndex] === letter;
-            const isCorrect = letter === currentQuestion.correct_choice;
-            const isCrossedOut = crossedOutChoices[currentQuestionIndex]?.[letter];
-            
-            let buttonClass = "block w-full text-left p-4 text-3xl border-2 transition-colors ";
-            
-            if (isSelected) {
-              if (isSelfExam) {
-                buttonClass += "bg-blue-200 border-blue-500 "; // Show selection without indicating correctness
-              } else {
-                buttonClass += isCorrect 
-                  ? "bg-[#e6fff9] border-[#009875] text-[#009875]" 
-                  : "bg-[#ffeded] border-[#DD0000] text-[#DD0000]";
-              }
-            } else {
-              buttonClass += "bg-slate-100 border-black hover:bg-slate-200";
-            }
+                if (isCrossedOut) {
+                  buttonClass += " line-through";
+                }
 
-            if (isCrossedOut) {
-              buttonClass += " line-through";
-            }
-
-            return (
-              <button
-                key={letter}
-                onClick={() => handleAnswer(letter)}
-                className={buttonClass}
-              >
-                <span 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleCrossOut(letter);
-                  }}
-                  className="cursor-pointer"
-                >
-                   {letter}. {text}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        {showExplanation && !isSelfExam && (
-          <>
-            <Explanation 
-              rationale={currentQuestion.rationale}
-              isVisible={showExplanation}
-              explanationImageUrl={currentQuestion.explanation_image_url}
+                return (
+                  <button
+                    key={letter}
+                    onClick={() => handleAnswer(letter)}
+                    className={buttonClass}
+                  >
+                    <span 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleCrossOut(letter);
+                      }}
+                      className="cursor-pointer"
+                    >
+                      {letter}. {text}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            {showExplanation && !isSelfExam && (
+              <>
+                <Explanation 
+                  rationale={currentQuestion.rationale}
+                  isVisible={showExplanation}
+                  explanationImageUrl={currentQuestion.explanation_image_url}
+                />
+                <Feedback 
+                  questionId={currentQuestion.id}
+                  currentAnswer={currentQuestion.correct_choice}
+                  options={options}
+                  onSubmit={handleFeedbackSubmit}
+                />
+              </>
+            )}
+            <SubmitExam 
+              isOpen={isSubmitModalOpen}
+              onClose={() => setIsSubmitModalOpen(false)}
+              onSubmit={endQuiz}
+              unansweredQuestions={answers.filter(a => a === null).length}
             />
-            <Feedback 
-              questionId={currentQuestion.id}
-              currentAnswer={currentQuestion.correct_choice}
-              options={options}
-              onSubmit={handleFeedbackSubmit}
-            />
-          </>
-        )}
-        <SubmitExam 
-          isOpen={isSubmitModalOpen}
-          onClose={() => setIsSubmitModalOpen(false)}
-          onSubmit={endQuiz}
-          unansweredQuestions={answers.filter(a => a === null).length}
-        />
-      </div>
-      <QuizFooter 
-        onPrevious={() => navigateQuestion(-1)}
-        onNext={() => navigateQuestion(1)}
-        onSubmit={handleSubmit}
-        currentQuestionIndex={currentQuestionIndex}
-        totalQuestions={questions.length}
-        onToggleBookmark={toggleBookmark}
-        isBookmarked={flaggedQuestions.includes(currentQuestionIndex)}
-      />
-    </div>
-    </Suspense>
+          </div>
+          <QuizFooter 
+            onPrevious={() => navigateQuestion(-1)}
+            onNext={() => navigateQuestion(1)}
+            onSubmit={handleSubmit}
+            currentQuestionIndex={currentQuestionIndex}
+            totalQuestions={questions.length}
+            onToggleBookmark={toggleBookmark}
+            isBookmarked={flaggedQuestions.includes(currentQuestionIndex)}
+          />
+        </div>
+      </Suspense>
     </>
   );
 };
