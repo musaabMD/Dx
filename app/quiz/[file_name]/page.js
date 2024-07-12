@@ -97,7 +97,6 @@
 //     </Wall>
 //   );
 // }
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import QuizComponent from "@/components/QuizComponent";
@@ -129,7 +128,11 @@ export default async function QuizPage({ params }) {
     console.log('Questions found:', questions.length);
 
     // Fetch the user's name or email
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError) {
+        console.error('Error fetching user:', userError);
+        return <div>Error loading user data. Please try again later.</div>;
+    }
     const testTaker = user?.user_metadata?.full_name || "Test Taker";
 
     // Fetch the user's subscription status
