@@ -13,17 +13,16 @@
 //     </Suspense>
 //   );
 // }
-
-// pages/exams/page.js
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Wall from '@/components/Wall';
+import ClientComponent from '@/components/ClientComponent';
 import { Suspense } from "react";
 
-async function getQuizzesAndSubjects(examName, req) {
-  const supabase = createServerComponentClient({ cookies: req.cookies });
+async function getQuizzesAndSubjects(examName) {
+  const supabase = createServerComponentClient({ cookies: () => cookies() });
 
   try {
     const { data: quizzes, error: quizzesError } = await supabase
@@ -71,36 +70,25 @@ async function getQuizzesAndSubjects(examName, req) {
   }
 }
 
-export async function getServerSideProps(context) {
-  const { examName } = context.params;
-  const data = await getQuizzesAndSubjects(examName, context.req);
+export default async function QuizzesListPage({ params }) {
+  const { examName } = params;
+  const data = await getQuizzesAndSubjects(examName);
 
-  return {
-    props: {
-      data,
-      examName,
-    },
-  };
-}
-
-export default function QuizzesListPage({ data, examName }) {
   const totalQuestions = data.quizzes.reduce((sum, quiz) => sum + quiz.question_count, 0);
   const totalSubjects = data.subjects.length;
 
   if (!data || (data.quizzes.length === 0 && data.subjects.length === 0)) {
     return (
-      <>
-        <Suspense>
-          <Header />
-          <br />
-          <br />
-          <br />
-          <div className="container mx-auto p-4 ">
-            <h1 className="text-3xl font-bold mb-4 text-center bg-yellow-100"> {decodeURIComponent(examName)}</h1>
-            <h1 className="text-3xl font-bold mb-4 text-center">To be added Soon</h1>
-          </div>
-        </Suspense>
-      </>
+      <Suspense>
+        <Header />
+        <br />
+        <br />
+        <br />
+        <div className="container mx-auto p-4 ">
+          <h1 className="text-3xl font-bold mb-4 text-center bg-yellow-100"> {decodeURIComponent(examName)}</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center">To be added Soon</h1>
+        </div>
+      </Suspense>
     );
   }
 
@@ -177,6 +165,7 @@ export default function QuizzesListPage({ data, examName }) {
           </section>
         </div>
       </Wall>
+      <ClientComponent data={data.quizzes} />
     </Suspense>
   );
 }
