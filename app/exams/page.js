@@ -159,7 +159,6 @@
 //     </Suspense>
 //   );
 // }
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import ClientPage from './clientPage';  // Importing the Client Component
