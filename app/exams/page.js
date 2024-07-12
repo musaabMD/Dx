@@ -18,7 +18,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Wall from '@/components/Wall';
-import ClientComponent from '@/components/ClientComponent';
+import QuizzesClientComponent from '@/components/QuizzesClientComponent'; // Adjusted import
 import { Suspense } from "react";
 
 async function getQuizzesAndSubjects(examName) {
@@ -165,7 +165,12 @@ export default async function QuizzesListPage({ params }) {
           </section>
         </div>
       </Wall>
-      <ClientComponent data={data.quizzes} />
+      <QuizzesClientComponent 
+        examName={decodeURIComponent(examName)}
+        totalQuestions={totalQuestions}
+        totalSubjects={totalSubjects}
+        data={data}
+      />
     </Suspense>
   );
 }

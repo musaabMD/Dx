@@ -1,10 +1,9 @@
-// components/QuizzesClientComponent.js
-"use client";
+// components/QuizzesClientComponent.js"use client";
 
 import React, { useState } from 'react';
 import Link from "next/link";
 import UpgradeModal from "@/components/UpgradeModal";
-import { Suspense } from 'react';
+
 export default function QuizzesClientComponent({ examName, totalQuestions, totalSubjects, data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,8 +18,6 @@ export default function QuizzesClientComponent({ examName, totalQuestions, total
 
   return (
     <>
-    <Suspense>
-
       <div className="bg-white">
         <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -55,7 +52,7 @@ export default function QuizzesClientComponent({ examName, totalQuestions, total
           {data.quizzes.length > 0 ? (
             <ul className="space-y-2">
               {data.quizzes.map((quiz, index) => (
-                <li key={index} className="bg-slate-100 border-2 border-slate-500 text-2xl shadow rounded p-3 pt-7 pb-7 hover:bg-slate-200 hover:border-3 hover:border-black">
+                <li key={index} className="bg-slate-100 border-2 border-slate-500 text-2xl shadow rounded p-3 pt-7 pb-7 hover:bg-slate-200 hover:border-3 hover-border-black">
                   <a href="#" onClick={handleQuizClick}>
                     <span className="text-blue-600 font-sans font-semibold">
                       {quiz.file_name.replace(/%20/g, ' ')}
@@ -75,7 +72,7 @@ export default function QuizzesClientComponent({ examName, totalQuestions, total
           {data.subjects.length > 0 ? (
             <ul className="space-y-2">
               {data.subjects.map((subject, index) => (
-                <li key={index} className="bg-slate-100 border-2 border-slate-500 text-2xl shadow rounded p-3 pt-7 pb-7 hover:bg-slate-200 hover:border-3 hover:border-black">
+                <li key={index} className="bg-slate-100 border-2 border-slate-500 text-2xl shadow rounded p-3 pt-7 pb-7 hover:bg-slate-200 hover-border-3 hover-border-black">
                   <a href="#" onClick={handleQuizClick}>
                     <span className="text-blue-600 font-sans font-semibold">
                       {subject.name}
@@ -90,8 +87,6 @@ export default function QuizzesClientComponent({ examName, totalQuestions, total
           )}
         </section>
       </div>
-      </Suspense>
-
     </>
   );
 }
