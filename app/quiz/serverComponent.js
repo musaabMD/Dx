@@ -1,9 +1,18 @@
-// serverComponent.js
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+
 export async function fetchExamsData() {
-    // Your fetch logic here
+    const supabase = createServerComponentClient({ cookies });
+
     try {
-        const response = await fetch('your-api-endpoint');
-        const data = await response.json();
+        const { data, error } = await supabase
+            .from('exams')
+            .select('examname, fileCount, questionCount');
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
         return { examsData: data, connectionError: null, examsError: null };
     } catch (error) {
         if (error.name === 'FetchError') {

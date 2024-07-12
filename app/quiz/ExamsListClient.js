@@ -1,15 +1,12 @@
-// ExamsListClient.js
 "use client";
 
 import Link from "next/link";
 import Header from "@/components/Header";
 import { Suspense } from "react";
+
 export default function ExamsListClient({ examsData }) {
     return (
         <>
-        <Suspense>
-
-       
             <Header />
             <div className="container mx-auto p-4">
                 <br />
@@ -29,7 +26,6 @@ export default function ExamsListClient({ examsData }) {
                     ))}
                 </ul>
             </div>
-            </Suspense>
         </>
     );
 }

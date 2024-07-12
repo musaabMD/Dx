@@ -43,26 +43,26 @@
 //     </>
 //   );
 // }
-import { fetchExamsData } from './serverComponent';
 import ExamsListClient from './ExamsListClient';
+import { fetchExamsData } from './serverComponent';
 import { Suspense } from 'react';
 
 export default async function ExamsListPage() {
-  const { examsData, connectionError, examsError } = await fetchExamsData();
+    const { examsData, connectionError, examsError } = await fetchExamsData();
 
-  if (connectionError) {
-    console.error('Error connecting to Supabase:', connectionError);
-    return <div>Error connecting to the database. Please try again later.</div>;
-  }
+    if (connectionError) {
+        console.error('Error connecting to Supabase:', connectionError);
+        return <div>Error connecting to the database. Please try again later.</div>;
+    }
 
-  if (examsError) {
-    console.error('Error fetching exams:', examsError);
-    return <div>Error loading exams. Please try again later.</div>;
-  }
+    if (examsError) {
+        console.error('Error fetching exams:', examsError);
+        return <div>Error loading exams. Please try again later.</div>;
+    }
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ExamsListClient examsData={examsData} />
-    </Suspense>
-  );
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ExamsListClient examsData={examsData} />
+        </Suspense>
+    );
 }
