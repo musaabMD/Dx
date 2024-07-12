@@ -43,6 +43,7 @@
 //     </>
 //   );
 // }
+
 import { Suspense } from 'react';
 import ExamsListClient from './ExamsListClient';
 import { fetchExamsData } from './serverComponent';

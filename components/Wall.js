@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import UpgradeModal from '@/components/UpgradeModal';
-import { Suspense } from 'react';
+
 export default function Wall({ children, examName }) {
   const [loading, setLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -61,14 +61,8 @@ export default function Wall({ children, examName }) {
   }
 
   return (
-    <>
-    <Suspense>
-
-   
     <div>
       {isSubscribed ? children : <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />}
     </div>
-    </Suspense>
-    </>
   );
 }

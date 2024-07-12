@@ -159,72 +159,15 @@
 //     </Suspense>
 //   );
 // }
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import ClientPage from './clientPage';  // Importing the Client Component
 
-async function getQuizzesAndSubjects(examName) {
-  const supabase = createServerComponentClient({ cookies: () => cookies() });
+import Wall from '@/components/Wall';
+import ExamsPage from '@/components/ExamsPage';
 
-  try {
-    const { data: quizzes, error: quizzesError } = await supabase
-      .from('qtable')
-      .select('file_name, id, subject, examname')
-      .eq('examname', decodeURIComponent(examName));
-
-    if (quizzesError) {
-      console.error('Error fetching quizzes:', quizzesError);
-      throw new Error(`Failed to fetch quizzes: ${quizzesError.message}`);
-    }
-
-    if (!quizzes || quizzes.length === 0) {
-      return { quizzes: [], subjects: [] };
-    }
-
-    const uniqueQuizzes = quizzes.reduce((acc, quiz) => {
-      if (!acc[quiz.file_name]) {
-        acc[quiz.file_name] = { ...quiz, question_count: 0 };
-      }
-      acc[quiz.file_name].question_count++;
-      return acc;
-    }, {});
-
-    const subjectsMap = quizzes.reduce((acc, quiz) => {
-      if (!acc[quiz.subject]) {
-        acc[quiz.subject] = 0;
-      }
-      acc[quiz.subject]++;
-      return acc;
-    }, {});
-
-    const subjects = Object.entries(subjectsMap).map(([subject, count]) => ({
-      name: subject,
-      question_count: count
-    })).sort((a, b) => a.name.localeCompare(b.name));
-
-    return {
-      quizzes: Object.values(uniqueQuizzes),
-      subjects
-    };
-  } catch (error) {
-    console.error('Error in getQuizzesAndSubjects:', error);
-    throw error;
-  }
-}
-
-export default async function QuizzesListPage({ params }) {
-  const { examName } = params;
-  const data = await getQuizzesAndSubjects(examName);
-
-  const totalQuestions = data.quizzes.reduce((sum, quiz) => sum + quiz.question_count, 0);
-  const totalSubjects = data.subjects.length;
-
+export default function ProtectedExamsPage() {
   return (
-    <ClientPage
-      examName={decodeURIComponent(examName)}
-      totalQuestions={totalQuestions}
-      totalSubjects={totalSubjects}
-      data={data}
-    />
+    <Wall>
+      <ExamsPage />
+    </Wall>
   );
 }
+
