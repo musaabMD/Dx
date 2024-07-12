@@ -43,7 +43,6 @@
 //     </>
 //   );
 // }
-// ExamsListPage.js
 import { fetchExamsData } from './serverComponent';
 import ExamsListClient from './ExamsListClient';
 import { Suspense } from 'react';

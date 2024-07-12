@@ -97,7 +97,6 @@
 //     </Wall>
 //   );
 // }
-// QuizPage.js
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import QuizComponent from "@/components/QuizComponent";
@@ -145,18 +144,18 @@ export default async function QuizPage({ params }) {
     }
 
     return (
-        <Suspense> 
-        <Wall examName={subscriptionData.examname}>
-            <Header />
-            <div className="w-full">
-                <QuizComponent 
-                    questions={questions} 
-                    quizName={decodeURIComponent(file_name)} 
-                    testTaker={testTaker}
-                    isSelfExam={false}
-                />
-            </div>
-        </Wall>
+        <Suspense fallback={<div>Loading...</div>}>
+            <Wall examName={subscriptionData.examname}>
+                <Header />
+                <div className="w-full">
+                    <QuizComponent 
+                        questions={questions} 
+                        quizName={decodeURIComponent(file_name)} 
+                        testTaker={testTaker}
+                        isSelfExam={false}
+                    />
+                </div>
+            </Wall>
         </Suspense>
     );
 }
