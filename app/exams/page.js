@@ -15,16 +15,15 @@
 // }
 
 // pages/exams/page.js
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Wall from '@/components/Wall';
-import { Suspense } from "react"; 
+import { Suspense } from "react";
 
-async function getQuizzesAndSubjects(examName) {
-  const supabase = createServerComponentClient({ cookies });
+async function getQuizzesAndSubjects(examName, req) {
+  const supabase = createServerComponentClient({ cookies: req.cookies });
 
   try {
     const { data: quizzes, error: quizzesError } = await supabase
@@ -72,20 +71,26 @@ async function getQuizzesAndSubjects(examName) {
   }
 }
 
-export default async function QuizzesListPage({ params }) {
-  const { examName } = params;
+export async function getServerSideProps(context) {
+  const { examName } = context.params;
+  const data = await getQuizzesAndSubjects(examName, context.req);
 
-  try {
-    const data = await getQuizzesAndSubjects(examName);
+  return {
+    props: {
+      data,
+      examName,
+    },
+  };
+}
 
-    const totalQuestions = data.quizzes.reduce((sum, quiz) => sum + quiz.question_count, 0);
-    const totalSubjects = data.subjects.length;
+export default function QuizzesListPage({ data, examName }) {
+  const totalQuestions = data.quizzes.reduce((sum, quiz) => sum + quiz.question_count, 0);
+  const totalSubjects = data.subjects.length;
 
-    if (!data || (data.quizzes.length === 0 && data.subjects.length === 0)) {
-      return (
-        <>
-                <Suspense> 
-
+  if (!data || (data.quizzes.length === 0 && data.subjects.length === 0)) {
+    return (
+      <>
+        <Suspense>
           <Header />
           <br />
           <br />
@@ -94,13 +99,13 @@ export default async function QuizzesListPage({ params }) {
             <h1 className="text-3xl font-bold mb-4 text-center bg-yellow-100"> {decodeURIComponent(examName)}</h1>
             <h1 className="text-3xl font-bold mb-4 text-center">To be added Soon</h1>
           </div>
-          </Suspense>
-        </>
-      );
-    }
+        </Suspense>
+      </>
+    );
+  }
 
-    return (
-        <Suspense>
+  return (
+    <Suspense>
       <Wall examName={decodeURIComponent(examName)}>
         <Header />
         <div className="bg-white">
@@ -124,7 +129,7 @@ export default async function QuizzesListPage({ params }) {
                   href="/pricing"
                   className="rounded-md bg-red-500 px-5 py-4 text-2xl font-semibold text-white shadow-sm hover:bg-red-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Subscribe 
+                  Subscribe
                 </a>
               </div>
             </div>
@@ -172,26 +177,6 @@ export default async function QuizzesListPage({ params }) {
           </section>
         </div>
       </Wall>
-      </Suspense>
-    );
-  } catch (error) {
-    console.error('Error in QuizzesListPage:', error);
-    return (
-      <>
-              <Suspense>
-
-        <Header />
-        <div className="container mx-auto p-4">
-          <h1 className="text-3xl font-bold mb-4">Error</h1>
-          <p>An error occurred while loading quizzes and subjects. Please try again later.</p>
-          <p>Error details: {error.message}</p>
-        </div>
-        </Suspense>
-
-      </>
-    );
-  }
+    </Suspense>
+  );
 }
-
-
-
