@@ -1521,17 +1521,14 @@
 //     </>
 //   );
 // };
-
-// export default Dashboard;
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Search } from 'lucide-react';
 import ButtonAccount from "@/components/ButtonAccount";
 import Header from "@/components/Header";
 import Feedback from "@/components/Feedback";
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -1742,14 +1739,6 @@ const Dashboard = () => {
         const userChoice = choices[answer.user_answer];
 
         return (
-
-          <>
-          <Suspense>
-
-
-         
-
-         
           <div
             key={index} 
             className={`mb-4 p-4 bg-slate-100 border-2 ${selectedItems.includes(answer) ? 'bg-red-100 border-red-500' : 'border-slate-500'}`}
@@ -1758,7 +1747,6 @@ const Dashboard = () => {
             <div className="flex justify-between items-center mb-2">
               <span className="text-1xl text-gray-900">{answer.qtable?.subject || 'Unknown Subject'}</span>
               {answer.user_answer === answer.qtable?.correct_choice && <span className="text-green-500">✓</span>}
-              
               {answer.is_bookmarked && <span className="text-blue-500">🚩</span>}
             </div>
             <br />
@@ -1782,8 +1770,6 @@ const Dashboard = () => {
               <p className="text-green-900 mt-2">Feedback sent</p>
             )}
           </div>
-          </Suspense>
-          </>
         );
       })}
     </div>
@@ -1803,7 +1789,6 @@ const Dashboard = () => {
               )}
               <p className="mt-2"><strong>Comments:</strong> {feedback.feedback_text}</p>
               <p className="mt-2"><strong>Feedback Status:</strong> {feedback.status}</p>
-
             </div>
           ))
         ) : (
@@ -1819,11 +1804,11 @@ const Dashboard = () => {
             <p><strong>Ends on:</strong> {new Date(subscriptionStatus.subscription_end).toLocaleDateString()}</p>
             <p><strong>Remaining Days:</strong> {remainingDays}</p>
             {new Date(subscriptionStatus.subscription_end) <= new Date() && (
-               <Link href="/pricing" passHref>
-               <button className="mt-4 px-4 py-2 bg-blue-500 text-white hover:bg-blue-600">
-                 Renew Subscription
-               </button>
-             </Link>
+              <Link href="/pricing" passHref>
+                <button className="mt-4 px-4 py-2 bg-blue-500 text-white hover:bg-blue-600">
+                  Renew Subscription
+                </button>
+              </Link>
             )}
           </div>
         ) : (
@@ -1842,70 +1827,70 @@ const Dashboard = () => {
 
   return (
     <>
-    <Suspense>
-      <Header />
-      <main className="p-8 pb-24">
-        <section className="max-w-6xl mx-auto space-y-8">
-          <h1 className="text-3xl md:text-4xl font-extrabold">Dashboard</h1>
-          <ButtonAccount />
-          <div className="space-x-4">
-            {tabData.map(tab => (
-              <button
-                key={tab.id}
-                className={`py-2 px-4 rounded-lg text-sm md:text-base font-semibold ${
-                  activeTab === tab.id ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-900'
-                }`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label} ({tab.count})
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center border-2 border-slate-500 rounded-lg p-2 bg-white max-w-lg mx-auto">
-            <Search className="text-slate-500" size={18} />
-            <input
-              type="text"
-              placeholder="Search Questions"
-              className="ml-2 flex-1 focus:outline-none"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          {selectedItems.length > 0 && (
-            <div className="max-w-4xl mx-auto bg-red-100 p-4 rounded-lg border border-red-300 flex items-center justify-between">
-              <p className="text-red-800">You have selected {selectedItems.length} items.</p>
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                onClick={() => setShowConfirm(true)}
-              >
-                Remove Selected Items
-              </button>
-              {showConfirm && (
-                <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-                  <div className="bg-white p-4 rounded-lg border border-red-300 max-w-md mx-auto">
-                    <p className="text-red-800">Are you sure you want to remove selected items?</p>
-                    <div className="mt-4 flex space-x-4">
-                      <button
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                        onClick={handleRemoveSelectedItems}
-                      >
-                        Yes, Remove
-                      </button>
-                      <button
-                        className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
-                        onClick={() => setShowConfirm(false)}
-                      >
-                        Cancel
-                      </button>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header />
+        <main className="p-8 pb-24">
+          <section className="max-w-6xl mx-auto space-y-8">
+            <h1 className="text-3xl md:text-4xl font-extrabold">Dashboard</h1>
+            <ButtonAccount />
+            <div className="space-x-4">
+              {tabData.map(tab => (
+                <button
+                  key={tab.id}
+                  className={`py-2 px-4 rounded-lg text-sm md:text-base font-semibold ${
+                    activeTab === tab.id ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-900'
+                  }`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {tab.label} ({tab.count})
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center border-2 border-slate-500 rounded-lg p-2 bg-white max-w-lg mx-auto">
+              <Search className="text-slate-500" size={18} />
+              <input
+                type="text"
+                placeholder="Search Questions"
+                className="ml-2 flex-1 focus:outline-none"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            {selectedItems.length > 0 && (
+              <div className="max-w-4xl mx-auto bg-red-100 p-4 rounded-lg border border-red-300 flex items-center justify-between">
+                <p className="text-red-800">You have selected {selectedItems.length} items.</p>
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                  onClick={() => setShowConfirm(true)}
+                >
+                  Remove Selected Items
+                </button>
+                {showConfirm && (
+                  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-4 rounded-lg border border-red-300 max-w-md mx-auto">
+                      <p className="text-red-800">Are you sure you want to remove selected items?</p>
+                      <div className="mt-4 flex space-x-4">
+                        <button
+                          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                          onClick={handleRemoveSelectedItems}
+                        >
+                          Yes, Remove
+                        </button>
+                        <button
+                          className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                          onClick={() => setShowConfirm(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
-          {renderContent()}
-        </section>
-      </main>
+                )}
+              </div>
+            )}
+            {renderContent()}
+          </section>
+        </main>
       </Suspense>
     </>
   );

@@ -183,11 +183,9 @@
 // //     </div>
 // //   );
 // // };
-
-// // export default Feedback;
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
-import { Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
+
 const Feedback = ({ questionId, examName, currentAnswer, options, onSubmit, existingFeedback }) => {
   const [feedbackType, setFeedbackType] = useState('');
   const [suggestedAnswer, setSuggestedAnswer] = useState('');
@@ -236,72 +234,68 @@ const Feedback = ({ questionId, examName, currentAnswer, options, onSubmit, exis
   };
 
   return (
-    <>
-    <Suspense>
-
-   
-    <div ref={formRef}>
-      {!showForm && !isSubmitted && (
-        <button 
-          onClick={() => setShowForm(true)} 
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-2 "
-        >
-          Provide Feedback
-        </button>
-      )}
-      {showForm && (
-        <form onSubmit={handleSubmit} className="mt-4 p-4 border rounded">
-          <h3 className="text-lg font-semibold mb-2">Provide Feedback</h3>
-          <div className="mb-2">
-            <label className="block mb-1">Feedback Type:</label>
-            <select 
-              value={feedbackType} 
-              onChange={(e) => setFeedbackType(e.target.value)}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="">Select a type</option>
-              <option value="incorrect_answer">Incorrect Answer</option>
-              <option value="incorrect_explanation">Incorrect Explanation</option>
-              <option value="typo">Typo or Error</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          {feedbackType === 'incorrect_answer' && (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div ref={formRef}>
+        {!showForm && !isSubmitted && (
+          <button 
+            onClick={() => setShowForm(true)} 
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-2 "
+          >
+            Provide Feedback
+          </button>
+        )}
+        {showForm && (
+          <form onSubmit={handleSubmit} className="mt-4 p-4 border rounded">
+            <h3 className="text-lg font-semibold mb-2">Provide Feedback</h3>
             <div className="mb-2">
-              <label className="block mb-1">Suggested Answer:</label>
+              <label className="block mb-1">Feedback Type:</label>
               <select 
-                value={suggestedAnswer} 
-                onChange={(e) => setSuggestedAnswer(e.target.value)}
+                value={feedbackType} 
+                onChange={(e) => setFeedbackType(e.target.value)}
                 className="w-full p-2 border rounded"
                 required
               >
-                <option value="">Select an answer</option>
-                {options.map(option => (
-                  <option key={option.letter} value={option.letter}>{option.letter}: {option.text}</option>
-                ))}
+                <option value="">Select a type</option>
+                <option value="incorrect_answer">Incorrect Answer</option>
+                <option value="incorrect_explanation">Incorrect Explanation</option>
+                <option value="typo">Typo or Error</option>
+                <option value="other">Other</option>
               </select>
             </div>
-          )}
-          <div className="mb-2">
-            <label className="block mb-1">Comments:</label>
-            <textarea 
-              value={feedbackText} 
-              onChange={(e) => setFeedbackText(e.target.value)}
-              className="w-full p-2 border rounded"
-              rows="3"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded">Submit Feedback</button>
-        </form>
-      )}
-      {isSubmitted && (
-        <p className="text-green-500 mt-2">Feedback sent successfully!</p>
-      )}
-    </div>
+            {feedbackType === 'incorrect_answer' && (
+              <div className="mb-2">
+                <label className="block mb-1">Suggested Answer:</label>
+                <select 
+                  value={suggestedAnswer} 
+                  onChange={(e) => setSuggestedAnswer(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  required
+                >
+                  <option value="">Select an answer</option>
+                  {options.map(option => (
+                    <option key={option.letter} value={option.letter}>{option.letter}: {option.text}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+            <div className="mb-2">
+              <label className="block mb-1">Comments:</label>
+              <textarea 
+                value={feedbackText} 
+                onChange={(e) => setFeedbackText(e.target.value)}
+                className="w-full p-2 border rounded"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded">Submit Feedback</button>
+          </form>
+        )}
+        {isSubmitted && (
+          <p className="text-green-500 mt-2">Feedback sent successfully!</p>
+        )}
+      </div>
     </Suspense>
-    </>
   );
 };
 
