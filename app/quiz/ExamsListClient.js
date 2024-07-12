@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Header from "@/components/Header";
-import { Suspense } from "react";
 
 export default function ExamsListClient({ examsData }) {
     return (

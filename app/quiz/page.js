@@ -43,9 +43,9 @@
 //     </>
 //   );
 // }
+import { Suspense } from 'react';
 import ExamsListClient from './ExamsListClient';
 import { fetchExamsData } from './serverComponent';
-import { Suspense } from 'react';
 
 export default async function ExamsListPage() {
     const { examsData, connectionError, examsError } = await fetchExamsData();
