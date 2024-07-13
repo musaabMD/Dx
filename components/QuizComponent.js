@@ -345,7 +345,6 @@
 // // // };
 
 // // // export default QuizComponent;
-
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
@@ -532,9 +531,7 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
         feedback_text: feedback.feedbackText,
         user_id: user.id,
         exam_name: quizName,  // Add the exam name
-        exam_name: feedback.exam_name,  // Add the exam name2
         status: 'In Progress'  // Set a default status
-        
       });
   
     if (error) {
