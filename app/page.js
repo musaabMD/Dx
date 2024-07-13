@@ -13,11 +13,24 @@ export default function Page() {
       <Suspense>
         <Header />
         <main>
-          <section className="flex flex-col items-center justify-center text-center gap-12 px-8 py-24">
-            <h1 className="text-5xl font-sans font-bold">DrNote Qbank</h1>
-            <p className="text-3xl opacity-80">
+  
+          <section className="relative isolate overflow-hidden bg-slate-100 items-center justify-center text-center gap-12 px-8 py-24">
+          <br />
+          <br />
+            <h1 className="text-5xl font-sans font-bold text-black">DrNote Qbank </h1>
+            <h1 className="mt-10 text-4xl font-bold tracking-tight text-blue-800 sm:text-6xl">
+            Pass with Confidence...
+The First Time
+          </h1>
+            <br />
+            <br />
+            <p className="text-3xl opacity-80 text-black">
               The #1 Choice for SCFHS Exams
             </p>
+            <br />
+            <br />
+            <br />
+            <br />
           </section>
           <ExamHome />
           <Features/>
@@ -25,6 +38,7 @@ export default function Page() {
         </main>
         <SpeedInsights />
         <Analytics />
+
       </Suspense>
     </>
   );
