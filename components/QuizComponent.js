@@ -345,11 +345,11 @@
 // // // };
 
 // // // export default QuizComponent;
+
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import Image from 'next/image';
 import QuizHeader from './QuizHeader';
 import Score from './Score';
 import SubmitExam from './SubmitExam';
@@ -397,6 +397,7 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
     if (isSelfExam) return; // Don't save responses for self-assessment
 
     const { data: { user } } = await supabase.auth.getUser();
+    console.log('Saving user response:', { user_id: user.id, question_id: questionId, user_answer: userAnswer, is_bookmarked: isBookmarked });
     const { data, error } = await supabase
       .from('user_responses')
       .upsert({
@@ -408,26 +409,50 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
   
     if (error) {
       console.error('Error saving user response:', error);
+      console.error('Error details:', JSON.stringify(error, null, 2));
     } else {
       console.log('User response saved successfully:', data);
     }
   };
 
   const updateChoiceVotes = async (questionId, choice) => {
+    console.log('Starting updateChoiceVotes function');
+    console.log('Inputs:', { questionId, choice });
+
+    if (!questionId || typeof questionId !== 'string') {
+      console.error('Invalid questionId:', questionId);
+      return;
+    }
+
+    if (!choice || typeof choice !== 'string' || !['A', 'B', 'C', 'D', 'E', 'F'].includes(choice.toUpperCase())) {
+      console.error('Invalid choice:', choice);
+      return;
+    }
+
     try {
+      console.log('Calling Supabase RPC function');
       const { data, error } = await supabase.rpc('increment_choice_votes', {
         q_id: questionId,
         choice: choice.toUpperCase()
       });
 
+      console.log('Supabase RPC response:', { data, error });
+
       if (error) {
         console.error('Supabase RPC error:', error);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+        console.error('Error details:', error.details);
         throw error;
       }
 
+      console.log('Choice votes updated successfully');
       return data;
     } catch (error) {
       console.error('Caught error in updateChoiceVotes:', error);
+      if (error.response) {
+        console.error('Error response:', error.response);
+      }
       throw error;
     }
   };
@@ -494,22 +519,23 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
   const handleFeedbackSubmit = async (feedback) => {
     if (isSelfExam) return; // Don't submit feedback for self-assessment
   
-    const { data: { user } } = await supabase.auth.getUser();
+    console.log("Feedback submitted:", feedback);
   
-    const feedbackData = {
-      question_id: feedback.questionId,
-      exam_name: feedback.examName, // Ensure examName is passed correctly
-      feedback_type: feedback.feedbackType,
-      suggested_answer: feedback.suggestedAnswer || null,
-      feedback_text: feedback.feedbackText,
-      user_id: user.id,
-      status: 'In Progress'
-    };
+    const { data: { user } } = await supabase.auth.getUser();
   
     const { data, error } = await supabase
       .from('feedback')
-      .insert(feedbackData)
-      .select();
+      .insert({
+        question_id: feedback.questionId,
+        feedback_type: feedback.feedbackType,
+        suggested_ans: feedback.suggested_answer || null,  // Changed from suggested_answer to suggested_ans
+        feedback_text: feedback.feedbackText,
+        user_id: user.id,
+        exam_name: quizName,  // Add the exam name
+        exam_name: feedback.exam_name,  // Add the exam name2
+        status: 'In Progress'  // Set a default status
+        
+      });
   
     if (error) {
       console.error('Error submitting feedback:', error);
@@ -524,7 +550,6 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
       }));
     }
   };
-  
 
   useEffect(() => {
     if (currentQuestionIndex === questions.length - 1) {
@@ -566,113 +591,108 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
     .filter(option => option.text !== null);
 
   return (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="flex flex-col min-h-screen bg-white">
-          <QuizHeader 
-            testTaker={testTaker}
-            quizName={quizName}
-            timerRef={timerRef}
-            currentQuestionIndex={currentQuestionIndex}
-            totalQuestions={questions.length}
-            onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-          />
-          <Sidebar 
-            questions={questions}
-            currentQuestion={currentQuestionIndex}
-            setCurrentQuestion={(index) => {
-              setCurrentQuestionIndex(index);
-              setShowExplanation(false);
-            }}
-            flaggedQuestions={flaggedQuestions}
-            isOpen={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
-          />
-          <div className="flex-grow p-8 pb-20">
-            <div className="mb-4">
-              {currentQuestion.question_image_url && (
-                <Image src={currentQuestion.question_image_url} alt="Question" className="mt-4 max-w-full h-auto" width={500} height={500} />
-              )}
-              <p className="text-4xl text-black font-semibold">{currentQuestion.question_text}</p>
-            </div>
-            <div className="space-y-4">
-              {options.map(({ letter, text }) => {
-                const isSelected = answers[currentQuestionIndex] === letter;
-                const isCorrect = letter === currentQuestion.correct_choice;
-                const isCrossedOut = crossedOutChoices[currentQuestionIndex]?.[letter];
-                
-                let buttonClass = "block w-full text-left p-4 text-3xl border-2 transition-colors ";
-                
-                if (isSelected) {
-                  if (isSelfExam) {
-                    buttonClass += "bg-blue-200 border-blue-500 "; // Show selection without indicating correctness
-                  } else {
-                    buttonClass += isCorrect 
-                      ? "bg-[#e6fff9] border-[#009875] text-[#009875]" 
-                      : "bg-[#ffeded] border-[#DD0000] text-[#DD0000]";
-                  }
-                } else {
-                  buttonClass += "bg-slate-100 border-black hover:bg-slate-200";
-                }
-
-                if (isCrossedOut) {
-                  buttonClass += " line-through";
-                }
-
-                return (
-                  <button
-                    key={letter}
-                    onClick={() => handleAnswer(letter)}
-                    className={buttonClass}
-                  >
-                    <span 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleCrossOut(letter);
-                      }}
-                      className="cursor-pointer"
-                    >
-                      {letter}. {text}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-            {showExplanation && !isSelfExam && (
-              <>
-                <Explanation 
-                  rationale={currentQuestion.rationale}
-                  isVisible={showExplanation}
-                  explanationImageUrl={currentQuestion.explanation_image_url}
-                />
-                <Feedback 
-                  questionId={currentQuestion.id}
-                  examName={quizName} // Pass the exam name
-                  currentAnswer={currentQuestion.correct_choice}
-                  options={options}
-                  onSubmit={handleFeedbackSubmit}
-                />
-              </>
-            )}
-            <SubmitExam 
-              isOpen={isSubmitModalOpen}
-              onClose={() => setIsSubmitModalOpen(false)}
-              onSubmit={endQuiz}
-              unansweredQuestions={answers.filter(a => a === null).length}
-            />
-          </div>
-          <QuizFooter 
-            onPrevious={() => navigateQuestion(-1)}
-            onNext={() => navigateQuestion(1)}
-            onSubmit={handleSubmit}
-            currentQuestionIndex={currentQuestionIndex}
-            totalQuestions={questions.length}
-            onToggleBookmark={toggleBookmark}
-            isBookmarked={flaggedQuestions.includes(currentQuestionIndex)}
-          />
+    <div className="flex flex-col min-h-screen bg-white">
+      <QuizHeader 
+        testTaker={testTaker}
+        quizName={quizName}
+        timerRef={timerRef}
+        currentQuestionIndex={currentQuestionIndex}
+        totalQuestions={questions.length}
+        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
+      <Sidebar 
+        questions={questions}
+        currentQuestion={currentQuestionIndex}
+        setCurrentQuestion={(index) => {
+          setCurrentQuestionIndex(index);
+          setShowExplanation(false);
+        }}
+        flaggedQuestions={flaggedQuestions}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
+      <div className="flex-grow p-8 pb-20">
+        <div className="mb-4">
+          {currentQuestion.question_image_url && (
+            <img src={currentQuestion.question_image_url} alt="Question" className="mt-4 max-w-full h-auto" />
+          )}
+          <p className="text-4xl text-black font-semibold">{currentQuestion.question_text}</p>
         </div>
-      </Suspense>
-    </>
+        <div className="space-y-4">
+          {options.map(({ letter, text }) => {
+            const isSelected = answers[currentQuestionIndex] === letter;
+            const isCorrect = letter === currentQuestion.correct_choice;
+            const isCrossedOut = crossedOutChoices[currentQuestionIndex]?.[letter];
+            
+            let buttonClass = "block w-full text-left p-4 text-3xl border-2 transition-colors ";
+            
+            if (isSelected) {
+              if (isSelfExam) {
+                buttonClass += "bg-blue-200 border-blue-500 "; // Show selection without indicating correctness
+              } else {
+                buttonClass += isCorrect 
+                  ? "bg-[#e6fff9] border-[#009875] text-[#009875]" 
+                  : "bg-[#ffeded] border-[#DD0000] text-[#DD0000]";
+              }
+            } else {
+              buttonClass += "bg-slate-100 border-black hover:bg-slate-200";
+            }
+
+            if (isCrossedOut) {
+              buttonClass += " line-through";
+            }
+
+            return (
+              <button
+                key={letter}
+                onClick={() => handleAnswer(letter)}
+                className={buttonClass}
+              >
+                <span 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleCrossOut(letter);
+                  }}
+                  className="cursor-pointer"
+                >
+                   {letter}. {text}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        {showExplanation && !isSelfExam && (
+          <>
+            <Explanation 
+              rationale={currentQuestion.rationale}
+              isVisible={showExplanation}
+              explanationImageUrl={currentQuestion.explanation_image_url}
+            />
+            <Feedback 
+              questionId={currentQuestion.id}
+              currentAnswer={currentQuestion.correct_choice}
+              options={options}
+              onSubmit={handleFeedbackSubmit}
+            />
+          </>
+        )}
+        <SubmitExam 
+          isOpen={isSubmitModalOpen}
+          onClose={() => setIsSubmitModalOpen(false)}
+          onSubmit={endQuiz}
+          unansweredQuestions={answers.filter(a => a === null).length}
+        />
+      </div>
+      <QuizFooter 
+        onPrevious={() => navigateQuestion(-1)}
+        onNext={() => navigateQuestion(1)}
+        onSubmit={handleSubmit}
+        currentQuestionIndex={currentQuestionIndex}
+        totalQuestions={questions.length}
+        onToggleBookmark={toggleBookmark}
+        isBookmarked={flaggedQuestions.includes(currentQuestionIndex)}
+      />
+    </div>
   );
 };
 
