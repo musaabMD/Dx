@@ -161,9 +161,6 @@ export async function POST(req) {
       .eq("id", question_id)
       .single();
 
-    console.log('Question Data:', questionData);
-    console.log('Question Error:', questionError);
-
     if (questionError) {
       console.error('Error fetching question:', questionError);
       return NextResponse.json({ error: 'Failed to fetch question details' }, { status: 400 });
