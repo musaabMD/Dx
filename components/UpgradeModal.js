@@ -11,6 +11,10 @@ const UpgradeModal = ({ isOpen, onClose }) => {
     router.push('/pricing');
   };
 
+  const handleCancel = () => {
+    router.push('/'); // This will navigate to the homepage
+  };
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -31,7 +35,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
             </div>
           </div>
           <div className="mt-8 flex justify-between">
-            <button onClick={onClose} className="btn btn-ghost">
+            <button onClick={handleCancel} className="btn btn-ghost">
               Cancel
             </button>
             <button onClick={handleStartPremium} className="btn btn-warning">

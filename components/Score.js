@@ -167,9 +167,10 @@ const Score = ({ score, totalQuestions, quizName, time, answers }) => {
     <>
     <Suspense>
 
+    <Header />
 
-  
     <div className="min-h-screen bg-gray-100">
+        
       <div className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <div className="px-4 py-5 sm:p-6">

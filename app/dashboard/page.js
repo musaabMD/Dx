@@ -1521,7 +1521,9 @@
 //     </>
 //   );
 // };
-'use client';
+
+"use client"
+
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Search } from 'lucide-react';
@@ -1540,6 +1542,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const supabase = createClientComponentClient();
 
   const fetchUserResponses = useCallback(async () => {
@@ -1620,6 +1623,16 @@ const Dashboard = () => {
 
     fetchData();
   }, [fetchUserResponses, fetchUserFeedback, fetchSubscriptionStatus]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize(); // Check on initial render
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const correctAnswers = userResponses.filter(response => response.user_answer === response.qtable?.correct_choice);
   const incorrectAnswers = userResponses.filter(response => response.user_answer !== response.qtable?.correct_choice && response.user_answer !== null);
@@ -1789,6 +1802,8 @@ const Dashboard = () => {
               )}
               <p className="mt-2"><strong>Comments:</strong> {feedback.feedback_text}</p>
               <p className="mt-2"><strong>Feedback Status:</strong> {feedback.status}</p>
+              <p className="mt-2"><strong>Feedback Sent:</strong> {feedback.created_at}</p>
+
             </div>
           ))
         ) : (
@@ -1822,6 +1837,30 @@ const Dashboard = () => {
     return content ? <div className="mt-4">{content}</div> : null;
   };
 
+  const renderTabBar = () => (
+    <div className={`btm-nav fixed bottom-0 left-0 right-0 flex justify-around bg-slate-900 text-white md:hidden`}>
+      {tabData.map(tab => (
+        <button
+          key={tab.id}
+          className={`py-2 px-4 flex-1 text-center ${
+            activeTab === tab.id ? 'bg-slate-700' : 'bg-slate-900'
+          }`}
+          onClick={() => setActiveTab(tab.id)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="btm-nav-label text-xs">{tab.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -1833,7 +1872,7 @@ const Dashboard = () => {
           <section className="max-w-6xl mx-auto space-y-8">
             <h1 className="text-3xl md:text-4xl font-extrabold">Dashboard</h1>
             <ButtonAccount />
-            <div className="space-x-4">
+            <div className="space-x-4 hidden md:flex">
               {tabData.map(tab => (
                 <button
                   key={tab.id}
@@ -1891,6 +1930,7 @@ const Dashboard = () => {
             {renderContent()}
           </section>
         </main>
+        {renderTabBar()}
       </Suspense>
     </>
   );

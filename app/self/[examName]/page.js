@@ -86,7 +86,6 @@ const SelfAssessmentExam = () => {
   
     return (
         <Suspense>
-
      
       <Wall examName={examName}>
         <div>

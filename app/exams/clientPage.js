@@ -20,7 +20,6 @@ const ClientPage = ({ examName, totalQuestions, totalSubjects, data }) => {
 
   return (
     <>
-      <Header />
       <Wall examName={decodeURIComponent(examName)}>
         <div className="bg-white">
           <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -31,12 +30,13 @@ const ClientPage = ({ examName, totalQuestions, totalSubjects, data }) => {
               <div className="flex justify-center gap-16 mt-10">
                 <div className="text-center">
                   <div className="text-6xl font-bold text-gray-900">{totalQuestions}</div>
-                  <div className="mt-2 text-lg font-semibold text-gray-600">Study Questions</div>
+                  <div className="mt-2 text-lg font-semibold text-gray-600">Questions</div>
                 </div>
                 <div className="text-center">
                   <div className="text-6xl font-bold text-gray-900">{totalSubjects}</div>
-                  <div className="mt-2 text-lg font-semibold text-gray-600">Subjects</div>
+                  <div className="mt-2 text-lg font-semibold text-gray-600">Subjects </div>
                 </div>
+                
               </div>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a

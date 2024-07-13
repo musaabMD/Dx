@@ -150,7 +150,6 @@ export default async function QuizPage({ params }) {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Wall examName={subscriptionData.examname}>
-                <Header />
                 <div className="w-full">
                     <QuizComponent 
                         questions={questions} 
