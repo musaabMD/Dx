@@ -4,6 +4,8 @@ import ExamHome from "@/components/ExamHome";
 import { Suspense } from 'react';
 import FAQ from "@/components/FAQ"; // Correctly importing FAQ
 import Features from "@/components/Features";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function Page() {
   return (
@@ -21,6 +23,8 @@ export default function Page() {
           <Features/>
           <FAQ /> {/* Correctly using FAQ */}
         </main>
+        <SpeedInsights />
+        <Analytics />
       </Suspense>
     </>
   );
