@@ -613,7 +613,7 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
           {currentQuestion.question_image_url && (
             <img src={currentQuestion.question_image_url} alt="Question" className="mt-4 max-w-full h-auto" />
           )}
-          <p className="text-4xl text-black font-semibold">{currentQuestion.question_text}</p>
+          <p className="text-2xl text-black font-semibold">{currentQuestion.question_text}</p>
         </div>
         <div className="space-y-4">
           {options.map(({ letter, text }) => {
@@ -621,7 +621,7 @@ const QuizComponent = ({ questions, quizName, testTaker, isSelfExam = false }) =
             const isCorrect = letter === currentQuestion.correct_choice;
             const isCrossedOut = crossedOutChoices[currentQuestionIndex]?.[letter];
             
-            let buttonClass = "block w-full text-left p-4 text-3xl border-2 transition-colors ";
+            let buttonClass = "block w-full text-left p-4 text-2xl border-2 transition-colors ";
             
             if (isSelected) {
               if (isSelfExam) {
