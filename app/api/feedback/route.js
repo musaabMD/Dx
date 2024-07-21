@@ -258,6 +258,61 @@
 //     console.error('Server error handling feedback:', error);
 //     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
 //   }
+// // }
+// import { NextResponse } from "next/server";
+// import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+// import { cookies } from "next/headers";
+
+// export const dynamic = "force-dynamic";
+
+// export async function POST(req) {
+//   const supabase = createRouteHandlerClient({ cookies });
+  
+//   try {
+//     const body = await req.json();
+//     console.log('Raw request body:', body);
+
+//     const { questionId, examName, feedbackType, suggestedAnswer, feedbackText } = body;
+//     console.log('Parsed feedback data:', { questionId, examName, feedbackType, suggestedAnswer, feedbackText });
+
+//     // Get the current user
+//     const { data: { user }, error: userError } = await supabase.auth.getUser();
+//     if (userError) {
+//       console.error('Error getting user:', userError);
+//       return NextResponse.json({ error: 'Failed to get user' }, { status: 401 });
+//     }
+
+//     // Construct feedback data
+//     const feedbackData = {
+//       question_id: questionId,
+//       exam_name: examName || 'Unknown', // Provide a default value if examName is undefined
+//       feedback_type: feedbackType,
+//       suggested_answer: suggestedAnswer,
+//       feedback_text: feedbackText,
+//       user_id: user.id,
+//       status: 'In Progress'
+//     };
+
+//     console.log('Feedback data to be inserted:', feedbackData);
+
+//     // Insert feedback into Supabase
+//     const { data: feedbackInsertResult, error: feedbackInsertError } = await supabase
+//       .from("feedback")
+//       .insert(feedbackData)
+//       .select();
+
+//     if (feedbackInsertError) {
+//       console.error('Supabase error inserting feedback:', feedbackInsertError);
+//       return NextResponse.json({ error: 'Failed to insert feedback' }, { status: 500 });
+//     }
+
+//     console.log('Feedback inserted successfully:', feedbackInsertResult);
+//     return NextResponse.json({ message: 'Feedback submitted successfully', data: feedbackInsertResult[0] });
+
+//   } catch (error) {
+//     console.error('Server error handling feedback:', error);
+//     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+//   }
 // }
 import { NextResponse } from "next/server";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";

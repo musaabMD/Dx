@@ -203,11 +203,209 @@
 //   );
 // };
 
+// // export default Review;
+// import React, { useState } from 'react';
+// import Feedback from './Feedback'; // Assume Feedback component is in the same directory
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+// import { Suspense } from 'react';
+// const Review = ({ responses, activeTab }) => {
+//   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+//   const [currentQuestion, setCurrentQuestion] = useState(null);
+//   const supabase = createClientComponentClient();
+
+//   const handleFeedbackSubmit = async (feedbackData) => {
+//     try {
+//       const { data, error } = await supabase
+//         .from('feedback')
+//         .insert(feedbackData)
+//         .single();
+
+//       if (error) throw error;
+//       console.log('Feedback submitted successfully:', data);
+//       setShowFeedbackForm(false);
+//     } catch (error) {
+//       console.error('Error submitting feedback:', error.message);
+//     }
+//   };
+
+//   const renderContent = () => {
+//     switch (activeTab) {
+//       case 'all':
+//       case 'bookmark':
+//       case 'incorrect':
+//         return responses.map((response, index) => {
+//           const correctChoice = response.qtable.choices.find(choice => choice.letter === response.qtable.correct_choice);
+//           const userChoice = response.qtable.choices.find(choice => choice.letter === response.user_answer);
+
+//           return (
+//             <div key={index} className="mb-4 p-4 border rounded">
+//               <div className="flex justify-between items-center mb-2">
+//                 <span className="text-sm text-gray-500">{response.qtable.subject}</span>
+//                 {response.user_answer === response.qtable.correct_choice && <span className="text-green-500">✓</span>}
+//                 {response.is_bookmarked && <span className="text-blue-500">🚩</span>}
+//               </div>
+//               <p className="font-bold">{response.qtable.question_text}</p>
+//               <p>Your answer: {userChoice ? `${userChoice.letter}: ${userChoice.text}` : 'Skipped'}</p>
+//               <p>Correct answer: {correctChoice ? `${correctChoice.letter}: ${correctChoice.text}` : 'N/A'}</p>
+//               <p>Explanation: {response.qtable.rationale}</p>
+//               <button
+//                 className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+//                 onClick={() => {
+//                   setShowFeedbackForm(true);
+//                   setCurrentQuestion(response);
+//                 }}
+//               >
+//                 Provide Feedback
+//               </button>
+//             </div>
+//           );
+//         });
+//       case 'feedback':
+//         return responses.map((feedback, index) => (
+//           <div key={index} className="mb-4 p-4 border rounded">
+//             <h4 className="font-semibold">Feedback for Question:</h4>
+//             <p>{feedback.qtable.question_text}</p>
+//             <p>Type: {feedback.feedback_type}</p>
+//             {feedback.suggested_answer && (
+//               <p>Suggested Answer: {feedback.suggested_answer}</p>
+//             )}
+//             <p>Comments: {feedback.feedback_text}</p>
+//           </div>
+//         ));
+//       default:
+//         return <p>No content to display.</p>;
+//     }
+//   };
+
+//   return (
+
+//     <>
+//     <Suspense>
+
+   
+//     <div className="w-full max-w-3xl bg-white rounded-lg">
+//       <div className="p-4">
+//         {renderContent()}
+//         {showFeedbackForm && currentQuestion && (
+//           <Feedback
+//             questionId={currentQuestion.qtable.id}
+//             currentAnswer={currentQuestion.user_answer}
+//             options={currentQuestion.qtable.choices}
+//             onSubmit={handleFeedbackSubmit}
+//           />
+//         )}
+//       </div>
+//     </div>
+//     </Suspense>
+    
+//     </>
+//   );
+// };
+
+// // export default Review;
+// import React, { useState } from 'react';
+// import Feedback from './Feedback'; // Assume Feedback component is in the same directory
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+// import { Suspense } from 'react';
+
+// const Review = ({ responses, activeTab }) => {
+//   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+//   const [currentQuestion, setCurrentQuestion] = useState(null);
+//   const supabase = createClientComponentClient();
+
+//   const handleFeedbackSubmit = async (feedbackData) => {
+//     try {
+//       const { data, error } = await supabase
+//         .from('feedback')
+//         .insert(feedbackData)
+//         .single();
+
+//       if (error) throw error;
+//       console.log('Feedback submitted successfully:', data);
+//       setShowFeedbackForm(false);
+//     } catch (error) {
+//       console.error('Error submitting feedback:', error.message);
+//     }
+//   };
+
+//   const renderContent = () => {
+//     switch (activeTab) {
+//       case 'all':
+//       case 'bookmark':
+//       case 'incorrect':
+//         return responses.map((response, index) => {
+//           const correctChoice = response.qs.choices.find(choice => choice.letter === response.qs.correct_choice);
+//           const userChoice = response.qs.choices.find(choice => choice.letter === response.user_answer);
+
+//           return (
+//             <div key={index} className="mb-4 p-4 border rounded">
+//               <div className="flex justify-between items-center mb-2">
+//                 <span className="text-sm text-gray-500">{response.qs.subject}</span>
+//                 {response.user_answer === response.qs.correct_choice && <span className="text-green-500">✓</span>}
+//                 {response.is_bookmarked && <span className="text-blue-500">🚩</span>}
+//               </div>
+//               <p className="font-bold">{response.qs.question_text}</p>
+//               <p>Your answer: {userChoice ? `${userChoice.letter}: ${userChoice.text}` : 'Skipped'}</p>
+//               <p>Correct answer: {correctChoice ? `${correctChoice.letter}: ${correctChoice.text}` : 'N/A'}</p>
+//               <p>Explanation: {response.qs.rationale}</p>
+//               <button
+//                 className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+//                 onClick={() => {
+//                   setShowFeedbackForm(true);
+//                   setCurrentQuestion(response);
+//                 }}
+//               >
+//                 Provide Feedback
+//               </button>
+//             </div>
+//           );
+//         });
+//       case 'feedback':
+//         return responses.map((feedback, index) => (
+//           <div key={index} className="mb-4 p-4 border rounded">
+//             <h4 className="font-semibold">Feedback for Question:</h4>
+//             <p>{feedback.qs.question_text}</p>
+//             <p>Type: {feedback.feedback_type}</p>
+//             {feedback.suggested_answer && (
+//               <p>Suggested Answer: {feedback.suggested_answer}</p>
+//             )}
+//             <p>Comments: {feedback.feedback_text}</p>
+//           </div>
+//         ));
+//       default:
+//         return <p>No content to display.</p>;
+//     }
+//   };
+
+//   return (
+//     <>
+//       <Suspense>
+//         <div className="w-full max-w-3xl bg-white rounded-lg">
+//           <div className="p-4">
+//             {renderContent()}
+//             {showFeedbackForm && currentQuestion && (
+//               <Feedback
+//                 questionId={currentQuestion.qs.id}
+//                 currentAnswer={currentQuestion.user_answer}
+//                 options={currentQuestion.qs.choices}
+//                 onSubmit={handleFeedbackSubmit}
+//               />
+//             )}
+//           </div>
+//         </div>
+//       </Suspense>
+//     </>
+//   );
+// };
+
 // export default Review;
+'use client';
+
 import React, { useState } from 'react';
-import Feedback from './Feedback'; // Assume Feedback component is in the same directory
+import Feedback from './Feedback';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Suspense } from 'react';
+
 const Review = ({ responses, activeTab }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -234,20 +432,20 @@ const Review = ({ responses, activeTab }) => {
       case 'bookmark':
       case 'incorrect':
         return responses.map((response, index) => {
-          const correctChoice = response.qtable.choices.find(choice => choice.letter === response.qtable.correct_choice);
-          const userChoice = response.qtable.choices.find(choice => choice.letter === response.user_answer);
+          const correctChoice = response.qs.choices.find(choice => choice.letter === response.qs.correct_choice);
+          const userChoice = response.qs.choices.find(choice => choice.letter === response.user_answer);
 
           return (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-gray-500">{response.qtable.subject}</span>
-                {response.user_answer === response.qtable.correct_choice && <span className="text-green-500">✓</span>}
+                <span className="text-sm text-gray-500">{response.qs.subject}</span>
+                {response.user_answer === response.qs.correct_choice && <span className="text-green-500">✓</span>}
                 {response.is_bookmarked && <span className="text-blue-500">🚩</span>}
               </div>
-              <p className="font-bold">{response.qtable.question_text}</p>
+              <p className="font-bold">{response.qs.question_text}</p>
               <p>Your answer: {userChoice ? `${userChoice.letter}: ${userChoice.text}` : 'Skipped'}</p>
               <p>Correct answer: {correctChoice ? `${correctChoice.letter}: ${correctChoice.text}` : 'N/A'}</p>
-              <p>Explanation: {response.qtable.rationale}</p>
+              <p>Explanation: {response.qs.rationale}</p>
               <button
                 className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 onClick={() => {
@@ -264,7 +462,7 @@ const Review = ({ responses, activeTab }) => {
         return responses.map((feedback, index) => (
           <div key={index} className="mb-4 p-4 border rounded">
             <h4 className="font-semibold">Feedback for Question:</h4>
-            <p>{feedback.qtable.question_text}</p>
+            <p>{feedback.qs.question_text}</p>
             <p>Type: {feedback.feedback_type}</p>
             {feedback.suggested_answer && (
               <p>Suggested Answer: {feedback.suggested_answer}</p>
@@ -278,26 +476,22 @@ const Review = ({ responses, activeTab }) => {
   };
 
   return (
-
     <>
-    <Suspense>
-
-   
-    <div className="w-full max-w-3xl bg-white rounded-lg">
-      <div className="p-4">
-        {renderContent()}
-        {showFeedbackForm && currentQuestion && (
-          <Feedback
-            questionId={currentQuestion.qtable.id}
-            currentAnswer={currentQuestion.user_answer}
-            options={currentQuestion.qtable.choices}
-            onSubmit={handleFeedbackSubmit}
-          />
-        )}
-      </div>
-    </div>
-    </Suspense>
-    
+      <Suspense>
+        <div className="w-full max-w-3xl bg-white rounded-lg">
+          <div className="p-4">
+            {renderContent()}
+            {showFeedbackForm && currentQuestion && (
+              <Feedback
+                questionId={currentQuestion.qs.id}
+                currentAnswer={currentQuestion.user_answer}
+                options={currentQuestion.qs.choices}
+                onSubmit={handleFeedbackSubmit}
+              />
+            )}
+          </div>
+        </div>
+      </Suspense>
     </>
   );
 };

@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import UpgradeModal from './UpgradeModal';
+import { useRouter } from 'next/navigation';
+import UpgradeModal from '@/components/UpgradeModal';
 
 export default function ProtectedQuizLink({ quiz }) {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const supabase = createClientComponentClient();
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchSubscriptionStatus() {
@@ -16,33 +18,29 @@ export default function ProtectedQuizLink({ quiz }) {
       if (session) {
         const { data, error } = await supabase
           .from('subscribers')
-          .select('disable, remaining_days, subscription_status, subscription_end')
+          .select('subscription_status, remaining_days, disable')
           .eq('user_id', session.user.id)
-          .eq('examname', quiz.examname)
-          .maybeSingle();
+          .single();
 
         if (error) {
-          console.error('Error fetching subscription data:', error);
+          console.error('Error fetching subscription status:', error);
           return;
         }
 
-        if (data) {
-          const currentDate = new Date();
-          const subscriptionEndDate = new Date(data.subscription_end);
+        const subscriptionStatus = data.subscription_status.toLowerCase();
+        const remainingDays = data.remaining_days;
+        const isDisabled = data.disable;
 
-          const hasAccess = !data.disable && (
-            data.remaining_days > 0 ||
-            data.subscription_status === 'active' ||
-            subscriptionEndDate >= currentDate
-          );
+        const isActive = (subscriptionStatus === 'active' && remainingDays > 0 && !isDisabled);
 
-          setIsSubscribed(hasAccess);
-        }
+        console.log(`User subscription status: ${subscriptionStatus}, remaining days: ${remainingDays}, isDisabled: ${isDisabled}, isSubscribed: ${isActive}`);
+        
+        setIsSubscribed(isActive);
       }
     }
 
     fetchSubscriptionStatus();
-  }, [supabase, quiz.examname]);
+  }, [supabase]);
 
   const handleQuizAccess = (e) => {
     if (!isSubscribed) {
@@ -55,6 +53,10 @@ export default function ProtectedQuizLink({ quiz }) {
     setIsModalOpen(false);
   };
 
+  if (!quiz.file_name) {
+    return null; // Return null if file_name is not available
+  }
+
   return (
     <>
       <a href={`/quiz/${quiz.file_name.replace(/%20/g, '-')}`} onClick={handleQuizAccess}>
@@ -63,7 +65,7 @@ export default function ProtectedQuizLink({ quiz }) {
           <span className="text-gray-500 text-sm ml-2">({quiz.question_count} questions)</span>
         </span>
       </a>
-      {!isSubscribed && <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />}
+      <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </>
   );
 }
