@@ -5,7 +5,12 @@ import ClientLayout from "@/components/LayoutClient";
 import config from "@/config";
 import "./globals.css";
 import { Suspense } from "react";
+import { PHProvider } from './providers'
 
+
+const PostHogPageView = dynamic(() => import('./PostHogPageView'), {
+  ssr: false,
+})
 const font = Inter({ subsets: ["latin"] });
 
 export const viewport = {
@@ -19,18 +24,23 @@ export const metadata = getSEOTags();
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme={config.colors.theme} className={font.className}>
+        <PHProvider> 
       <head>
         {config.domainName && (
           <PlausibleProvider domain={config.domainName} />
         )}
       </head>
       <body>
-        <Suspense>
+      <Suspense>
+      <PostHogPageView /> 
+
+       
           
      {children}
 
         </Suspense>
       </body>
+      </PHProvider>
     </html>
   );
 }
