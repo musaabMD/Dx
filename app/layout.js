@@ -7,6 +7,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import dynamic from 'next/dynamic'; // Correct import for dynamic
 import { PHProvider } from './providers'
+import { CSPostHogProvider } from './providers'
 
 const PostHogPageView = dynamic(() => import('./PostHogPageView'), {
   ssr: false,
@@ -24,19 +25,21 @@ export const metadata = getSEOTags();
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme={config.colors.theme} className={font.className}>
-      <PHProvider> 
-        <head>
+      <CSPostHogProvider>
+      <head>
           {config.domainName && (
             <PlausibleProvider domain={config.domainName} />
           )}
+          
         </head>
         <body>
           <Suspense>
             <PostHogPageView /> 
             {children}
           </Suspense>
+          
         </body>
-      </PHProvider>
-    </html>
+        </CSPostHogProvider>
+        </html>
   );
 }
