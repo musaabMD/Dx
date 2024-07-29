@@ -1014,7 +1014,7 @@ export default async function QuizzesListPage({ params }) {
               <ul className="space-y-2">
                 {data.quizzes.map((quiz, index) => (
                   <li key={index} className="bg-slate-100 border-2 border-slate-500 text-2xl shadow rounded p-3 pt-7 pb-7 hover:bg-slate-200 hover-border-3 hover-border-black">
-                    <ProtectedQuizLink quiz={quiz} />
+                    <ProtectedQuizLink quiz={quiz} examName={examName} />
                   </li>
                 ))}
               </ul>

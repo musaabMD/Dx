@@ -68,14 +68,13 @@
 //       <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />
 //     </>
 //   );
-// }
-'use client';
+// }'use client';
 
 import { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import UpgradeModal from '@/components/UpgradeModal';
 
-export default function ProtectedQuizLink({ quiz }) {
+export default function ProtectedQuizLink({ quiz, examName }) {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const supabase = createClientComponentClient();
@@ -89,6 +88,7 @@ export default function ProtectedQuizLink({ quiz }) {
           .from('subscribers')
           .select('subscription_status, remaining_days, disable')
           .eq('user_id', session.user.id)
+          .eq('examname', examName)
           .single();
 
         if (error) {
@@ -109,7 +109,7 @@ export default function ProtectedQuizLink({ quiz }) {
     }
 
     fetchSubscriptionStatus();
-  }, [supabase]);
+  }, [supabase, examName]);
 
   const handleQuizAccess = (e) => {
     if (!isSubscribed) {

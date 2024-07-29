@@ -155,16 +155,18 @@ export default function Wall({ children, examName }) {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
-          const { data, error } = await supabase
+          const { data, error, status } = await supabase
             .from('subscribers')
             .select('subscription_status, remaining_days, disable')
             .eq('user_id', user.id)
             .eq('examname', examName)
             .single();
 
-          if (error) {
-            console.error("Error fetching subscription data:", error);
-          } else if (data) {
+          if (error && status !== 406) {
+            throw error;
+          }
+
+          if (data) {
             const subscriptionStatus = data.subscription_status.toLowerCase();
             const remainingDays = data.remaining_days;
             const isDisabled = data.disable;
@@ -176,12 +178,10 @@ export default function Wall({ children, examName }) {
             setIsSubscribed(isActive);
             setIsModalOpen(!isActive);
           } else {
-            // No subscription found
             setIsSubscribed(false);
             setIsModalOpen(true);
           }
         } else {
-          // No user logged in
           setIsSubscribed(false);
           setIsModalOpen(true);
         }
