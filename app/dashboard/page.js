@@ -2776,7 +2776,7 @@
 //     </>
 //   );
 // };
-"use client";
+'use client';
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';

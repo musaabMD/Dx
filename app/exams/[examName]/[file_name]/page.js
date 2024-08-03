@@ -249,9 +249,90 @@
 //             </Wall>
 //         </Suspense>
 //     );
-// }
-"use client";
+// // }
+// "use client";
 
+// import React, { useEffect, useState } from 'react';
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+// import QuizComponent from '@/components/QuizComponent';
+
+// const QuizPage = ({ params }) => {
+//   const { examName, file_name } = params;
+//   const [questions, setQuestions] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [testTaker, setTestTaker] = useState(null);
+
+//   const fetchQuestions = async () => {
+//     const supabase = createClientComponentClient();
+//     try {
+//       const decodedExamName = decodeURIComponent(examName);
+//       const decodedFileName = decodeURIComponent(file_name);
+//       let allQuestions = [];
+//       let rangeStart = 0;
+//       const rangeStep = 1000;
+//       let newQuestions = [];
+
+//       do {
+//         const { data, error } = await supabase
+//           .from('qs')
+//           .select('*')
+//           .eq('file_name', decodedFileName)
+//           .eq('examname', decodedExamName)
+//           .range(rangeStart, rangeStart + rangeStep - 1);
+
+//         if (error) {
+//           throw new Error('Error fetching questions');
+//         }
+
+//         newQuestions = data;
+//         allQuestions = [...allQuestions, ...newQuestions];
+//         rangeStart += rangeStep;
+//       } while (newQuestions.length === rangeStep);
+
+//       // Fetch the user's name or email
+//       const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+//       if (userError) {
+//         throw new Error('Error fetching user data');
+//       }
+
+//       setQuestions(allQuestions);
+//       setTestTaker(user?.user_metadata?.full_name || "Test Taker");
+//       setLoading(false);
+//     } catch (err) {
+//       setError(err.message);
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchQuestions();
+//   }, [examName, file_name]);
+
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (error) {
+//     return <div>{error}</div>;
+//   }
+
+//   return (
+//     <div>
+//       <QuizComponent 
+//         questions={questions} 
+//         quizName={decodeURIComponent(file_name)} 
+//         examName={decodeURIComponent(examName)}
+//         testTaker={testTaker}
+//         isSelfExam={false}
+//       />
+//     </div>
+//   );
+// };
+
+// export default QuizPage;
+"use client";
 import React, { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import QuizComponent from '@/components/QuizComponent';
