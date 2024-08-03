@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 
 const Explanation = ({ rationale, isVisible, explanationImageUrl }) => {
   if (!isVisible) return null;
 
-  const splitRationale = rationale.split('<br>The incorrect answers are: <br>');
+  const splitRationale = rationale ? rationale.split('<br>The incorrect answers are: <br>') : ['No explanation available.'];
   const hasIncorrectAnswers = splitRationale.length > 1;
 
   return (

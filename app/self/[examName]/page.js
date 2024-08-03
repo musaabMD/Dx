@@ -103,17 +103,14 @@
 //   };
   
 //   export default SelfAssessmentExam;
-
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useParams } from 'next/navigation';
 import QuizComponent from '@/components/QuizComponent';
 import Header from '@/components/Header';
-import Wall from '@/components/Wall';
-import blueprints from '../../blueprints';
-import { Suspense } from 'react';
+import blueprints from '@/app/blueprints';
 
 const SelfAssessmentExam = () => {
   const [questions, setQuestions] = useState([]);

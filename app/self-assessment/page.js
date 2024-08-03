@@ -185,7 +185,6 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Header from '@/components/Header';
 import UpgradeModal from '@/components/UpgradeModal';
-import Wall from '@/components/Wall';
 import QuizComponent from '@/components/QuizComponent';
 import blueprints from '@/app/blueprints';
 import { Suspense } from 'react';
@@ -209,15 +208,15 @@ export default function SelfAssessmentPage() {
 
         setUser(user);
 
-        const { data, error } = await supabase
-          .from('qs')
+        const { data: examsData, error: examsError } = await supabase
+          .from('user_data')
           .select('examname')
-          .order('examname');
+          .eq('user_id', user.id);
 
-        if (error) {
-          console.error('Error fetching exams:', error);
+        if (examsError) {
+          console.error('Error fetching exams:', examsError);
         } else {
-          const uniqueExams = [...new Set(data.map(item => item.examname))];
+          const uniqueExams = [...new Set(examsData.map(item => item.examname))];
           setExams(uniqueExams);
         }
       } catch (error) {
@@ -235,36 +234,30 @@ export default function SelfAssessmentPage() {
   };
 
   const fetchQuestionsForExam = async (examName) => {
-    const { data, error } = await supabase
-      .from('qs')
-      .select('*')
-      .eq('examname', examName);
+    try {
+      const { data, error } = await supabase
+        .from('qs')
+        .select('*')
+        .eq('examname', examName)
+        .order('id', { ascending: true }) // Ensure consistent ordering
+        .limit(200); // Limit to 200 questions
 
-    if (error) {
-      console.error('Error fetching questions:', error);
+      if (error) {
+        console.error('Error fetching questions:', error);
+        return [];
+      }
+
+      console.log('Questions data:', data); // Log the fetched questions data
+
+      return data.map(question => ({
+        ...question,
+        userAnswer: null,
+        isBookmarked: false,
+      }));
+    } catch (err) {
+      console.error('Error in fetchQuestionsForExam:', err);
       return [];
     }
-
-    const blueprint = blueprints[examName] || {};
-    const questionsBySubject = data.reduce((acc, question) => {
-      if (!acc[question.subject]) {
-        acc[question.subject] = [];
-      }
-      acc[question.subject].push(question);
-      return acc;
-    }, {});
-
-    const selectedQuestions = Object.entries(blueprint).flatMap(([subject, weight]) => {
-      const subjectQuestions = questionsBySubject[subject] || [];
-      const numQuestions = Math.floor((weight / 100) * 200);
-      return subjectQuestions.slice(0, numQuestions);
-    }).slice(0, 200).map(question => ({
-      ...question,
-      userAnswer: null,
-      isBookmarked: false,
-    }));
-
-    return selectedQuestions;
   };
 
   const handleStartExam = async () => {
@@ -286,13 +279,12 @@ export default function SelfAssessmentPage() {
 
   if (examStarted) {
     return (
-        <QuizComponent 
-          questions={questions} 
-          quizName={selectedExam}
-          testTaker={user ? user.user_metadata?.full_name || "Test Taker" : "Test Taker"}
-          isSelfExam={true}
-        />
- 
+      <QuizComponent 
+        questions={questions} 
+        quizName={selectedExam}
+        testTaker={user ? user.user_metadata?.full_name || "Test Taker" : "Test Taker"}
+        isSelfExam={true}
+      />
     );
   }
 
@@ -322,37 +314,35 @@ export default function SelfAssessmentPage() {
               </ul>
             </>
           ) : (
-              <>
-                <h2 className="text-2xl font-semibold mb-4">Exam Instructions for {selectedExam}</h2>
-                <p className="mb-4">This is a self-assessment exam. You will have 3 hours to complete it once you start.</p>
-                <p className="mb-4">Instructions:</p>
-                <ul className="list-disc list-inside mb-4">
-                  <li>You cannot pause the exam once started.</li>
-                  <li>Answer all questions to the best of your ability.</li>
-                  <li>You can review and change your answers within the time limit.</li>
-                  <li>Your results will be available immediately after completion.</li>
-                  <li>This is a fresh assessment - no previous answers or bookmarks will be shown.</li>
+            <>
+              <h2 className="text-2xl font-semibold mb-4">Exam Instructions for {selectedExam}</h2>
+              <p className="mb-4">This is a self-assessment exam. You will have 3 hours to complete it once you start.</p>
+              <p className="mb-4">Instructions:</p>
+              <ul className="list-disc list-inside mb-4">
+                <li>You cannot pause the exam once started.</li>
+                <li>Answer all questions to the best of your ability.</li>
+                <li>You can review and change your answers within the time limit.</li>
+                <li>Your results will be available immediately after completion.</li>
+                <li>This is a fresh assessment - no previous answers or bookmarks will be shown.</li>
+              </ul>
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold">Blueprint:</h3>
+                <ul className="list-disc list-inside">
+                  {Object.entries(blueprints[selectedExam] || {}).map(([subject, weight]) => (
+                    <li key={subject}>{subject}: {weight}%</li>
+                  ))}
                 </ul>
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold">Blueprint:</h3>
-                  <ul className="list-disc list-inside">
-                    {Object.entries(blueprints[selectedExam] || {}).map(([subject, weight]) => (
-                      <li key={subject}>{subject}: {weight}%</li>
-                    ))}
-                  </ul>
-                </div>
-                <button 
-                  onClick={handleStartExam}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Start Exam
-                </button>
-              </>
-            
+              </div>
+              <button 
+                onClick={handleStartExam}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Start Exam
+              </button>
+            </>
           )}
         </div>
       </div>
     </Suspense>
   );
 }
-
