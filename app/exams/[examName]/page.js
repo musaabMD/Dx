@@ -511,6 +511,7 @@ import Header from "@/components/Header";
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import UpgradeModal from '@/components/UpgradeModal';
+import { Suspense } from 'react';
 
 export default function QuizzesClientComponent({ params }) {
   const { examName } = params;
@@ -685,6 +686,10 @@ export default function QuizzesClientComponent({ params }) {
 
   return (
     <>
+          <Suspense>
+
+
+
       <Header />
       <div className="bg-white">
         <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -761,6 +766,10 @@ export default function QuizzesClientComponent({ params }) {
         </section>
       </div>
       {!hasActiveSubscription && <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />}
+      </Suspense>
+
     </>
+   
+
   );
 }

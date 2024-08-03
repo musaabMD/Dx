@@ -160,14 +160,13 @@
 //   );
 // }
 
-import Wall from '@/components/Wall';
 import ExamsPage from '@/components/ExamsPage';
 
 export default function ProtectedExamsPage() {
   return (
-    <Wall>
+    
       <ExamsPage />
-    </Wall>
+   
   );
 }
 

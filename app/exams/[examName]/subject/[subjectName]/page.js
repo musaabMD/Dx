@@ -131,7 +131,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
 import QuizComponent from '@/components/QuizComponent';
 import UpgradeModal from '@/components/UpgradeModal';
-
+import { Suspense } from 'react';
 export default function SubjectQuizPage({ params }) {
   const { examName, subjectName } = params;
   const [questions, setQuestions] = useState([]);
@@ -225,6 +225,8 @@ export default function SubjectQuizPage({ params }) {
   if (error) return <div>{error}</div>;
 
   return (
+    <Suspense>
+
     <div className="w-full">
       {questions.length > 0 ? (
         <QuizComponent
@@ -241,5 +243,7 @@ export default function SubjectQuizPage({ params }) {
         Back to Exam
       </Link>
     </div>
+          </Suspense>
+
   );
 }

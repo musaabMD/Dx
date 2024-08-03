@@ -193,7 +193,6 @@ const SelfAssessmentExam = () => {
 
   return (
     <Suspense>
-      <Wall examName={examName}>
         <div>
           <Header />
           <QuizComponent 
@@ -203,7 +202,6 @@ const SelfAssessmentExam = () => {
             isSelfExam={true}
           />
         </div>
-      </Wall>
     </Suspense>
   );
 };

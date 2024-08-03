@@ -336,7 +336,7 @@
 import React, { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import QuizComponent from '@/components/QuizComponent';
-
+import { Suspense } from 'react';
 const QuizPage = ({ params }) => {
   const { examName, file_name } = params;
   const [questions, setQuestions] = useState([]);
@@ -400,6 +400,8 @@ const QuizPage = ({ params }) => {
   }
 
   return (
+    <Suspense>
+
     <div>
       <QuizComponent 
         questions={questions} 
@@ -409,6 +411,8 @@ const QuizPage = ({ params }) => {
         isSelfExam={false}
       />
     </div>
+    </Suspense>
+
   );
 };
 

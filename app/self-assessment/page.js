@@ -286,14 +286,13 @@ export default function SelfAssessmentPage() {
 
   if (examStarted) {
     return (
-      <Wall examName={selectedExam}>
         <QuizComponent 
           questions={questions} 
           quizName={selectedExam}
           testTaker={user ? user.user_metadata?.full_name || "Test Taker" : "Test Taker"}
           isSelfExam={true}
         />
-      </Wall>
+ 
     );
   }
 
@@ -323,7 +322,6 @@ export default function SelfAssessmentPage() {
               </ul>
             </>
           ) : (
-            <Wall examName={selectedExam}>
               <>
                 <h2 className="text-2xl font-semibold mb-4">Exam Instructions for {selectedExam}</h2>
                 <p className="mb-4">This is a self-assessment exam. You will have 3 hours to complete it once you start.</p>
@@ -350,7 +348,7 @@ export default function SelfAssessmentPage() {
                   Start Exam
                 </button>
               </>
-            </Wall>
+            
           )}
         </div>
       </div>
