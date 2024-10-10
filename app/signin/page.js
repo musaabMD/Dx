@@ -336,9 +336,9 @@ export default function Login() {
         </button>
       </div>
 
-      {/* <div className="divider text-xs text-base-content/50 font-medium">OR</div> */}
+      <div className="divider text-xs text-base-content/50 font-medium">OR</div>
 
-      {/* <form
+      <form
         className="form-control w-full space-y-4 max-w-xl mx-auto"
         onSubmit={(e) => handleSignup(e, { type: "magic_link" })}
       >
@@ -362,7 +362,7 @@ export default function Login() {
           )}
           Send Magic Link
         </button>
-      </form> */}
+      </form>
     </main>
   );
 }
