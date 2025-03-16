@@ -28,7 +28,7 @@ const Pricing = () => {
               <p className="mt-4 text-center text-lg text-gray-600">Everything you need to pass your exam</p>
               
               <div className="mt-6 flex items-center justify-center gap-x-4">
-                <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">What's included</h4>
+                <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">What&apos;s included</h4>
                 <div className="h-px flex-auto bg-gray-100"></div>
               </div>
               
@@ -68,6 +68,7 @@ const Pricing = () => {
           </div>
         </div>
       </div>
+      <p>Don&apos;t miss out on this offer!</p>
     </div>
   );
 };

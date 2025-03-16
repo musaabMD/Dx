@@ -10,11 +10,11 @@ const StarIcon = () => (
 
 const Features = () => {
   const [features, setFeatures] = useState([]);
-  const [stats, setStats] = useState({
+  const stats = {
     questionsAnswered: '500,000+',
     passRate: '94%',
     activeUsers: '20,000+'
-  });
+  };
   const supabase = createClientComponentClient();
 
   useEffect(() => {

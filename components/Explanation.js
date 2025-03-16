@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Suspense } from 'react';
+import Image from 'next/image';
 
 const Explanation = ({ rationale, isVisible, explanationImageUrl }) => {
   if (!isVisible) return null;
@@ -22,7 +23,13 @@ const Explanation = ({ rationale, isVisible, explanationImageUrl }) => {
             </>
           )}
           {explanationImageUrl && (
-            <img src={explanationImageUrl} alt="Explanation" className="mt-4 max-w-full h-auto rounded-md" />
+            <Image 
+              src={explanationImageUrl}
+              alt="Explanation"
+              width={500}
+              height={300}
+              layout="responsive"
+            />
           )}
         </div>
       </Suspense>

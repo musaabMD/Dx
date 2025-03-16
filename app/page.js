@@ -1,6 +1,5 @@
 'use client';
 
-import Link from "next/link";
 import Header from "@/components/Header";
 import ExamHome from "@/components/ExamHome";
 import { Suspense } from 'react';
