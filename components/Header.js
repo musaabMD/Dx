@@ -35,10 +35,7 @@ const links = [
   {
     href: "/self-assessment",
     label: "Self Exam",
-  },{
-    href: "/study",
-    label: "Study",
-  },
+  }
 ];
 
 const cta = <ButtonSignin extraStyle="btn-primary btn-neutral" />;
