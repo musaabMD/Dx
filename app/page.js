@@ -20,7 +20,7 @@ export default function Page() {
             <br />
             <h1 className="text-5xl font-sans font-bold text-black">DrNote Qbank </h1>
             <h1 className="mt-10 text-4xl font-bold tracking-tight text-blue-800 sm:text-6xl">
-              Pass with Confidence...
+              Pass with Confidence..
               The First Time
             </h1>
             <br />
