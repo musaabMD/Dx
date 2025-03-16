@@ -28,12 +28,10 @@ export default function Page() {
               Trusted by over 20,000 medical professionals
             </div>
             <div className="mt-8 flex justify-center gap-4">
-              <a href="/signup" className="rounded-md bg-blue-600 px-8 py-4 text-xl font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+              <a href="/sigin" className="rounded-md bg-blue-600 px-8 py-4 text-xl font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
                 Start Free Trial
               </a>
-              <a href="#features" className="rounded-md bg-gray-100 px-8 py-4 text-xl font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200">
-                Learn More
-              </a>
+             
             </div>
           </section>
           <ExamHome />
