@@ -10,6 +10,11 @@ const StarIcon = () => (
 
 const Features = () => {
   const [features, setFeatures] = useState([]);
+  const [stats, setStats] = useState({
+    questionsAnswered: '500,000+',
+    passRate: '94%',
+    activeUsers: '20,000+'
+  });
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -26,46 +31,56 @@ const Features = () => {
   }, [supabase]);
 
   return (
-
-    <>
     <Suspense>
+      <div className="relative bg-white py-24 sm:py-32 lg:py-40">
+        {/* Stats Section */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-20">
+          <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+            <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+              <dt className="text-base leading-7 text-gray-600">Questions Answered</dt>
+              <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">{stats.questionsAnswered}</dd>
+            </div>
+            <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+              <dt className="text-base leading-7 text-gray-600">Pass Rate</dt>
+              <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">{stats.passRate}</dd>
+            </div>
+            <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+              <dt className="text-base leading-7 text-gray-600">Active Users</dt>
+              <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900">{stats.activeUsers}</dd>
+            </div>
+          </dl>
+        </div>
 
-
-  
-    <div className="relative bg-white py-24 sm:py-32 lg:py-40">
-      <div className="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8">
-        <h2 className="text-3xl font-semibold text-indigo-600">DrNote Features</h2>
-        <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Everything you need to score high in your exam
-        </p>
-        <p className="mx-auto mt-5 max-w-prose text-2xl text-gray-500">
-         
-        </p>
-        <div className="mt-20">
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-2">
-            {features.map((feature) => (
-              <div key={feature.id} className="pt-6">
-                <div className="flow-root rounded-lg bg-gray-50 px-6 pb-8 border-2 border-slate-300 font-sans">
-                  <div className="-mt-6">
-                    <div>
-                      <span className="inline-flex items-center justify-center rounded-xl bg-green-500 p-3 shadow-lg ">
-                        <StarIcon />
-                      </span>
+        {/* Features Section */}
+        <div className="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8">
+          <h2 className="text-3xl font-semibold text-indigo-600">Why Choose DrNote?</h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Everything you need to excel in your SCFHS exam
+          </p>
+          <div className="mt-20">
+            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-2">
+              {features.map((feature) => (
+                <div key={feature.id} className="pt-6">
+                  <div className="flow-root rounded-lg bg-gray-50 px-6 pb-8 border-2 border-slate-300 font-sans">
+                    <div className="-mt-6">
+                      <div>
+                        <span className="inline-flex items-center justify-center rounded-xl bg-green-500 p-3 shadow-lg ">
+                          <StarIcon />
+                        </span>
+                      </div>
+                      <h3 className="mt-8 text-3xl font-semibold leading-8 tracking-tight text-gray-900 ">
+                        {feature.name}
+                      </h3>
+                      <p className="mt-5 text-2xl leading-7 text-gray-600 ">{feature.description}</p>
                     </div>
-                    <h3 className="mt-8 text-3xl font-semibold leading-8 tracking-tight text-gray-900 ">
-                      {feature.name}
-                    </h3>
-                    <p className="mt-5 text-2xl leading-7 text-gray-600 ">{feature.description}</p>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Suspense>
-    </>
   );
 };
 
