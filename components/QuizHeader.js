@@ -4,7 +4,16 @@ import React from 'react';
 import QuizTimer from './QuizTimer';
 import { Suspense } from 'react';
 
-const QuizHeader = ({ testTaker, quizName, timerRef, currentQuestionIndex, totalQuestions, onToggleSidebar }) => {
+const QuizHeader = ({ 
+  testTaker, 
+  quizName, 
+  timerRef, 
+  currentQuestionIndex, 
+  totalQuestions, 
+  onToggleSidebar,
+  showAnswersMode,
+  setShowAnswersMode
+}) => {
   return (
     <Suspense>
       <div className="bg-[#0066a1] text-white p-3 w-full">
@@ -19,9 +28,19 @@ const QuizHeader = ({ testTaker, quizName, timerRef, currentQuestionIndex, total
               Page {currentQuestionIndex + 1} of {totalQuestions}
             </p>
           </div>
-          <div className="flex-1 text-center">
+          <div className="flex-1 text-center flex flex-col items-center">
             <p className="text-xl lg:text-xl md:text-lg sm:text-base text-sm">{testTaker}</p>
             <p className="text-lg lg:text-lg md:text-base sm:text-sm text-xs">{quizName || 'Quiz'}</p>
+            <button
+              onClick={() => setShowAnswersMode(!showAnswersMode)}
+              className={`mt-2 px-3 py-1 rounded-md text-sm ${
+                showAnswersMode 
+                  ? 'bg-yellow-500 text-gray-800' 
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+            >
+              {showAnswersMode ? 'Hide Answers' : 'Show Answers'}
+            </button>
           </div>
           <div className="flex-1 text-right">
             <QuizTimer ref={timerRef} textColor="white" />
