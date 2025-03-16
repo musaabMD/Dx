@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 import { createClient } from '@supabase/supabase-js';
@@ -162,7 +162,7 @@ export default function StudyPage() {
       }, 1000);
 
       return () => clearInterval(timer);
-    }, []);
+    }, [handleSubmit]);
 
     const handleAnswerSelect = (answer) => {
       const updatedAnswers = [...userAnswers];
@@ -192,7 +192,8 @@ export default function StudyPage() {
       setCurrentQuestionIndex(index);
     };
 
-    const handleSubmit = () => {
+    // Define handleSubmit with useCallback to prevent unnecessary re-renders
+    const handleSubmit = React.useCallback(() => {
       // Calculate results
       const correctAnswers = questions.filter(
         (question, index) => userAnswers[index] === question.correct_answer
@@ -210,7 +211,7 @@ export default function StudyPage() {
       });
       
       setExamSubmitted(true);
-    };
+    }, [questions, userAnswers, quizName, testTaker, remainingTime]);
 
     const formatTime = (seconds) => {
       const hours = Math.floor(seconds / 3600);
@@ -417,7 +418,7 @@ export default function StudyPage() {
         
         {!hasExams ? (
           <div className="bg-slate-100 p-6 rounded-lg text-center">
-            <p className="mb-4 font-sans text-xl">You don't have access to any study materials</p>
+            <p className="mb-4 font-sans text-xl">You don&apos;t have access to any study materials</p>
             
             <button 
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
