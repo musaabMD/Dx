@@ -35,6 +35,9 @@ const links = [
   {
     href: "/self-assessment",
     label: "Self Exam",
+  },{
+    href: "/study",
+    label: "Study",
   },
 ];
 
