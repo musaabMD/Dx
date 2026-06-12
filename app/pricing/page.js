@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { ShieldCheck, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export default function PricingPage() {
   return (
@@ -17,10 +17,6 @@ export default function PricingPage() {
           <p className="mx-auto mt-3 max-w-2xl text-base font-bold leading-7 text-[#777]">
             Secure checkout for SCFHS question banks and exam preparation access.
           </p>
-          <div className="mt-5 inline-flex items-center gap-2 rounded-2xl border-2 border-[#DDF4FE] bg-[#F2FBFF] px-4 py-2 text-sm font-extrabold text-[#1CB0F6]">
-            <ShieldCheck className="h-4 w-4" strokeWidth={2.5} />
-            Payments are handled by Payhere
-          </div>
         </section>
 
         <section className="mx-auto max-w-6xl px-4 py-8">

@@ -19,6 +19,7 @@ export default function ExamOverviewClient({ examName, overview, error }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const supabase = useMemo(() => createClientComponentClient(), []);
   const hasInactiveSubscription = accessState === "inactive";
+  const shouldBlockQuizAccess = accessState !== "active";
 
   useEffect(() => {
     let isMounted = true;
@@ -72,7 +73,7 @@ export default function ExamOverviewClient({ examName, overview, error }) {
   }, [examName, supabase]);
 
   const handleQuizAccess = (event) => {
-    if (hasInactiveSubscription) {
+    if (shouldBlockQuizAccess) {
       event.preventDefault();
       setIsModalOpen(true);
     }
@@ -186,7 +187,7 @@ export default function ExamOverviewClient({ examName, overview, error }) {
                   overview.quizzes.map((quiz) => (
                     <Link
                       key={quiz.file_name}
-                      prefetch={true}
+                      prefetch={!shouldBlockQuizAccess}
                       href={`/exams/${encodeURIComponent(examName)}/${encodeURIComponent(quiz.file_name)}`}
                       onClick={handleQuizAccess}
                       className="group flex items-center justify-between gap-4 rounded-2xl border-2 border-[#E5E5E5] bg-white p-4 transition-transform hover:-translate-y-0.5"
@@ -234,7 +235,7 @@ export default function ExamOverviewClient({ examName, overview, error }) {
                   overview.subjects.map((subject) => (
                     <Link
                       key={subject.name}
-                      prefetch={true}
+                      prefetch={!shouldBlockQuizAccess}
                       href={`/exams/${encodeURIComponent(examName)}/subject/${encodeURIComponent(subject.name)}`}
                       onClick={handleQuizAccess}
                       className="group flex items-center justify-between gap-4 rounded-2xl border-2 border-[#E5E5E5] bg-white p-4 transition-transform hover:-translate-y-0.5"

@@ -1,152 +1,72 @@
-// 'use client';
-// import React, { Suspense } from 'react';
-// import { useRouter } from 'next/navigation';
-
-// const UpgradeModal = ({ isOpen, onClose }) => {
-//   const router = useRouter();
-
-//   if (!isOpen) return null;
-
-//   const handleStartPremium = () => {
-//     router.push('/pricing');
-//   };
-
-//   const handleCancel = () => {
-//     router.push('/'); // This will navigate to the homepage
-//   };
-
-//   return (
-//     <Suspense fallback={<div>Loading...</div>}>
-//       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-//         <div className="bg-white p-8 rounded">
-//           <h2 className="text-2xl mb-4">Upgrade to Premium</h2>
-//           <div className="space-y-4">
-//             <div className="flex items-center space-x-4">
-//               <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-//               <p>Access All questions and explanations written by subject matter experts.</p>
-//             </div>
-//             <div className="flex items-center space-x-4">
-//               <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-//               <p>Multiple quiz modes to gauge your exam readiness.</p>
-//             </div>
-//             <div className="flex items-center space-x-4">
-//               <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-//               <p>Pass Guarantee: If you fail your exam, we’ll give you three months free.</p>
-//             </div>
-//           </div>
-//           <div className="mt-8 flex justify-between">
-//             <button onClick={handleCancel} className="btn btn-ghost">
-//               Cancel
-//             </button>
-//             <button onClick={handleStartPremium} className="btn btn-warning">
-//               Subscribe
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </Suspense>
-//   );
-// };
-
-// // export default UpgradeModal;
-// 'use client';
-// import React, { Suspense } from 'react';
-// import { useRouter } from 'next/navigation';
-
-// const UpgradeModal = ({ isOpen, onClose }) => {
-//   const router = useRouter();
-
-//   if (!isOpen) return null;
-
-//   const handleStartPremium = () => {
-//     router.push('/pricing');
-//   };
-
-//   const handleCancel = () => {
-//     onClose();
-//   };
-
-//   return (
-//     <Suspense fallback={<div>Loading...</div>}>
-//       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-//         <div className="bg-white p-8 rounded">
-//           <h2 className="text-2xl mb-4">Upgrade to Premium</h2>
-//           <div className="space-y-4">
-//             <div className="flex items-center space-x-4">
-//               <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-//               <p>Access All questions and explanations written by subject matter experts.</p>
-//             </div>
-//             <div className="flex items-center space-x-4">
-//               <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-//               <p>Multiple quiz modes to gauge your exam readiness.</p>
-//             </div>
-//             <div className="flex items-center space-x-4">
-//               <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-//               <p>Pass Guarantee: If you fail your exam, we’ll give you three months free.</p>
-//             </div>
-//           </div>
-//           <div className="mt-8 flex justify-between">
-//             <button onClick={handleCancel} className="btn btn-ghost">
-//               Cancel
-//             </button>
-//             <button onClick={handleStartPremium} className="btn btn-warning">
-//               Subscribe
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </Suspense>
-//   );
-// };
-
 'use client';
 
-import React, { Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { CheckCircle2, CreditCard, X } from 'lucide-react';
+
+const benefits = [
+  'Access all questions and expert explanations.',
+  'Unlock files, subjects, and all quiz modes.',
+  "Get the Pass Guarantee with three extra months if you do not pass.",
+];
 
 const UpgradeModal = ({ isOpen, onClose }) => {
-  const router = useRouter();
-
   if (!isOpen) return null;
 
-  const handleStartPremium = () => {
-    router.push('/pricing');
-  };
-
-  const handleCancel = () => {
-    onClose();
-  };
-
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-        <div className="bg-white p-8 rounded">
-          <h2 className="text-2xl mb-4">Upgrade to Premium</h2>
-          <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-              <p>Access all questions and explanations written by subject matter experts.</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 px-4 py-6">
+      <div className="w-full max-w-lg overflow-hidden rounded-2xl border-2 border-[#E5E5E5] bg-white text-[#3C3C3C]" style={{ boxShadow: '0 6px 0 #D9D9D9' }}>
+        <div className="flex items-start justify-between gap-4 border-b-2 border-[#E5E5E5] bg-[#F7FFF0] px-5 py-5 sm:px-7">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border-2 border-[#D7F4C1] bg-white px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[#58A700]">
+              <CreditCard className="h-4 w-4" strokeWidth={2.5} />
+              Premium access
             </div>
-            <div className="flex items-center space-x-4">
-              <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-              <p>Multiple quiz modes to gauge your exam readiness.</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <svg className="w-6 h-6" /* Add your SVG icon */></svg>
-              <p>Pass Guarantee: If you fail your exam, we’ll give you three months free.</p>
-            </div>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">
+              Upgrade to keep practicing
+            </h2>
+            <p className="mt-2 text-sm font-bold leading-6 text-[#777]">
+              Choose a plan on the pricing page to unlock this qbank.
+            </p>
           </div>
-          <div className="mt-8 flex justify-between">
-            <button onClick={handleCancel} className="btn btn-ghost">
-              Cancel
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border-2 border-[#E5E5E5] bg-white text-[#777] hover:text-[#3C3C3C]"
+            aria-label="Close upgrade dialog"
+          >
+            <X className="h-5 w-5" strokeWidth={3} />
+          </button>
+        </div>
+
+        <div className="px-5 py-6 sm:px-7">
+          <ul className="space-y-3">
+            {benefits.map((benefit) => (
+              <li key={benefit} className="flex gap-3 text-sm font-bold leading-6 text-[#3C3C3C]">
+                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#58CC02]" strokeWidth={2.5} />
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-2xl px-5 py-3 text-sm font-extrabold text-[#777] hover:text-[#3C3C3C]"
+            >
+              Not now
             </button>
-            <button onClick={handleStartPremium} className="btn btn-warning">
-              Subscribe
-            </button>
+            <Link
+              href="/pricing"
+              className="inline-flex items-center justify-center rounded-2xl bg-[#58CC02] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white hover:brightness-105"
+              style={{ boxShadow: '0 4px 0 #46A302' }}
+            >
+              View pricing and upgrade
+            </Link>
           </div>
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 };
 
