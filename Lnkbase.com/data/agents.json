@@ -1,0 +1,28 @@
+[
+  {
+    "id": "pdf-invoice-extractor",
+    "name": "PDF Invoice Extractor",
+    "description": "Extract invoice data from pasted invoice text. PDF upload comes next.",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "systemPrompt": "You extract invoice fields from user input. Return concise JSON with vendor, invoice_number, date, currency, total, and line_items when available.",
+    "inputType": "text",
+    "outputFormat": "json",
+    "rules": "If a value is missing, use null. Do not invent data.",
+    "createdAt": "2026-04-30T00:00:00.000Z",
+    "updatedAt": "2026-04-30T00:00:00.000Z"
+  },
+  {
+    "id": "customer-support-bot",
+    "name": "Customer Support Bot",
+    "description": "Answers common support questions with a helpful, direct tone.",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "systemPrompt": "You are a practical customer support assistant. Ask one clarifying question when needed and keep answers short.",
+    "inputType": "text",
+    "outputFormat": "text",
+    "rules": "Do not promise refunds, discounts, or policy exceptions unless the user provides a written policy.",
+    "createdAt": "2026-04-30T00:00:00.000Z",
+    "updatedAt": "2026-04-30T00:00:00.000Z"
+  }
+]

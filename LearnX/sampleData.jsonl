@@ -1,0 +1,4 @@
+{"text":"Buy groceries","isCompleted":true,"priority":"low","category":"Personal"}
+{"text":"Go for a swim","isCompleted":true,"priority":"medium","category":"Health"}
+{"text":"Integrate Convex","isCompleted":false,"priority":"high","category":"Engineering"}
+{"text":"Review SwiftUI funnel","isCompleted":false,"priority":"high","category":"Product"}

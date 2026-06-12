@@ -1,0 +1,136 @@
+/* Tab Bar */
+"Today" = "Today";
+"Discover" = "Discover";
+"Add" = "Add";
+"Progress" = "Progress";
+"Profile" = "Profile";
+
+/* Auth */
+"Sign in to continue" = "Sign in to continue";
+"Create your private meal history and keep your nutrition data synced." = "Create your private meal history and keep your nutrition data synced.";
+"Sign in with Clerk" = "Sign in with Clerk";
+
+/* Onboarding */
+"Skip" = "Skip";
+"Continue" = "Continue";
+"Start your journey" = "Start your journey";
+
+/* Goal Setup */
+"Setup Goals" = "Setup Goals";
+"What's your primary goal?" = "What's your primary goal?";
+"We'll personalise your meal plan around this." = "We'll personalise your meal plan around this.";
+"Primary Goal" = "Primary Goal";
+"Your diet preference" = "Your diet preference";
+"Choose the eating style that fits you best." = "Choose the eating style that fits you best.";
+"Diet Preference" = "Diet Preference";
+"Body stats" = "Body stats";
+"Optional — helps us fine-tune your calorie targets." = "Optional — helps us fine-tune your calorie targets.";
+"Body Stats (Optional)" = "Body Stats (Optional)";
+"Weight (kg)" = "Weight (kg)";
+"Height (cm)" = "Height (cm)";
+"Finish" = "Finish";
+
+/* Goals */
+"Lose Weight" = "Lose Weight";
+"Maintain" = "Maintain";
+"Gain Muscle" = "Gain Muscle";
+
+/* Diet Types */
+"Keto" = "Keto";
+"Vegan" = "Vegan";
+"Low Carb" = "Low Carb";
+"High Protein" = "High Protein";
+"Diabetic" = "Diabetic";
+"Balanced" = "Balanced";
+
+/* Paywall */
+"Your personalized plan\nis ready" = "Your personalized plan\nis ready";
+"Unlock all features and smash your goals." = "Unlock all features and smash your goals.";
+"Unlimited AI food scans" = "Unlimited AI food scans";
+"Advanced macro & progress insights" = "Advanced macro & progress insights";
+"Smarter personalised meal planning" = "Smarter personalised meal planning";
+"Weekly" = "Weekly";
+"Monthly" = "Monthly";
+"Yearly" = "Yearly";
+"Save 50%" = "Save 50%";
+"Start 7-day free trial" = "Start 7-day free trial";
+"Continue with free plan" = "Continue with free plan";
+
+/* Home */
+"kcal remaining" = "kcal remaining";
+"done" = "done";
+"Protein" = "Protein";
+"Carbs" = "Carbs";
+"Fat" = "Fat";
+"Add Meal" = "Add Meal";
+"Today's Meals" = "Today's Meals";
+"Trending Now" = "Trending Now";
+"Recommended for You" = "Recommended for You";
+"Community Meals" = "Community Meals";
+
+/* Recipe Detail */
+"Recipe" = "Recipe";
+"Ingredients" = "Ingredients";
+"%@ items" = "%@ items";
+"Video Guide" = "Video Guide";
+"%@ min cook-along" = "%@ min cook-along";
+"Place recipe video here" = "Place recipe video here";
+"Add a short prep clip or full cooking tutorial" = "Add a short prep clip or full cooking tutorial";
+"Steps Checklist" = "Steps Checklist";
+"%@/%@ done" = "%@/%@ done";
+"Step %@" = "Step %@";
+"Share Recipe" = "Share Recipe";
+"Trending" = "Trending";
+"reviews" = "reviews";
+
+/* Discover */
+"Best Rated" = "Best Rated";
+
+/* Add Meal */
+"Add Meal" = "Add Meal";
+"Scan food with AI" = "Scan food with AI";
+"Snap a photo to log instantly" = "Snap a photo to log instantly";
+"Search meal database" = "Search meal database";
+"Browse 200+ tracked recipes" = "Browse 200+ tracked recipes";
+"Quick add calories" = "Quick add calories";
+"Manually enter nutrition data" = "Manually enter nutrition data";
+"Recent Logs" = "Recent Logs";
+"kcal" = "kcal";
+
+/* Progress */
+"Calories" = "Calories";
+"Weekly Trend" = "Weekly Trend";
+
+/* Profile */
+"Meals Today" = "Meals Today";
+"Saved" = "Saved";
+"Diet" = "Diet";
+"Preferences" = "Preferences";
+"Display name" = "Display name";
+"Bio" = "Bio";
+"Theme" = "Theme";
+"Layout" = "Layout";
+"Units" = "Units";
+"Private meals" = "Private meals";
+"Synced Data" = "Synced Data";
+"Midnight" = "Midnight";
+"Ocean" = "Ocean";
+"Sunset" = "Sunset";
+"Compact" = "Compact";
+"Detailed" = "Detailed";
+"Metric" = "Metric";
+"Imperial" = "Imperial";
+
+/* Days */
+"Mon" = "Mon";
+"Tue" = "Tue";
+"Wed" = "Wed";
+"Thu" = "Thu";
+"Fri" = "Fri";
+"Sat" = "Sat";
+"Sun" = "Sun";
+
+/* Macros short */
+"P" = "P";
+"C" = "C";
+"F" = "F";

@@ -1,0 +1,23 @@
+name = "tg-scraper-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+MAX_PAGES_PER_RUN = "6"
+MAX_IMAGE_DOWNLOADS = "20"
+MAX_FILE_DOWNLOADS = "5"
+REQUEST_DELAY_MIN_MS = "800"
+REQUEST_DELAY_MAX_MS = "1500"
+FILE_TTL_DAYS = "14"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tg-scraper"
+database_id = "REPLACE_WITH_D1_ID"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "tg-scraper"
+
+[triggers]
+crons = ["0 */4 * * *", "30 2 * * *"]

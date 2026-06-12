@@ -1,0 +1,135 @@
+/* Tab Bar */
+"Today" = "اليوم";
+"Discover" = "استكشف";
+"Add" = "إضافة";
+"Progress" = "التقدم";
+"Profile" = "الملف";
+
+/* Auth */
+"Sign in to continue" = "سجّل دخولك للمتابعة";
+"Create your private meal history and keep your nutrition data synced." = "أنشئ سجلّ وجباتك الخاصة وابقَ متزامناً مع بياناتك الغذائية.";
+"Sign in with Clerk" = "تسجيل الدخول";
+
+/* Onboarding */
+"Skip" = "تخطّي";
+"Continue" = "متابعة";
+"Start your journey" = "ابدأ رحلتك";
+
+/* Goal Setup */
+"Setup Goals" = "إعداد الأهداف";
+"What's your primary goal?" = "ما هدفك الرئيسي؟";
+"We'll personalise your meal plan around this." = "سنخصّص خطة وجباتك بناءً على هذا.";
+"Primary Goal" = "الهدف الرئيسي";
+"Your diet preference" = "تفضيل نظامك الغذائي";
+"Choose the eating style that fits you best." = "اختر أسلوب الأكل الذي يناسبك.";
+"Diet Preference" = "النظام الغذائي";
+"Body stats" = "مقاييس الجسم";
+"Optional — helps us fine-tune your calorie targets." = "اختياري — يساعدنا في ضبط أهداف السعرات الحرارية.";
+"Body Stats (Optional)" = "مقاييس الجسم (اختياري)";
+"Weight (kg)" = "الوزن (كجم)";
+"Height (cm)" = "الطول (سم)";
+"Finish" = "إنهاء";
+
+/* Goals */
+"Lose Weight" = "إنقاص الوزن";
+"Maintain" = "الحفاظ على الوزن";
+"Gain Muscle" = "بناء العضلات";
+
+/* Diet Types */
+"Keto" = "كيتو";
+"Vegan" = "نباتي";
+"Low Carb" = "قليل الكربوهيدرات";
+"High Protein" = "بروتين عالٍ";
+"Diabetic" = "مناسب لمرضى السكر";
+"Balanced" = "متوازن";
+
+/* Paywall */
+"Your personalized plan\nis ready" = "خطتك المخصصة\nجاهزة";
+"Unlock all features and smash your goals." = "افتح جميع الميزات وحقّق أهدافك.";
+"Unlimited AI food scans" = "مسح غير محدود للطعام بالذكاء الاصطناعي";
+"Advanced macro & progress insights" = "تحليلات متقدمة للماكرو والتقدم";
+"Smarter personalised meal planning" = "تخطيط وجبات أذكى ومخصص";
+"Weekly" = "أسبوعي";
+"Monthly" = "شهري";
+"Yearly" = "سنوي";
+"Save 50%" = "وفّر 50%";
+"Start 7-day free trial" = "ابدأ التجربة المجانية 7 أيام";
+"Continue with free plan" = "المتابعة مع الخطة المجانية";
+
+/* Home */
+"kcal remaining" = "سعرة حرارية متبقية";
+"done" = "مكتمل";
+"Protein" = "بروتين";
+"Carbs" = "كارب";
+"Fat" = "دهون";
+"Add Meal" = "أضف وجبة";
+"Today's Meals" = "وجبات اليوم";
+"Trending Now" = "الأكثر رواجاً";
+"Recommended for You" = "موصى به لك";
+"Community Meals" = "وجبات المجتمع";
+
+/* Recipe Detail */
+"Recipe" = "الوصفة";
+"Ingredients" = "المكونات";
+"%@ items" = "%@ عناصر";
+"Video Guide" = "دليل الفيديو";
+"%@ min cook-along" = "%@ دقيقة";
+"Place recipe video here" = "ضع فيديو الوصفة هنا";
+"Add a short prep clip or full cooking tutorial" = "أضف مقطعاً قصيراً للتحضير أو درساً كاملاً للطبخ";
+"Steps Checklist" = "قائمة الخطوات";
+"%@/%@ done" = "%@/%@ مكتمل";
+"Step %@" = "الخطوة %@";
+"Share Recipe" = "مشاركة الوصفة";
+"Trending" = "رائج";
+"reviews" = "مراجعة";
+
+/* Discover */
+"Best Rated" = "الأعلى تقييماً";
+
+/* Add Meal */
+"Scan food with AI" = "مسح الطعام بالذكاء الاصطناعي";
+"Snap a photo to log instantly" = "التقط صورة لتسجيل الوجبة فوراً";
+"Search meal database" = "البحث في قاعدة الوجبات";
+"Browse 200+ tracked recipes" = "تصفح أكثر من 200 وصفة";
+"Quick add calories" = "إضافة سريعة للسعرات";
+"Manually enter nutrition data" = "أدخل البيانات الغذائية يدوياً";
+"Recent Logs" = "آخر التسجيلات";
+"kcal" = "سعرة";
+
+/* Progress */
+"Calories" = "سعرات";
+"Weekly Trend" = "الأداء الأسبوعي";
+
+/* Profile */
+"Meals Today" = "وجبات اليوم";
+"Saved" = "المحفوظات";
+"Diet" = "النظام";
+"Preferences" = "التفضيلات";
+"Display name" = "الاسم المعروض";
+"Bio" = "النبذة";
+"Theme" = "المظهر";
+"Layout" = "التخطيط";
+"Units" = "الوحدات";
+"Private meals" = "الوجبات الخاصة";
+"Synced Data" = "البيانات المتزامنة";
+"Midnight" = "منتصف الليل";
+"Ocean" = "المحيط";
+"Sunset" = "الغروب";
+"Compact" = "مضغوط";
+"Detailed" = "مفصّل";
+"Metric" = "متري";
+"Imperial" = "إمبريالي";
+
+/* Days */
+"Mon" = "الإث";
+"Tue" = "الثل";
+"Wed" = "الأر";
+"Thu" = "الخم";
+"Fri" = "الجم";
+"Sat" = "الست";
+"Sun" = "الأح";
+
+/* Macros short */
+"P" = "ب";
+"C" = "ك";
+"F" = "د";

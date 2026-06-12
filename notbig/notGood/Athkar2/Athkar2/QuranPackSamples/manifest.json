@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-02-22T02:40:00Z",
+  "packs": [
+    {
+      "id": "qul-core-full-offline",
+      "title": "QUL Core Full Offline",
+      "description": "Full offline Quran pack (114 surahs, 6236 verses, 604-page Mushaf layout)",
+      "version": "2.0.0",
+      "base_url": "./qul-core-sample/",
+      "chapters_file": "chapters.json",
+      "verses_file": "verses.json",
+      "translation_files": [
+        {
+          "resource_id": "en.sahih",
+          "language": "en",
+          "title": "Sahih International (Sample)",
+          "file": "translation_en_sahih.json"
+        }
+      ],
+      "tafsir_files": [
+        {
+          "resource_id": "en.tafsir.sample",
+          "language": "en",
+          "title": "Sample Tafsir",
+          "file": "tafsir_en_sample.json"
+        }
+      ],
+      "audio_files": [
+        {
+          "reciter_id": "ar.alafasy.sample",
+          "title": "Alafasy Sample",
+          "file": "audio_manifest.json",
+          "base_audio_url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/"
+        }
+      ],
+      "layout_file": {
+        "layout_id": "madani-15line-sample",
+        "title": "Madani 15-line Sample",
+        "file": "layout_words.json"
+      },
+      "mushaf_layout_file": {
+        "layout_id": "kfgqpc-v2-full",
+        "title": "QUL Mushaf Pages Full",
+        "file": "mushaf_pages.json"
+      },
+      "mushaf_script_file": {
+        "layout_id": "kfgqpc-v2-full",
+        "title": "QUL Mushaf Words Full",
+        "file": "mushaf_words.json"
+      }
+    }
+  ]
+}

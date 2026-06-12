@@ -1,0 +1,11 @@
+node_modules
+.next
+.vercel
+.wrangler
+.dev.vars
+.env
+.env.local
+.DS_Store
+dist
+coverage
+pnpm-lock.yaml

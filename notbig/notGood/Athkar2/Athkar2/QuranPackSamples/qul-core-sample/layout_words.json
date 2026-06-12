@@ -1,0 +1,6 @@
+[
+  { "page": 1, "line_number": 1, "position": 1, "verse_key": "1:1", "word_index": 1, "x": 0.72, "y": 0.10, "width": 0.11, "height": 0.04, "token": "بِسْمِ" },
+  { "page": 1, "line_number": 1, "position": 2, "verse_key": "1:1", "word_index": 2, "x": 0.59, "y": 0.10, "width": 0.08, "height": 0.04, "token": "اللَّهِ" },
+  { "page": 1, "line_number": 1, "position": 3, "verse_key": "1:1", "word_index": 3, "x": 0.42, "y": 0.10, "width": 0.13, "height": 0.04, "token": "الرَّحْمَٰنِ" },
+  { "page": 1, "line_number": 1, "position": 4, "verse_key": "1:1", "word_index": 4, "x": 0.26, "y": 0.10, "width": 0.12, "height": 0.04, "token": "الرَّحِيمِ" }
+]

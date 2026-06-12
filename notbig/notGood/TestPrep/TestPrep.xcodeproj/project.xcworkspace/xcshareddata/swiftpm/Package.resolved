@@ -1,0 +1,60 @@
+{
+  "originHash" : "20a1d0caf37ec28714229be87f47de0adaa0d9660b97e892a4943885dd886fce",
+  "pins" : [
+    {
+      "identity" : "clerk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/clerk/clerk-ios",
+      "state" : {
+        "branch" : "main",
+        "revision" : "908cad54356da48b69734cee858ca3fbadb8dca6"
+      }
+    },
+    {
+      "identity" : "convex-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/get-convex/convex-swift",
+      "state" : {
+        "revision" : "6a87b8a74bf8c9d36f205558bf6eff90fbd36673",
+        "version" : "0.7.0"
+      }
+    },
+    {
+      "identity" : "nuke",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Nuke.git",
+      "state" : {
+        "revision" : "0ead44350d2737db384908569c012fe67c421e4d",
+        "version" : "12.8.0"
+      }
+    },
+    {
+      "identity" : "phonenumberkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/marmelroy/PhoneNumberKit",
+      "state" : {
+        "revision" : "7b0a5e858b328736d9b7e175b1620f452af6b699",
+        "version" : "4.2.4"
+      }
+    },
+    {
+      "identity" : "superscript-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/superwall/Superscript-iOS",
+      "state" : {
+        "revision" : "711866edcb62dbd237c24ed3e5fa39fad0db639f",
+        "version" : "1.0.13"
+      }
+    },
+    {
+      "identity" : "superwall-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/superwall/Superwall-iOS",
+      "state" : {
+        "revision" : "309e0cc4e24aa6212d4f1b37cac1ebb1f3ce9102",
+        "version" : "4.12.11"
+      }
+    }
+  ],
+  "version" : 3
+}
