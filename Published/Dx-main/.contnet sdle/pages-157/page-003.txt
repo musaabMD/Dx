@@ -1,0 +1,4 @@
+275. amount fluoride in water causes fluorosis:  
+     1. 0.7 to 1.2 ppm   
+     2. 1.5 to 3 ppm ✅
+

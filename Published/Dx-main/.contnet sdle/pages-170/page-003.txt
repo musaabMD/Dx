@@ -1,0 +1,3 @@
+340. calculate D9 of file 30 taper 0.04? (previously mentioned)  
+     1. 0.66  
+* ![][image341]  

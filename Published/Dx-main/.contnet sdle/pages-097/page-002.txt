@@ -1,0 +1,6 @@
+336. A periodontal probe with markings at 1, 2, 3, 5 mm is called:  
+     1. UNC-15 probe  
+     2.  WHO probe  
+     3.  Nabers probe  
+     4.  Williams probe ✅  
+        ![][image244]  

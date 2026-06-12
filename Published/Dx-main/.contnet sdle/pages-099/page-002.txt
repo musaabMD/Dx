@@ -1,0 +1,5 @@
+346. A question mentions a device written as "palate with w”. What is the most likely orthodontic appliance?  
+     1.  Palatal expander (W-arch appliance) ✅  
+     2.  Hawley retainer  
+     3.  Fixed lingual arch  
+     4.  Herbst appliance  

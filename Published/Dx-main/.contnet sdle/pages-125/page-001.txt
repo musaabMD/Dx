@@ -1,0 +1,3 @@
+148. Which occlusion is more susceptible to lateral excursions/interferences?  
+     1. Edge-to-edge occlusion ✅  
+     2. Shallow cuspal groove anatomy  

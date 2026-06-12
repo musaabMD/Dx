@@ -1,0 +1,5 @@
+320. Which of the following blood-borne infections is considered the most feared occupational risk in dentistry due to its high infectivity and risk of chronic disease?  
+     1. A. Hepatitis A virus (HAV)  
+     2.  B. Hepatitis B virus (HBV) ✅  
+     3.  C. Hepatitis C virus (HCV)  
+     4.  D. Human immunodeficiency virus (HIV)  

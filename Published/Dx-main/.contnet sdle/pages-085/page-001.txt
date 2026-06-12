@@ -1,0 +1,5 @@
+259. A Doctor is applying for a job. He did a blood test of TB , HBV showed he is non- responder , resistant to HBV Vaccine , what is the correct action to do ?  
+1. Should not be accepted at this job  
+2. Give him vaccine   
+3. Accept him and Use protective precautions ✅  
+4. Accept him only at low risk departments   

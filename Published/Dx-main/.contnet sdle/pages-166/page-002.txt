@@ -1,0 +1,7 @@
+319. maximum implant size to replace \#14 when available space is 12mm from ridge to maxillary sinus?(previously mentioned)  
+     1. 9  
+     2. 10  
+     3. 11✅  
+     4. 12  
+* ![][image330]
+

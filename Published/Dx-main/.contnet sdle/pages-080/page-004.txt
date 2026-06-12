@@ -1,0 +1,3 @@
+244. Pt with disease , and he has a letter from his physician that he can make a decision , who will make it ?    
+            A. Doctor  
+            B. Patient ✅  

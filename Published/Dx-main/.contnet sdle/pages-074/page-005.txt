@@ -1,0 +1,3 @@
+219. “If you explained to the girl that she needs an extraction, but her father refused,   
+     1. cancel and change treatment plan ✅  
+     2.  explain it   

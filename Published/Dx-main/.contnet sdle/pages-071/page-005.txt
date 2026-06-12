@@ -1,0 +1,5 @@
+204. Doctor was cut by instrument m he took off the gloves and press it to bleed and then wash with soup and water , what next step   
+     1. Ask patient for blood test   
+     2. Report for infection control department  
+     3. Change gloves and continue treatment  
+        ![][image203]  

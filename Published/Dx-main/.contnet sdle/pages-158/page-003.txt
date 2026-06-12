@@ -1,0 +1,5 @@
+280. What type of incision to raise the flap coronally?  
+     1. Internal bevel  
+     2. External bevel  
+     3. Sulcular ✅
+

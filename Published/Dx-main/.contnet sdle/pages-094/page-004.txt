@@ -1,0 +1,5 @@
+323. A \#30 file with 0.04 taper used. What is D9?  
+     1. 0.50 mm  
+     2.  0.66 mm ✅  
+     3.  0.39 mm  
+     4.  0.70 mm  

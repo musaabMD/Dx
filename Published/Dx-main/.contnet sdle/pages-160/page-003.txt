@@ -1,0 +1,5 @@
+290. Tooth with  displaced 1 mm buccally ,  mobility miller classification  
+     1. Class1  
+     2. Class 2✅  
+     3. Class 3
+

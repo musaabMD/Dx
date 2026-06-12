@@ -1,0 +1,5 @@
+33. File number 30 with 0.04 taper , Calculate D9 ?  
+1. 0.66 ✅ 
+
+   The equation is: (9 x 0.04) \+ 0.3 \= 0.66
+

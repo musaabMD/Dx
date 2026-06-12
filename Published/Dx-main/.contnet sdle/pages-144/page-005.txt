@@ -1,0 +1,3 @@
+240. After 30 mins the patient experienced wheezing, diagnosis?  
+     1. Allergy ✅  
+     2. Asthma  

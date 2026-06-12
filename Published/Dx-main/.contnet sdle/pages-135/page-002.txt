@@ -1,0 +1,5 @@
+199. A patient presents with missing multiple teeth (hypodontia/anodontia), sparse hair, and dry skin. What is the most likely diagnosis?  
+     1. Cleidocranial dysplasia  
+     2.  Ectodermal dysplasia ✅  
+     3.  Amelogenesis imperfecta  
+     4.  Gardner syndrome  

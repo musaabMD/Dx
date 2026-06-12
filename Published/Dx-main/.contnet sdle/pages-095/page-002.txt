@@ -1,0 +1,5 @@
+326. First step in skull fracture case is:  
+     1. CT scan  
+     2.  Suture wound  
+     3.  Airway management ✅  
+     4.  Antibiotics  

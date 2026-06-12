@@ -1,0 +1,7 @@
+170. A patient presents after placement of a dental implant at site \#31. The adjacent tooth \#32 shows deep periodontal pocketing, bleeding on probing, and clinical attachment loss. The tooth responds positively to vitality testing. What is the diagnosis of \#32  
+1. primary perio ✅  
+2. primarily endo secondary perio  
+3. primary perio secondary endo  
+4.  true combined lesion  
+* ![][image190]  
+  Treatment?  

@@ -1,0 +1,5 @@
+52. Scenario: TMJ clicking without pain after trauma → diagnosis options: (understand differences).   
+    1. disc displacement with reduction ✅  
+    2.  without reduction   
+    3. TMJ fracture   
+* ![][image130]  

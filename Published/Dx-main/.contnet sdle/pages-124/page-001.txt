@@ -1,0 +1,3 @@
+143. A patient is in a coma and requires treatment, but the family refuses. Who makes the decision?  
+* It depends on whether it is an emergency or not I think the original question mentioned that the patient had gangrene which is a medical emergency and the family’s refusal can be overruled by the doctor so the doctor ends up making the decision that is in the patients best interest   
+* If it is not an emergency then the doctor will need an approval provided by court  

@@ -1,0 +1,5 @@
+350. Patient wants to place an amalgam of the remaining dentine 2 mm. What is the **linear** to use ? (previously mentioned)  
+     1. No need ✅   
+     2. GIC  
+     3. Caoh   
+     4. RMGIC ( base )  

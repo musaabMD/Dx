@@ -1,0 +1,5 @@
+317. Patient want to replace tooth 14 with implant there was 4mm interarch distance what to do: ( previously mentioned )  
+     1. wide  
+     2. Return the patient to the surgeon to adjust  
+     3. Place implant screw retained implant✅  
+* ![][image327]  

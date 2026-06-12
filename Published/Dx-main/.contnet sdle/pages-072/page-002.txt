@@ -1,0 +1,7 @@
+206. Hardest tooth to scaling ?  
+     1. Upper first premolar✅  
+     2. Upper first molar  
+     3. Lower second molar  
+     4. Upper second molar  
+     5. Upper second premolar  
+        ![][image205]  

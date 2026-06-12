@@ -1,0 +1,3 @@
+78. Pediatric radiograph →  
+1. Can be used to estimate age ✅  
+* ![][image144]  

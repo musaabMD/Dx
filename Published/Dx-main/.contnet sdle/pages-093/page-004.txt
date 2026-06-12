@@ -1,0 +1,5 @@
+318. Which laboratory test is most characteristically prolonged in hemophilia A or B?  
+     1. Bleeding time  
+     2.  Prothrombin time (PT)  
+     3.  Activated partial thromboplastin time (aPTT) ✅  
+     4.  Thrombin time  

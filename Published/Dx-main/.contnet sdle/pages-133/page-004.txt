@@ -1,0 +1,3 @@
+191. DG16 function  
+     1.  calcification ✅  
+* DG16 is also used in detecting canal orifices, if both were in the options then go for detecting orifices   

@@ -1,0 +1,5 @@
+323. A case about missing 36 and you are planning to replace it with implant size 4mm and height of 8mm, teeth 37 and 35 are sound. And gave you the following measurements: Interocclusal distance 4mm, Mesiodistal width 7mm, vertical 10mm, horizontal 4mm. Which of the following findings isn’t recommended for implant? (previously mentioned)  
+     1. Horizontal✅   
+     2. Vertical   
+     3. Interocclusal space   
+     4. Mesiodistal width  

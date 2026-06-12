@@ -1,0 +1,5 @@
+319. A vaccinated healthcare worker sustains a needle-stick injury from a patient known to be HBsAg positive. What is the most appropriate management?  
+     1. No action required  
+     2.  Start hepatitis B immunoglobulin (HBIG) only  
+     3.  Booster dose of hepatitis B vaccine only  
+     4.  Check anti-HBs level and give HBIG \+ vaccine if required ✅  

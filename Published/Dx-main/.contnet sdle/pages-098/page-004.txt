@@ -1,0 +1,5 @@
+343. Which diagnostic method is mainly used to determine the relationship between the mandible and maxilla?  
+     1. Periapical radiograph  
+     2.  Cephalometric analysis ✅  
+     3.  Panoramic radiograph  
+     4.  CBCT only  

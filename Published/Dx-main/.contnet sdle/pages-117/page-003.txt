@@ -1,0 +1,5 @@
+78. Why is it important to remove/avoid restoration overhangs?  
+1. to allow growth of gram \+ve bacteria   
+2. to avoid growth of gram \-ve bacteria   
+3. to avoid calculus accumulation ✅  
+4. to avoid biological width violation  

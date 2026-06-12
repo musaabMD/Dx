@@ -1,0 +1,5 @@
+186. A GP referred a patient for periodontal evaluation and recommended 6 crowns. The periodontist evaluates the case and believes the patient only needs simple fillings and no crowns. What is the most appropriate action?  
+     1. Report the GP for malpractice  
+     2. Tell the patient the GP was wrong  
+     3. Provide a new independent treatment plan and explain findings to the patient without criticizing the GP ✅  
+     4. Ignore the GP plan and proceed without informing anyone  

@@ -1,0 +1,5 @@
+341. A patient has an ankylosed tooth after orthodontic treatment. What type of orthodontic force is most appropriate?  
+     1. Rapid heavy force  
+     2.  No force application ✅(Tooth is ankylosed there will not be any movement)  
+     3.  Slow continuous light force  
+     4.  Intermittent strong force  

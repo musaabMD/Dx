@@ -1,0 +1,2 @@
+145. Angle between minor and major connector?  
+* ![][image49]  

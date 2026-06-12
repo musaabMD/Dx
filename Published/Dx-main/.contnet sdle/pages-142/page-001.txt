@@ -1,0 +1,6 @@
+230. Tooth dark more than adjacent   
+     1. chroma   
+     2. Value ✅
+
+        
+

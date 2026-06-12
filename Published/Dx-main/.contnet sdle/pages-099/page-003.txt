@@ -1,0 +1,5 @@
+347. Which type of tooth preparation is considered the most “healthy” or biologically conservative?  
+     1.  Subgingival preparation  
+     2.  Equigingival preparation  
+     3.  Supragingival preparation ✅  
+     4.  Intrasulcular preparation  

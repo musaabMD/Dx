@@ -1,0 +1,5 @@
+192. What to use in calcified canals   
+     1. k files   
+     2. h files   
+     3. remear   
+     4. c file ✅   

@@ -1,0 +1,6 @@
+337. Implant impression with analog in mouth:  
+     1.  Closed tray ✅  
+     2.  Open tray  
+     3.  Alginate only  
+     4.  Rubber base only  
+* ![][image245]  

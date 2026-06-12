@@ -1,0 +1,5 @@
+299. 60 years old patient presented with intermittent pain in tooth \#26 that is associated with sinus tract upon examination, tooth \#26 is sensitive to percussion  and palpation,7mm  probing depth in the mesiopalatal area of the tooth and grade II mobility. Which of the following is the most probable diagnosis of tooth \#26?  
+     1. Previously treated with acute apical abscess   
+     2. Previously treated associated with vertical root fracture✅   
+     3. Previously treated associated without vertical root fracture
+

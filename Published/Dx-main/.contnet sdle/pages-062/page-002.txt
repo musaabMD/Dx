@@ -1,0 +1,3 @@
+158. 25mm space needed and 26mm space present is considered to be?   
+1. Spacing ✅  
+2. Normal   

@@ -1,0 +1,5 @@
+193. Lateral luxation time of splint  
+     1. 1 week  
+     2. 2 weeks  
+     3. 3 weeks  
+     4. 1 months ✅  

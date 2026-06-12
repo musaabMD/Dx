@@ -1,0 +1,7 @@
+257. Wibe vomiting from the floor ?  
+     1. High disinfection   
+     2. low disinfection  
+     3. Intermediate disinfection ✅
+
+        ![][image302]
+

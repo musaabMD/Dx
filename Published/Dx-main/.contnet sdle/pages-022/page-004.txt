@@ -1,0 +1,3 @@
+130. When is surface disinfection successful?  
+     1. Removing blood ✅  
+     2. Removing fluids ✅  

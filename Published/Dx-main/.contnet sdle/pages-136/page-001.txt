@@ -1,0 +1,2 @@
+203. Periodontal probe tip   
+     1. 0..5 mm ✅  

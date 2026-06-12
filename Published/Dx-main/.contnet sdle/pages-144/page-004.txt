@@ -1,0 +1,5 @@
+239. If the width of a central incisor is 8 mm, what is the expected width of the lateral incisor using the 0.60 rule?  
+     1. 4.8 mm ✅ (8 x 0.60 \= 4.0mm)  
+     2.  6.0 mm  
+     3.  8.0 mm  
+     4.  10.0 mm  

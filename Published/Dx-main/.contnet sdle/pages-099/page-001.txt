@@ -1,0 +1,5 @@
+345. In cephalometric analysis, “Sella–Gnathion (S–Gn)” line represents:  
+     1. Anterior cranial base length   
+     2.  Mandibular base length ✅  
+     3.  Maxillary length  
+     4.  Dental arch width  

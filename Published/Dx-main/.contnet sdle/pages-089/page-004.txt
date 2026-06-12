@@ -1,0 +1,3 @@
+278. The patient has a last stage tumor , before incision and drainage which step should be done ?  
+     1. Aspiration ✅  
+     2. Curretage    

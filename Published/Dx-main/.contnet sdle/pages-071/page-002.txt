@@ -1,0 +1,7 @@
+201. Patient with lingering pain since 2 weeks and xray show normal pdl and no peri apical lesion , diagnosis?  
+     1. Symptomatic Irreversible pulpitis , symptomatic apical periodontitis✅  
+     2. Symptomatic Irreversible pulpitis , Asymptomatic apical periodontitis  
+     3. Normal pulp, symptomatic apical periodontitis  
+     4. Necrotic pulp, acute apical abscess  
+        ![][image200]  
+        ![][image201]  

@@ -1,0 +1,6 @@
+328. Gemination picture:  
+     1. Two teeth fused  
+     2.  One tooth splits partially ✅  
+     3.  Extra tooth formation  
+     4.  Carious lesion  
+* ![][image241]  

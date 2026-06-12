@@ -1,0 +1,5 @@
+210. Pt had cancer and son didn't want doctor to tell him, what’s your management?  
+     1. Tell the patient✅  
+     2. Follow the instructions of the son, don’t tell the patient  
+     3. Inform the colleague to tell the patient  
+        ![][image209]  

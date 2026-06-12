@@ -1,0 +1,5 @@
+47. BP readings → diagnosis: Hypertension Stage 2\.  patient 1 visit bp 130/80 2 visit 139/80 3 visit 130/80 the diagnosis?  
+    1. Elevated (prehypertension?) ✅  
+    2. hypertension stage 1  
+    3. hypertension stage 2  
+* ![][image125]  

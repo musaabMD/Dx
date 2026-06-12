@@ -1,0 +1,5 @@
+161. Patient with Parkinson disease come to treat drooling. What management?   
+     1. antibiotics   
+     2. Surgical removal of salivary glands.  
+     3. Anticholinergic (Atropine, Glycopyrrolate) ✅  
+     4. No treatment  

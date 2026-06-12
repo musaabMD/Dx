@@ -1,0 +1,5 @@
+316. A patient is being planned for complete denture fabrication. The clinician is selecting artificial anterior teeth and aims to achieve optimal esthetics and function.Compared to natural teeth, the size of denture teeth should generally be:  
+     1.  Larger than natural teeth  
+     2.  Smaller than natural teeth ✅  
+     3.  Exactly the same size as natural teeth in all cases  
+     4.  Randomly selected based on operator preference  

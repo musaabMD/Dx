@@ -1,0 +1,5 @@
+188. Which immunoglobulin is mainly involved in Type I hypersensitivity reaction?  
+     1. IgG  
+     2. IgE ✅  
+     3. Lymphocytes  
+     4. Neutrophils   

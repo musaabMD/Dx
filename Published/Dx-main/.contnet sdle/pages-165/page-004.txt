@@ -1,0 +1,4 @@
+316. 3.5 or 4.1 implant size what the category: ( previously mentioned )  
+     1. wide  
+     2. small or narrow  
+     3. regular ✅  

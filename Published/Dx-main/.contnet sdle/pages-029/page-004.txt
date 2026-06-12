@@ -1,0 +1,6 @@
+163. Which of the following supplements is commonly required in patients with Crohn’s disease taking corticosteroids?   
+     1. Zinc  
+     2. Calcium✅
+
+                  Note: Corticosteroids affects bone that why we give calcium.
+

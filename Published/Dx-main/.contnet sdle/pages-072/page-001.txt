@@ -1,0 +1,6 @@
+205. White lesion, bilateral, how to diagnose?  
+     1. Biopsy✅  
+     2. OPG  
+     3. CBCT  
+     4. MRI  
+        ![][image204]  

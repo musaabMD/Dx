@@ -1,0 +1,4 @@
+194. Sudden Bleeding after irrigation due to  
+     1. Sealer  
+     2. CaOh extrusion  
+     3. Naocl extrusion ✅  

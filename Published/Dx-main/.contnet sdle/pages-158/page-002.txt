@@ -1,0 +1,6 @@
+279. Pedo patient with multiple carious lesions. His behavior is deﬁnitely negative. What treatment will you do?  
+     1. Swab the teeth with gauze and place ﬂuoride varnish✅   
+     2. Swab the teeth with gauze and place ﬂuoride gel   
+     3. Do professional prophylaxis and place ﬂuoride gel   
+     4. Do professional prophylaxis and place ﬂuoride varnish
+

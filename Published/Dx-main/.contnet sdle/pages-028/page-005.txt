@@ -1,0 +1,5 @@
+159. Percentage of doctors who write reports after Needle Stick Injury (its not in the answers but the correct answer is 35%)  
+     1.  74%  
+     2.  50 %  
+     3. 40%  
+     4. 60%  

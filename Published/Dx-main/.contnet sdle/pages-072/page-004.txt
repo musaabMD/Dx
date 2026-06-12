@@ -1,0 +1,5 @@
+208. Doctor used implant sample from a company for a patient, what ethical principle did they violate?  
+     1. Confidentiality  
+     2. Privacy  
+     3. Conflict of Interest✅  
+        ![][image207]  

@@ -1,0 +1,6 @@
+333. Minimum implant–implant distance:  
+     1. 1 mm  
+     2.  2 mm  
+     3.  3 mm ✅  
+     4.  5 mm  
+* ![][image242]  

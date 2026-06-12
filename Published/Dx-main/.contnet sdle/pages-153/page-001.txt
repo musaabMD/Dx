@@ -1,0 +1,10 @@
+253. Intra oral photograph presented asking for orthodontic diagnosis. Pt. has molar class I in left side and molar Class II in right side what is the class?  
+     1. Class I   
+     2. Class II  
+     3. Class II subdivision left  
+     4. Class II subdivision right✅
+
+        ![][image298]
+
+     
+

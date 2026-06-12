@@ -1,0 +1,2 @@
+119. Trauma case: patient with multiple injuries including mandibular fracture.  
+     1. Priority: the condition affecting breathing → mandibular fracture ✅  

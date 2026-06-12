@@ -1,0 +1,5 @@
+348. A matrix band becomes contaminated with blood during a restorative procedure. What is the correct management?  
+     1.  Rinse with water only and continue ✅  
+     2.  Wipe with alcohol only  
+     3.  Wash with water and soap, then disinfect  
+     4.  Continue without cleaning if visually clean  

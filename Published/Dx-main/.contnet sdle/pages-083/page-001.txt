@@ -1,0 +1,4 @@
+254. The dental assistant cleaned the burs and instrument in the clinic then sent it to CSSD , the technician did manual cleaning then put utility gloves on and started sterilization. What should be corrected in the previous scenario ?    
+1.  should put gloves before cleaning   
+2.  technician should not manually clean the instruments again in CSSD  ✅  
+3. assistant should not clean in the clinic  

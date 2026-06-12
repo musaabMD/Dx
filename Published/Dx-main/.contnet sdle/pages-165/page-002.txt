@@ -1,0 +1,5 @@
+314. There was a case vital tooth with periapical radiolucency asking if it is  
+     1. true combined lesion  
+     2. perio origin ✅   
+     3. endo origin  
+* ![][image325]  

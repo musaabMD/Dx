@@ -1,0 +1,8 @@
+133. Patient on long-term bisphosphonates → extraction → antibiotics?  
+     1. Pre-op only  
+     2. Pre \+ during healing  
+     3. Not needed ✅  
+* \* Stopping bisphosphonates prior to invasive dental procedures is not recommended as there is no evidence it reduces the risk of osteonecrosis of the jaw (ONJ).  
+* \*Some clinicians may choose to postpone IV bisphosphonate infusions until after a planned procedure, but this should be discussed with the treating physician.  
+* \*Routine prophylactic antibiotics are not necessary unless there are local or systemic infection risk factors.  
+* \*No evidence supports the use of antibiotics to reduce ONJ risk after invasive dental procedures.  

@@ -1,0 +1,4 @@
+115. CBCT: which view is best for diagnosis (used for VRF)?   
+     1. Axial ✅  
+     2. Coronal  
+     3. sagittal.  

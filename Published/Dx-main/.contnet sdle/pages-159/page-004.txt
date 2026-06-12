@@ -1,0 +1,10 @@
+286. 146.lower 6 tooth they have done perio surgery for it and they need to do again based on periodontist (xray with distal bone resorption and there is no second molar )What is the incision?  
+     1. semilunar  
+     2. submarginal  
+     3. intra sulcular  
+     4. Distal wedge flap✅
+
+     ![][image310]
+
+     
+

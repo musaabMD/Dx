@@ -1,0 +1,7 @@
+234. Acceptable pathological bone resorption after one year of implant Placement.  
+1.  0.5   
+2.  1-1.5 ✅  
+3.  2   
+4. 4
+
+

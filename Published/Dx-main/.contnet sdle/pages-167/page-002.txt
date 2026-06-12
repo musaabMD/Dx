@@ -1,0 +1,6 @@
+324. What type of bone is considered a risk factor for long term prognosis of dental implant? (previously mentioned)  
+     1. D1 ( safest, bc it’s area with free/ less of blood vessels and nerves)  
+     2. D2 ( best )  
+     3. D3   
+     4. D4✅ ( worst )  
+* ![][image331]  

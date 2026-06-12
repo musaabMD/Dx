@@ -1,0 +1,4 @@
+307. Most frequent radiographic feature of Vertical root fracture ? ( previously mentioned )  
+     1. J shaped appearance  ✅  
+     2. Pear shaped  
+* ![][image316]  

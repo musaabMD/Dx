@@ -1,0 +1,5 @@
+222. If a patient had dialysis today at 9 a.m., when would you schedule him to come in?”  
+     1. After the dialysis the same day  
+     2. The day after✅  
+     3. After 1 week  
+     4. 1 day before  

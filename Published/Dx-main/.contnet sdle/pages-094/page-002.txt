@@ -1,0 +1,5 @@
+321. Which virus is most commonly associated with cross-infection through contaminated dental impressions?  
+     1. HIV  
+     2.  Hepatitis B virus (HBV) ✅  
+     3. Influenza virus  
+     4. Herpes simplex virus  

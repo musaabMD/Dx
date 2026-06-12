@@ -1,0 +1,10 @@
+325. A patient has mandibular deformity correction surgery. Which procedure is shown?   
+     1. Le Fort I  
+     2.  BSSO ✅  
+     3.  Genioplasty  
+     4.  Condylectomy  
+* ![][image240]
+
+
+  
+

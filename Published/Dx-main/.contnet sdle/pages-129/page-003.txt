@@ -1,0 +1,4 @@
+170. Radiograph shows a patient with a bony lesion. What is the most appropriate next step?  
+     1. Biopsy  
+     2. Fine needle aspiration (FNA) ✅  
+     3. CBCT  

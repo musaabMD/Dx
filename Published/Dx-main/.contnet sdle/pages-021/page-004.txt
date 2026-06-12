@@ -1,0 +1,59 @@
+     4. Pseudo  
+107. After caries removal (2nd premolar), planning inlay \+ recession: where should cavosurface and gingival floor end?  
+     1. At cervical line  
+     2. Below cervical line  
+     3. In area accessible for cleaning/finishing  
+108. Metal crown try-in with open contact → what to check first?  
+     1. Crown fit  
+     2. Proximal contact ✅  
+109. Pediatric patient with liver cirrhosis \+ high caries → fluoride varnish interval?  
+     1. Every 6 months  
+     2. Every 3 months ✅  
+     3. Yearly  
+110. Pediatric with kidney failure → fluoride varnish interval?  
+     1. Monthly  
+     2. Every 6 months ✅  
+     3. Contraindicated  
+111. Number of embrasures between two teeth:  
+     1. 1  
+     2. 4 ✅  
+     3. 6  
+112. Interference: distal of upper \+ mesial of lower crown → type?  
+     1. protrusive ✅  
+113. Patient with desquamative gingivitis \+ white lesion in buccal mucosa → diagnosis?  
+     1. OLP  
+114. Perio probe tip diameter:   
+     1. 0.5 mm✅  
+115. Ortho patient with extended wire →   
+     1. what to do?  
+116. Extended wire causing multiple ulcers:  
+     1. Cut wire ✅  
+     2. Place wax  
+117. Which plane represents Wits analysis?  
+     1. functional occlusal plane ✅  
+118. Renal failure patient \+ yellow oral ulcers → cause?  
+     1. High blood urea ✅  
+119. Ortho patient with generalized gingivitis despite brushing 3x/day → cause?  
+     1. Poor hygiene  
+     2. Plaque-retentive appliance ✅  
+     3. Systemic disease  
+120. Patient with unusual headache → what to request?  
+     1. MRI ✅  
+121. Suspected ameloblastoma → most important step before incisional biopsy?  
+     1. Aspiration ✅  
+122. Hepatitis patient after full vaccination → marker of immunity:  
+     1. Anti-HBc  
+     2. Anti-HBs ✅  
+123. Doctor used patient data for research without permission → violation of:  
+     1. Confidentiality ✅  
+124. Patient diagnosed with malignant tumor; son asks you to hide it and say “ulcer” → what to do?  
+     1. Follow son’s request  
+     2. Ask colleague to break news  
+     3. Tell patient the truth ✅  
+     4. Ask another family member  
+125. Serial extraction sequence (given as BCD4)  
+* ![][image30]  
+  * B: Extract primary lower left first molar (Primary B).  
+  * C: Extract primary upper left canine (Primary C).  
+  * D: Extract primary lower left second molar (Primary D).  
+  * 4: Extract permanent first premolars (upper and lower).  

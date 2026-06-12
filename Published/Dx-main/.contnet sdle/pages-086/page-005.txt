@@ -1,0 +1,4 @@
+264. Vomit on the floor , the assistant used a towel to clean , what type is this ?  
+      A. Contaminated   
+     B. Infected ✅  
+     C. Hazard  

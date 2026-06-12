@@ -1,0 +1,5 @@
+322. How is a cheek retractor classified according to infection control?  
+     1. Critical instrument  
+     2. Semi-critical instrument ✅  
+     3.  Non-critical instrument  
+     4. Disposable instrument only  

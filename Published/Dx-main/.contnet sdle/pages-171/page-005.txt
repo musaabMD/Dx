@@ -1,0 +1,5 @@
+347. class 1 with deep caries RDT is 0.5? (previously mentioned)  
+     1. RMGIC base ✅   
+     2. GIC   
+     3. RMGI base with GIC liner ( If less than 0.5 )  
+* ![][image348]![][image349]  

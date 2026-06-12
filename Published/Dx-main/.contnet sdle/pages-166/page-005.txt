@@ -1,0 +1,5 @@
+322. 34+ 35 \+ 36 missing and dentists decided to do implant size 4 , 37 is mesially tilted mesiodistal space available 14mm . How many implant a dentist can make ? (previously mentioned)  
+     1. 1  
+     2. 2✅  
+     3. 3  
+     4. 4  

@@ -1,0 +1,5 @@
+327. Fordyce spots are:  
+     1. Viral infection  
+     2.  Normal sebaceous glands ✅  
+     3.  Malignant lesion  
+     4.  Fungal infection  

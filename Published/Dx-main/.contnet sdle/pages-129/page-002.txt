@@ -1,0 +1,8 @@
+169. Nurse was cleaning and sustained a needle-stick injury but did not report it. Later she developed Hepatitis B infection and only then wrote a report. What is this situation called?  
+     1.  Nosocomial infection  
+     2.  Occupational exposure (needle-stick injury) with delayed reporting ✅  
+     3.  Community-acquired infection  
+     4. Cross infection
+
+        
+

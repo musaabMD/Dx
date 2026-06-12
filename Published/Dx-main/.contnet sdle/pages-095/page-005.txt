@@ -1,0 +1,5 @@
+329. Hutchinson teeth are seen in:  
+     1. Tuberculosis  
+     2.  Syphilis ✅  
+     3.  HIV  
+     4.  Measles  

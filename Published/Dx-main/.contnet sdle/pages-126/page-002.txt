@@ -1,0 +1,4 @@
+154. What difficulty in root planing and scaling?   
+     1. divergent root with long trunk ✅  
+     2. divergent root with short trunk  
+     3. convergent  

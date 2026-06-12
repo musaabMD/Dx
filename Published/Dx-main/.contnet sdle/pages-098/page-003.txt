@@ -1,0 +1,5 @@
+342. A patient has a ceramic crown and refuses removal, but the tooth requires endodontic access. Which bur is most appropriate to access through the crown?  
+     1. Metal bur  
+     2.  Transmetal bur  
+     3.  Diamond bur ✅  
+     4. Tungsten carbide finishing bur  

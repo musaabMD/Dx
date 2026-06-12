@@ -1,0 +1,3 @@
+339. D09, file size 10, taper 0.02 calculation? (previously mentioned)  
+     1. 0.28  
+* ![][image340]  

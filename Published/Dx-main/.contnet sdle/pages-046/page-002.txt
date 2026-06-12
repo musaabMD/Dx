@@ -1,0 +1,3 @@
+79. Jaw fracture image → identify fracture type.  
+* ![][image145]![][image146]  
+*   

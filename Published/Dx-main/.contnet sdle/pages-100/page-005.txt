@@ -1,0 +1,5 @@
+354. In a malocclusion case requiring extraction for orthodontic purposes, which tooth is most commonly extracted?  
+     1. Second molar  
+     2.  First premolar ✅  
+     3.  Canine  
+     4.   Incisor  

@@ -1,0 +1,4 @@
+275. Distance required between two adjacent implants and between implants \- natural tooth ?  
+* Implant to implant \-\> 3mm  
+* Implant to natural tooth \-\> 1.5 mm  
+* ![][image234]  

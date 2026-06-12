@@ -1,0 +1,6 @@
+338. The dentist plans to extract a tooth of a 65-year-old man (see report). Radiographic evaluation: Showed increased opacity around the apices of some tooth roots. Which of the following can explain this observation?(previously mentioned)  
+     1. Physiologic tooth migration  
+     2. Physiologic remodeling of cementum with age   
+     3. Bone deposition due to age and occlusal forces   
+     4. Continuous deposition of cementum throughout life ✅  
+*   

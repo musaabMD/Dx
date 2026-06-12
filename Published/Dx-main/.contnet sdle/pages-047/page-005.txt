@@ -1,0 +1,2 @@
+87.  Scenario:  
+    Patient taking:  Thiazide,ACE inhibitor.Image shows: upper lip swelling Which drug caused it?  

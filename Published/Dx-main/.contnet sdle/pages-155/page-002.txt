@@ -1,0 +1,3 @@
+264. What is the component responsible for retention in RPD ?  
+     1. Retentive clasp ✅. 
+

@@ -1,0 +1,5 @@
+117. Recession classification:  
+* Case: 1 mm recession without interdental papilla.  
+* Options: RT1 or Miller.  
+* Chosen: Cairo classification.  
+* ![][image159]![][image160]  
