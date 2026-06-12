@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createSupabaseBrowserClient } from '@/lib/supabaseBrowser';
 import { Suspense } from 'react';
 const StarIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -15,9 +15,13 @@ const Features = () => {
     passRate: '94%',
     activeUsers: '20,000+'
   };
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
 
   useEffect(() => {
+    if (!supabase) {
+      return;
+    }
+
     const fetchFeatures = async () => {
       const { data, error } = await supabase.from('features').select('*');
       if (error) {

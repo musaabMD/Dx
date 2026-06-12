@@ -1,391 +1,152 @@
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import Header from "@/components/Header";
+import QuizComponent from "@/components/QuizComponent";
+import { BookOpen, LockKeyhole } from "lucide-react";
 
-// 'use client';
+export const dynamic = "force-dynamic";
 
-// import React, { useState, useEffect, Suspense } from 'react';
-// import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-// import Link from "next/link";
-// import Header from "@/components/Header";
-// import QuizComponent from "@/components/QuizComponent";
-// import Wall from '@/components/Wall';
-// import { Suspense } from 'react';
+const questionColumns = `
+  id,
+  question_text,
+  option_a,
+  option_b,
+  option_c,
+  option_d,
+  option_e,
+  option_f,
+  correct_choice,
+  rationale,
+  subject,
+  examname,
+  file_name,
+  question_image_url,
+  explanation_image_url
+`;
 
-// export default function SubjectQuizPage({ params }) {
-//   const [questions, setQuestions] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const { examName, subjectName } = params;
-//   const supabase = createClientComponentClient();
+async function getAccessAndUser(supabase, examName) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-//   useEffect(() => {
-//     async function getSubjectQuestions() {
-//       try {
-//         const { data, error } = await supabase
-//           .from('qtable')
-//           .select('*')
-//           .eq('examname', decodeURIComponent(examName))
-//           .eq('subject', decodeURIComponent(subjectName));
+  if (!user) {
+    return { user: null, hasAccess: false };
+  }
 
-//         if (error) throw error;
-//         setQuestions(data);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error('Error fetching subject questions:', error);
-//         setError('Failed to load questions. Please try again.');
-//         setLoading(false);
-//       }
-//     }
+  const { data } = await supabase
+    .from("user_data")
+    .select("subscription_status, remaining_days, disable, trial")
+    .eq("user_id", user.id)
+    .eq("examname", examName)
+    .maybeSingle();
 
-//     getSubjectQuestions();
-//   }, [examName, subjectName, supabase]);
+  const subscriptionStatus = data?.subscription_status?.toLowerCase();
+  const hasAccess = Boolean(
+    (subscriptionStatus === "active" && data?.remaining_days > 0 && !data?.disable) ||
+      data?.trial
+  );
 
-//   if (loading) return <div>Loading...</div>;
-//   if (error) return <div>{error}</div>;
+  return { user, hasAccess };
+}
 
-//   return (
-//     <Suspense> 
-//     <Wall examName={decodeURIComponent(examName)}>
-//       <div className="w-full">
-//         {questions.length > 0 ? (
-//           <QuizComponent
-//             questions={questions}
-//             quizName={`${decodeURIComponent(subjectName)} (${decodeURIComponent(examName)})`}
-//             testTaker="Subject Quiz"
-//             isSelfExam={false}
-//           />
-//         ) : (
-//           <p>No questions found for this subject.</p>
-//         )}
-//         <Link href={`/exams/${encodeURIComponent(examName)}`} className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-//           Back to Exam
-//         </Link>
-//       </div>
-//     </Wall>
-//     </Suspense>
-//   );
-// }
+async function getSubjectQuestions(supabase, examName, subjectName) {
+  return supabase
+    .from("qs")
+    .select(questionColumns)
+    .eq("examname", examName)
+    .eq("subject", subjectName)
+    .order("id", { ascending: true });
+}
 
-// 'use client';
+function LockedSubject({ examName }) {
+  return (
+    <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
+      <Header />
+      <main className="mx-auto max-w-3xl px-4 py-12">
+        <section
+          className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-8 text-center"
+          style={{ boxShadow: "0 5px 0 #E5E5E5" }}
+        >
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FFE3E3]">
+            <LockKeyhole className="h-7 w-7 text-[#FF4B4B]" strokeWidth={2.5} />
+          </span>
+          <h1 className="mt-5 text-3xl font-extrabold">Subscribe to open {examName}</h1>
+          <p className="mx-auto mt-2 max-w-md text-sm font-bold leading-6 text-[#777]">
+            Full subject practice is available with an active DrNote subscription.
+          </p>
+          <a
+            href="/pricing"
+            className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-[#58CC02] px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-white hover:brightness-105"
+            style={{ boxShadow: "0 4px 0 #46A302" }}
+          >
+            View Pricing
+          </a>
+        </section>
+      </main>
+    </div>
+  );
+}
 
-// import React, { useState, useEffect } from 'react';
-// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-// import Link from 'next/link';
-// import QuizComponent from '@/components/QuizComponent';
-// import Wall from '@/components/Wall';
+export default async function SubjectQuizPage({ params }) {
+  const examName = decodeURIComponent(params.examName);
+  const subjectName = decodeURIComponent(params.subjectName);
+  const supabase = createServerComponentClient({ cookies });
+  const [accessState, questionsState] = await Promise.allSettled([
+    getAccessAndUser(supabase, examName),
+    getSubjectQuestions(supabase, examName, subjectName),
+  ]);
+  const { user = null, hasAccess = false } =
+    accessState.status === "fulfilled" ? accessState.value : {};
+  const { data: questions = null, error } =
+    questionsState.status === "fulfilled" ? questionsState.value : {};
 
-// export default function SubjectQuizPage({ params }) {
-//   const [questions, setQuestions] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const { examName, subjectName } = params;
-//   const supabase = createClientComponentClient();
-
-//   useEffect(() => {
-//     async function getSubjectQuestions() {
-//       try {
-//         const { data, error } = await supabase
-//           .from('qtable')
-//           .select('*')
-//           .eq('examname', decodeURIComponent(examName))
-//           .eq('subject', decodeURIComponent(subjectName));
-
-//         if (error) throw error;
-//         setQuestions(data);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error('Error fetching subject questions:', error);
-//         setError('Failed to load questions. Please try again.');
-//         setLoading(false);
-//       }
-//     }
-
-//     getSubjectQuestions();
-//   }, [examName, subjectName, supabase]);
-
-//   if (loading) return <div>Loading...</div>;
-//   if (error) return <div>{error}</div>;
-
-//   return (
-//     <Wall examName={decodeURIComponent(examName)}>
-//       <div className="w-full">
-//         {questions.length > 0 ? (
-//           <QuizComponent
-//             questions={questions}
-//             quizName={`${decodeURIComponent(subjectName)} (${decodeURIComponent(examName)})`}
-//             testTaker="Subject Quiz"
-//             isSelfExam={false}
-//           />
-//         ) : (
-//           <p>No questions found for this subject.</p>
-//         )}
-//         <Link href={`/exams/${encodeURIComponent(examName)}`} className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-//           Back to Exam
-//         </Link>
-//       </div>
-//     </Wall>
-//   );
-// }
-
-
-// 'use client';
-
-// import React, { useState, useEffect } from 'react';
-// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-// import Link from 'next/link';
-// import QuizComponent from '@/components/QuizComponent';
-// import UpgradeModal from '@/components/UpgradeModal';
-// import { Suspense } from 'react';
-// export default function SubjectQuizPage({ params }) {
-//   const { examName, subjectName } = params;
-//   const [questions, setQuestions] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const supabase = createClientComponentClient();
-
-//   useEffect(() => {
-//     async function checkSubscriptionStatus() {
-//       try {
-//         const { data: { session } } = await supabase.auth.getSession();
-//         if (session) {
-//           const { data, error } = await supabase
-//             .from('user_data')
-//             .select('subscription_status, remaining_days, disable, trial, examname')
-//             .eq('user_id', session.user.id)
-//             .eq('examname', decodeURIComponent(examName))
-//             .single();
-
-//           if (error) {
-//             throw error;
-//           }
-
-//           const subscriptionStatus = data.subscription_status?.toLowerCase();
-//           const remainingDays = data.remaining_days;
-//           const isDisabled = data.disable;
-//           const isTrial = data.trial;
-
-//           const isActive = (subscriptionStatus === 'active' && remainingDays > 0 && !isDisabled) || isTrial;
-
-//           if (isActive) {
-//             setHasActiveSubscription(true);
-//           }
-//         }
-//       } catch (error) {
-//         console.error('Error checking subscription status:', error);
-//       }
-//     }
-
-//     async function getSubjectQuestions() {
-//       setLoading(true);
-//       setError(null);
-//       const decodedExamName = decodeURIComponent(examName);
-//       const decodedSubjectName = decodeURIComponent(subjectName);
-
-//       if (!hasActiveSubscription) {
-//         setIsModalOpen(true);
-//         setLoading(false);
-//         return;
-//       }
-
-//       let allQuestions = [];
-//       let rangeStart = 0;
-//       const rangeStep = 1000;
-//       let newQuestions = [];
-
-//       try {
-//         do {
-//           const { data, error } = await supabase
-//             .from('qs')
-//             .select('*')
-//             .eq('examname', decodedExamName)
-//             .eq('subject', decodedSubjectName)
-//             .range(rangeStart, rangeStart + rangeStep - 1);
-
-//           if (error) throw error;
-//           newQuestions = data;
-//           allQuestions = [...allQuestions, ...newQuestions];
-//           rangeStart += rangeStep;
-//         } while (newQuestions.length === rangeStep);
-//       } catch (error) {
-//         console.error('Error fetching subject questions:', error);
-//         setError('Failed to load questions. Please try again.');
-//       }
-
-//       setQuestions(allQuestions);
-//       setLoading(false);
-//     }
-
-//     checkSubscriptionStatus();
-//     getSubjectQuestions();
-//   }, [examName, subjectName, supabase, hasActiveSubscription]);
-
-//   const handleCloseModal = () => {
-//     setIsModalOpen(false);
-//   };
-
-//   if (loading) return <div>Loading...</div>;
-//   if (error) return <div>{error}</div>;
-
-//   return (
-//     <Suspense>
-
-//     <div className="w-full">
-//       {questions.length > 0 ? (
-//         <QuizComponent
-//           questions={questions}
-//           quizName={`${decodeURIComponent(subjectName)} (${decodeURIComponent(examName)})`}
-//           testTaker="Subject Quiz"
-//           isSelfExam={false}
-//         />
-//       ) : (
-//         <p>No questions found for this subject.</p>
-//       )}
-//       {!hasActiveSubscription && <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />}
-//       <Link href={`/exams/${encodeURIComponent(examName)}`} className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-//         Back to Exam
-//       </Link>
-//     </div>
-//           </Suspense>
-
-//   );
-// }
-'use client';
-
-import React, { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import Link from 'next/link';
-import QuizComponent from '@/components/QuizComponent';
-import UpgradeModal from '@/components/UpgradeModal';
-import { Suspense } from 'react';
-
-export default function SubjectQuizPage({ params }) {
-  const { examName, subjectName } = params;
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const supabase = createClientComponentClient();
-
-  const fetchTotalQuestionsCount = async (decodedExamName, decodedSubjectName) => {
-    const { count, error } = await supabase
-      .from('qs')
-      .select('*', { count: 'exact', head: true })
-      .eq('examname', decodedExamName)
-      .eq('subject', decodedSubjectName);
-
-    if (error) throw new Error('Error fetching total questions count');
-    return count;
-  };
-
-  const fetchQuestions = async (decodedExamName, decodedSubjectName) => {
-    let allQuestions = [];
-    let rangeStart = 0;
-    const rangeStep = 1000;
-    let newQuestions = [];
-
-    try {
-      const totalQuestions = await fetchTotalQuestionsCount(decodedExamName, decodedSubjectName);
-      do {
-        const { data, error } = await supabase
-          .from('qs')
-          .select('*')
-          .eq('examname', decodedExamName)
-          .eq('subject', decodedSubjectName)
-          .range(rangeStart, rangeStart + rangeStep - 1);
-
-        if (error) throw error;
-
-        newQuestions = data;
-        allQuestions = [...allQuestions, ...newQuestions];
-        rangeStart += rangeStep;
-
-        console.log(`Fetched ${allQuestions.length} of ${totalQuestions} questions...`);
-      } while (newQuestions.length === rangeStep);
-
-      if (allQuestions.length !== totalQuestions) {
-        throw new Error('Fetched questions count does not match total count');
-      }
-
-      return allQuestions;
-    } catch (err) {
-      throw new Error(`Error fetching questions: ${err.message}`);
+  if (!hasAccess) {
+    if (accessState.status === "rejected") {
+      console.error("Error checking access status:", accessState.reason);
     }
-  };
+    return <LockedSubject examName={examName} />;
+  }
 
-  useEffect(() => {
-    const checkSubscriptionStatus = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          const { data, error } = await supabase
-            .from('user_data')
-            .select('subscription_status, remaining_days, disable, trial, examname')
-            .eq('user_id', session.user.id)
-            .eq('examname', decodeURIComponent(examName))
-            .single();
+  if (questionsState.status === "rejected" || error) {
+    if (questionsState.status === "rejected") {
+      console.error("Error loading questions:", questionsState.reason);
+    }
+    return (
+      <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
+        <Header />
+        <main className="mx-auto max-w-3xl px-4 py-12">
+          <div className="rounded-2xl border-2 border-[#FFBABA] bg-[#FFE3E3] p-6 font-extrabold text-[#CC3C3C]">
+            Error loading questions. Please try again later.
+          </div>
+        </main>
+      </div>
+    );
+  }
 
-          if (error) throw error;
-
-          const subscriptionStatus = data.subscription_status?.toLowerCase();
-          const remainingDays = data.remaining_days;
-          const isDisabled = data.disable;
-          const isTrial = data.trial;
-
-          const isActive = (subscriptionStatus === 'active' && remainingDays > 0 && !isDisabled) || isTrial;
-
-          setHasActiveSubscription(isActive);
-        }
-      } catch (error) {
-        console.error('Error checking subscription status:', error);
-      }
-    };
-
-    const initializePage = async () => {
-      await checkSubscriptionStatus();
-      if (hasActiveSubscription) {
-        try {
-          const decodedExamName = decodeURIComponent(examName);
-          const decodedSubjectName = decodeURIComponent(subjectName);
-          const questions = await fetchQuestions(decodedExamName, decodedSubjectName);
-          setQuestions(questions);
-        } catch (err) {
-          setError(err.message);
-        }
-      } else {
-        setIsModalOpen(true);
-      }
-      setLoading(false);
-    };
-
-    initializePage();
-  }, [examName, subjectName, supabase, hasActiveSubscription]);
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (!questions?.length) {
+    return (
+      <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
+        <Header />
+        <main className="mx-auto max-w-3xl px-4 py-12">
+          <div
+            className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-8 text-center"
+            style={{ boxShadow: "0 5px 0 #E5E5E5" }}
+          >
+            <BookOpen className="mx-auto h-8 w-8 text-[#58CC02]" strokeWidth={2.5} />
+            <h1 className="mt-4 text-2xl font-extrabold">No questions found.</h1>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
-    <Suspense>
-      <div className="w-full">
-        {questions.length > 0 ? (
-          <QuizComponent
-            questions={questions}
-            quizName={`${decodeURIComponent(subjectName)} (${decodeURIComponent(examName)})`}
-            testTaker="Subject Quiz"
-            isSelfExam={false}
-          />
-        ) : (
-          <p>No questions found for this subject.</p>
-        )}
-        {!hasActiveSubscription && <UpgradeModal isOpen={isModalOpen} onClose={handleCloseModal} />}
-        <Link href={`/exams/${encodeURIComponent(examName)}`} className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-          Back to Exam
-        </Link>
-      </div>
-    </Suspense>
+    <QuizComponent
+      questions={questions}
+      quizName={`${subjectName} (${examName})`}
+      examName={examName}
+      testTaker={user?.user_metadata?.full_name || user?.email || "Subject Quiz"}
+      isSelfExam={false}
+    />
   );
 }

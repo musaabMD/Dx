@@ -1,4 +1,4 @@
-// 'use client';
+"use client";
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';

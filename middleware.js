@@ -21,18 +21,16 @@
 // }
 
 // middleware.js
-import { createMiddlewareSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function middleware(req) {
   const res = NextResponse.next();
-  const supabase = createMiddlewareSupabaseClient({ req, res });
+  const supabase = createMiddlewareClient({ req, res });
   await supabase.auth.getSession();
   return res;
 }
 
 export const config = {
-  matcher: ["/quiz/:path*"], // Apply this middleware to the quiz pages
+  matcher: ["/quiz/:path*", "/exams/:path*", "/self/:path*", "/self-assessment/:path*", "/dashboard/:path*"],
 };
-

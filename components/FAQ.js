@@ -224,13 +224,17 @@
 // export default FAQ;
  "use client";
 import React, { useEffect, useState, useRef, Suspense } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createSupabaseBrowserClient } from '@/lib/supabaseBrowser';
 
 const FAQ = () => {
   const [faqList, setFaqList] = useState([]);
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
 
   useEffect(() => {
+    if (!supabase) {
+      return;
+    }
+
     const fetchFAQ = async () => {
       const { data, error } = await supabase
         .from('faq')

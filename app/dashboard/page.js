@@ -3691,7 +3691,7 @@
 "use client"
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Search } from 'lucide-react';
+import { BookOpen, CheckCircle2, CreditCard, Flag, MessageSquare, Search, Trash2 } from 'lucide-react';
 import ButtonAccount from "@/components/ButtonAccount";
 import Header from "@/components/Header";
 import Feedback from "@/components/Feedback";
@@ -3709,7 +3709,6 @@ const Dashboard = () => {
     const [error, setError] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [tabCounts, setTabCounts] = useState({
@@ -3736,8 +3735,8 @@ const Dashboard = () => {
 
             if (error) throw error;
 
-            setUserResponses(data);
-            setTotalPages(Math.ceil(count / ITEMS_PER_PAGE));
+            setUserResponses(data || []);
+            setTotalPages(Math.max(1, Math.ceil((count || 0) / ITEMS_PER_PAGE)));
         } catch (error) {
             console.error('Error fetching user responses:', error);
             setError(error.message);
@@ -3759,8 +3758,8 @@ const Dashboard = () => {
 
             if (error) throw error;
 
-            setUserFeedback(data);
-            setTotalPages(Math.ceil(count / ITEMS_PER_PAGE));
+            setUserFeedback(data || []);
+            setTotalPages(Math.max(1, Math.ceil((count || 0) / ITEMS_PER_PAGE)));
         } catch (error) {
             console.error('Error fetching user feedback:', error);
             setError(error.message);
@@ -3822,10 +3821,10 @@ const Dashboard = () => {
             ]);
 
             setTabCounts({
-                all: allCount,
-                flagged: flaggedCount,
-                incorrect: incorrectCount,
-                feedback: feedbackCount
+                all: allCount || 0,
+                flagged: flaggedCount || 0,
+                incorrect: incorrectCount || 0,
+                feedback: feedbackCount || 0
             });
         } catch (error) {
             console.error('Error fetching tab counts:', error);
@@ -3852,16 +3851,6 @@ const Dashboard = () => {
     }, [fetchUserResponses, fetchUserFeedback, fetchSubscriptionStatus, fetchTabCounts]);
 
     useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    useEffect(() => {
         setCurrentPage(1);
     }, [activeTab]);
 
@@ -3880,16 +3869,15 @@ const Dashboard = () => {
         fetchPageData();
     }, [currentPage, activeTab, fetchUserResponses, fetchUserFeedback]);
 
-    const correctAnswers = userResponses.filter(response => response.user_answer === response.qs?.correct_choice);
     const incorrectAnswers = userResponses.filter(response => response.user_answer !== response.qs?.correct_choice && response.user_answer !== null);
     const flaggedQuestions = userResponses.filter(response => response.is_bookmarked);
 
     const tabData = [
-        { id: 'all', label: 'All', count: tabCounts.all },
-        { id: 'flagged', label: 'Flagged', count: tabCounts.flagged },
-        { id: 'incorrect', label: 'Incorrect', count: tabCounts.incorrect },
-        { id: 'feedback', label: 'Feedback', count: tabCounts.feedback },
-        { id: 'subscription', label: 'Subscription', count: subscriptionStatus?.remaining_days ?? 0 }
+        { id: 'all', label: 'All', count: tabCounts.all, icon: BookOpen },
+        { id: 'flagged', label: 'Flagged', count: tabCounts.flagged, icon: Flag },
+        { id: 'incorrect', label: 'Incorrect', count: tabCounts.incorrect, icon: CheckCircle2 },
+        { id: 'feedback', label: 'Feedback', count: tabCounts.feedback, icon: MessageSquare },
+        { id: 'subscription', label: 'Subscription', count: subscriptionStatus?.remaining_days ?? 0, icon: CreditCard }
     ];
 
     const getAnswersForTab = (tabId) => {
@@ -3901,9 +3889,23 @@ const Dashboard = () => {
         }
     };
 
-    const filteredAnswers = getAnswersForTab(activeTab).filter(answer =>
-        answer.qs?.question_text?.toLowerCase().includes(searchTerm.toLowerCase())
+    const activeAnswers = getAnswersForTab(activeTab);
+    const filteredAnswers = activeAnswers.filter(answer =>
+        activeTab === 'feedback'
+            ? (answer.qs?.question_text || answer.feedback_text || '').toLowerCase().includes(searchTerm.toLowerCase())
+            : answer.qs?.question_text?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    const hasPagedRows = activeTab !== 'subscription' && filteredAnswers.length > 0;
+
+    const getEmptyMessage = () => {
+        if (searchTerm) return `No results match "${searchTerm}".`;
+        switch (activeTab) {
+            case 'flagged': return 'No flagged questions yet.';
+            case 'incorrect': return 'No incorrect answers on this page.';
+            case 'feedback': return 'No feedback submitted yet.';
+            default: return 'No answers saved yet. Start a quiz to fill your dashboard.';
+        }
+    };
 
     const handleSelectItem = (item) => {
         setSelectedItems(prev =>
@@ -3976,6 +3978,13 @@ const Dashboard = () => {
 
     const renderAnswers = (answers) => (
         <div>
+            {answers.length === 0 ? (
+                <div className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-8 text-center" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
+                    <BookOpen className="mx-auto h-8 w-8 text-[#58CC02]" strokeWidth={2.5} />
+                    <p className="mt-3 text-lg font-extrabold text-[#3C3C3C]">{getEmptyMessage()}</p>
+                    <p className="mt-1 text-sm font-bold text-[#777]">Your review activity will appear here.</p>
+                </div>
+            ) : null}
             {answers.map((answer, index) => {
                 const choices = {
                     'A': answer.qs?.option_a,
@@ -3992,22 +4001,23 @@ const Dashboard = () => {
                 return (
                     <div
                         key={index}
-                        className={`mb-4 p-4 bg-slate-100 border-2 ${selectedItems.includes(answer) ? 'bg-red-100 border-red-500' : 'border-slate-500'}`}
+                        className={`mb-4 cursor-pointer rounded-2xl border-2 bg-white p-5 ${selectedItems.includes(answer) ? 'border-[#FF4B4B] bg-[#FFE3E3]' : 'border-[#E5E5E5]'}`}
+                        style={{ boxShadow: "0 4px 0 #E5E5E5" }}
                         onClick={() => handleSelectItem(answer)}
                     >
                         <div className="flex justify-between items-center mb-2">
-                            <span className="text-1xl text-gray-900">{answer.qs?.subject || 'Unknown Subject'}</span>
-                            {answer.user_answer === answer.qs?.correct_choice && <span className="text-green-500">✓</span>}
+                            <span className="rounded-full bg-[#E7F8D6] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[#58A700]">{answer.qs?.subject || 'Unknown Subject'}</span>
+                            {answer.user_answer === answer.qs?.correct_choice && <span className="text-[#58CC02]">✓</span>}
                             {answer.is_bookmarked && <span className="text-blue-500">🚩</span>}
                         </div>
                         <br />
-                        <p className="font-semibold ">{answer.qs?.question_text || 'Question text not available'}</p>
+                        <p className="font-extrabold text-[#3C3C3C]">{answer.qs?.question_text || 'Question text not available'}</p>
                         <br />
-                        <p> <strong className='text-1xl text-red-500'> Your answer:</strong> {userChoice ? `${answer.user_answer}: ${userChoice}` : 'Skipped'}</p>
+                        <p className="font-bold text-[#777]"> <strong className='text-[#FF4B4B]'> Your answer:</strong> {userChoice ? `${answer.user_answer}: ${userChoice}` : 'Skipped'}</p>
                         <br />
-                        <p> <strong className='text-1xl text-green-800'> Correct answer: </strong> {correctChoice ? `${answer.qs?.correct_choice}: ${correctChoice}` : 'N/A'}</p>
+                        <p className="font-bold text-[#777]"> <strong className='text-[#58A700]'> Correct answer: </strong> {correctChoice ? `${answer.qs?.correct_choice}: ${correctChoice}` : 'N/A'}</p>
                         <br />
-                        <p> <strong className='text-1xl text-blue-800'> Explanation: </strong>  {answer.qs?.rationale || 'No explanation available'}</p>
+                        <p className="font-bold text-[#777]"> <strong className='text-[#1CB0F6]'> Explanation: </strong>  {answer.qs?.rationale || 'No explanation available'}</p>
                         <Feedback
                             questionId={answer.qs?.id}
                             currentAnswer={answer.user_answer}
@@ -4018,7 +4028,7 @@ const Dashboard = () => {
                             existingFeedback={userFeedback.some(feedback => feedback.question_id === answer.qs?.id)}
                         />
                         {userFeedback.some(feedback => feedback?.question_id === answer.qs?.id) && (
-                            <p className="text-green-900 mt-2">Feedback sent</p>
+                            <p className="mt-2 font-extrabold text-[#58A700]">Feedback sent</p>
                         )}
                     </div>
                 );
@@ -4030,9 +4040,9 @@ const Dashboard = () => {
         let content;
         switch (activeTab) {
             case 'feedback':
-                content = userFeedback.length > 0 ? (
-                    userFeedback.map((feedback, index) => (
-                        <div key={index} className="mb-4 p-4 border-2 border-slate-500 bg-slate-100">
+                content = filteredAnswers.length > 0 ? (
+                    filteredAnswers.map((feedback, index) => (
+                        <div key={index} className="mb-4 rounded-2xl border-2 border-[#E5E5E5] bg-white p-5" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
                             <p> <strong>Question:</strong> {feedback.qs?.question_text || 'Question text not available'}</p>
                             <p className="mt-2"><strong>Feedback Type:</strong> {feedback.feedback_type}</p>
                             {feedback.suggested_answer && (
@@ -4044,13 +4054,17 @@ const Dashboard = () => {
                         </div>
                     ))
                 ) : (
-                    <p>No feedback submitted yet.</p>
+                    <div className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-8 text-center" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
+                        <MessageSquare className="mx-auto h-8 w-8 text-[#1CB0F6]" strokeWidth={2.5} />
+                        <p className="mt-3 text-lg font-extrabold text-[#3C3C3C]">{getEmptyMessage()}</p>
+                        <p className="mt-1 text-sm font-bold text-[#777]">Question feedback you submit will show here.</p>
+                    </div>
                 );
                 break;
             case 'subscription':
                 content = subscriptionStatus ? (
-                    <div className="p-6 mb-6 bg-slate-100 border-2 border-black">
-                        <h2 className="text-2xl font-bold mb-4 ">Subscription Status</h2>
+                    <div className="mb-6 rounded-2xl border-2 border-[#E5E5E5] bg-white p-6" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
+                        <h2 className="text-2xl font-extrabold mb-4 ">Subscription Status</h2>
                         <p><strong>Exam:</strong> {subscriptionStatus.examname}</p>
                         <p><strong>Status:</strong> {new Date(subscriptionStatus.subscription_end) > new Date() ? 'Active' : 'Expired'}</p>
                         <p><strong>Ends on:</strong> {new Date(subscriptionStatus.subscription_end).toLocaleDateString()}</p>
@@ -4058,13 +4072,19 @@ const Dashboard = () => {
                         <br />
                         <br />
                         <Link href="/pricing" legacyBehavior>
-                            <a className="mt-4 px-4 py-2 bg-blue-500 text-white hover:bg-blue-600">
+                            <a className="mt-4 inline-flex rounded-2xl bg-[#58CC02] px-5 py-3 text-sm font-extrabold uppercase tracking-wide text-white hover:brightness-105" style={{ boxShadow: "0 4px 0 #46A302" }}>
                                 Renew Subscription
                             </a>
                         </Link>
                     </div>
                 ) : (
-                    <p>No active subscription found.</p>
+                    <div className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-8 text-center" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
+                        <CreditCard className="mx-auto h-8 w-8 text-[#FF9600]" strokeWidth={2.5} />
+                        <p className="mt-3 text-lg font-extrabold text-[#3C3C3C]">No active subscription found.</p>
+                        <Link href="/pricing" className="mt-4 inline-flex rounded-2xl bg-[#58CC02] px-5 py-3 text-sm font-extrabold uppercase tracking-wide text-white hover:brightness-105" style={{ boxShadow: "0 4px 0 #46A302" }}>
+                            View Pricing
+                        </Link>
+                    </div>
                 );
                 break;
             default:
@@ -4073,22 +4093,22 @@ const Dashboard = () => {
         return content ? (
             <div className="mt-4">
                 {content}
-                {activeTab !== 'subscription' && (
+                {hasPagedRows && (
                     <div className="flex justify-center mt-4">
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                            className="px-4 py-2 mr-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+                            className="mr-2 rounded-2xl bg-[#1CB0F6] px-4 py-2 font-extrabold text-white disabled:bg-[#E5E5E5]"
                         >
                             Previous
                         </button>
-                        <span className="px-4 py-2">
+                        <span className="px-4 py-2 font-extrabold text-[#777]">
                             Page {currentPage} of {totalPages}
                         </span>
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 ml-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+                            className="ml-2 rounded-2xl bg-[#1CB0F6] px-4 py-2 font-extrabold text-white disabled:bg-[#E5E5E5]"
                         >
                             Next
                         </button>
@@ -4099,26 +4119,22 @@ const Dashboard = () => {
     };
 
     const renderTabBar = () => (
-        <div className={`btm-nav fixed bottom-0 left-0 right-0 flex justify-around bg-slate-900 text-white md:hidden`}>
-            {tabData.map(tab => (
+        <div className="fixed bottom-0 left-0 right-0 z-30 flex justify-around border-t-2 border-[#E5E5E5] bg-white text-[#777] md:hidden">
+            {tabData.map(tab => {
+                const Icon = tab.icon;
+                return (
                 <button
                     key={tab.id}
-                    className={`py-2 px-4 flex-1 text-center ${
-                        activeTab === tab.id ? 'bg-slate-700' : 'bg-slate-900'
+                    className={`flex-1 px-2 py-2 text-center text-xs font-extrabold ${
+                        activeTab === tab.id ? 'bg-[#E7F8D6] text-[#58A700]' : 'bg-white'
                     }`}
                     onClick={() => setActiveTab(tab.id)}
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="btm-nav-label text-xs">{tab.label}</span>
+                    <Icon className="mx-auto h-5 w-5" strokeWidth={2.5} />
+                    <span>{tab.label}</span>
                 </button>
-            ))}
+                );
+            })}
         </div>
     );
 
@@ -4126,62 +4142,83 @@ const Dashboard = () => {
         <>
             <Suspense fallback={<div>Loading...</div>}>
                 <Header />
-                <main className="p-8 pb-24">
+                <main className="min-h-screen bg-[#FAFAFA] px-4 py-8 pb-24 text-[#3C3C3C] md:px-8">
                     <section className="max-w-6xl mx-auto space-y-8">
-                        <h1 className="text-3xl md:text-4xl font-extrabold">Dashboard</h1>
-                        <h1 className="text-3xl md:text-1xl font-light">Review your answers</h1>
+                        <div className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-6 md:p-8" style={{ boxShadow: "0 5px 0 #E5E5E5" }}>
+                            <span className="inline-flex rounded-full border-2 border-[#E7F8D6] bg-[#F3FBE9] px-4 py-1.5 text-xs font-extrabold uppercase tracking-wide text-[#58A700]">
+                                Review center
+                            </span>
+                            <h1 className="mt-4 text-4xl font-extrabold tracking-tight md:text-5xl">Dashboard</h1>
+                            <p className="mt-2 max-w-2xl text-base font-bold text-[#777]">Review your answers, flagged questions, feedback, and subscription status in one place.</p>
+                        </div>
                         {subscriptionStatus?.examname && (
-                            <div className="mt-4">
-                                <h2 className="text-xl font-bold mb-4">Your Exam</h2>
-                                <p className="text-lg">{subscriptionStatus.examname} <Link href="/" legacyBehavior><a className="text-blue-500">Go to Homepage</a></Link></p>
+                            <div className="rounded-2xl border-2 border-[#DDF4FE] bg-[#F2FBFF] p-5" style={{ boxShadow: "0 4px 0 #DDF4FE" }}>
+                                <h2 className="text-xl font-extrabold">Your Exam</h2>
+                                <p className="mt-2 text-lg font-bold">{subscriptionStatus.examname} <Link href="/" legacyBehavior><a className="text-[#1CB0F6]">Go to Homepage</a></Link></p>
                             </div>
                         )}
                         <ButtonAccount />
-                        <div className="space-x-4 hidden md:flex">
-                            {tabData.map(tab => (
+                        <div className="hidden flex-wrap gap-3 md:flex">
+                            {tabData.map(tab => {
+                                const Icon = tab.icon;
+                                return (
                                 <button
                                     key={tab.id}
-                                    className={`py-2 px-4 rounded-lg text-sm md:text-base font-semibold ${
-                                        activeTab === tab.id ? 'bg-slate-900 text-white' : 'bg-slate-200 text-slate-900'
+                                    className={`inline-flex items-center gap-2 rounded-2xl border-2 px-4 py-3 text-sm font-extrabold ${
+                                        activeTab === tab.id ? 'border-[#58CC02] bg-[#E7F8D6] text-[#58A700]' : 'border-[#E5E5E5] bg-white text-[#777]'
                                     }`}
                                     onClick={() => setActiveTab(tab.id)}
                                 >
+                                    <Icon className="h-4 w-4" strokeWidth={2.5} />
                                     {tab.label} ({tab.count})
                                 </button>
-                            ))}
+                                );
+                            })}
                         </div>
-                        <div className="flex items-center border-2 border-slate-500 rounded-lg p-2 bg-white max-w-lg mx-auto">
-                            <Search className="text-slate-500" size={18} />
+                        <div className="mx-auto flex max-w-lg items-center rounded-2xl border-2 border-[#E5E5E5] bg-white p-3" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
+                            <Search className="text-[#AFAFAF]" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search Questions"
-                                className="ml-2 flex-1 focus:outline-none"
+                                className="ml-2 flex-1 bg-transparent font-bold text-[#3C3C3C] placeholder:text-[#AFAFAF] focus:outline-none"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
+                        {loading && (
+                            <div className="rounded-2xl border-2 border-[#E5E5E5] bg-white p-6 text-center" style={{ boxShadow: "0 4px 0 #E5E5E5" }}>
+                                <p className="text-lg font-extrabold text-[#3C3C3C]">Loading dashboard...</p>
+                                <p className="mt-1 text-sm font-bold text-[#777]">Fetching your saved answers and subscription.</p>
+                            </div>
+                        )}
+                        {error && (
+                            <div className="rounded-2xl border-2 border-[#FFBABA] bg-[#FFE3E3] p-5" style={{ boxShadow: "0 4px 0 #FFBABA" }}>
+                                <p className="font-extrabold text-[#CC3C3C]">{error}</p>
+                            </div>
+                        )}
                         {selectedItems.length > 0 && (
-                            <div className="max-w-4xl mx-auto bg-red-100 p-4 rounded-lg border border-red-300 flex items-center justify-between">
-                                <p className="text-red-800">You have selected {selectedItems.length} items.</p>
+                            <div className="mx-auto flex max-w-4xl items-center justify-between rounded-2xl border-2 border-[#FFBABA] bg-[#FFE3E3] p-4">
+                                <p className="font-extrabold text-[#CC3C3C]">You have selected {selectedItems.length} items.</p>
                                 <button
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                    className="inline-flex items-center gap-2 rounded-2xl bg-[#FF4B4B] px-4 py-2 font-extrabold text-white hover:brightness-105"
                                     onClick={() => setShowConfirm(true)}
                                 >
+                                    <Trash2 className="h-4 w-4" strokeWidth={2.5} />
                                     Remove Selected Items
                                 </button>
                                 {showConfirm && (
                                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                        <div className="bg-white p-4 rounded-lg border border-red-300 max-w-md mx-auto">
-                                            <p className="text-red-800">Are you sure you want to remove selected items?</p>
+                                        <div className="mx-auto max-w-md rounded-2xl border-2 border-[#FFBABA] bg-white p-5">
+                                            <p className="font-extrabold text-[#CC3C3C]">Are you sure you want to remove selected items?</p>
                                             <div className="mt-4 flex space-x-4">
                                                 <button
-                                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                                    className="rounded-2xl bg-[#FF4B4B] px-4 py-2 font-extrabold text-white hover:brightness-105"
                                                     onClick={handleRemoveSelectedItems}
                                                 >
                                                     Yes, Remove
                                                 </button>
                                                 <button
-                                                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                                                    className="rounded-2xl bg-[#E5E5E5] px-4 py-2 font-extrabold text-[#3C3C3C] hover:brightness-95"
                                                     onClick={() => setShowConfirm(false)}
                                                 >
                                                     Cancel
@@ -4193,7 +4230,7 @@ const Dashboard = () => {
                                 )}
                             </div>
                         )}
-                        {renderContent()}
+                        {!loading && renderContent()}
                     </section>
                 </main>
                 {renderTabBar()}

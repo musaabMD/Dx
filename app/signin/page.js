@@ -2,15 +2,19 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 import config from "@/config";
 import Header from "@/components/Header";
+import { ChevronRight, Home, Mail, ShieldCheck } from "lucide-react";
+import {
+  createSupabaseBrowserClient,
+  hasSupabaseBrowserConfig,
+} from "@/lib/supabaseBrowser";
 
 // This is a login/signup page for Supabase Auth.
 // Successful login redirects to /api/auth/callback where the Code Exchange is processed (see app/api/auth/callback/route.js).
 export default function Login() {
-  const supabase = createClientComponentClient();
+  const supabase = createSupabaseBrowserClient();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -21,6 +25,11 @@ export default function Login() {
     setIsLoading(true);
 
     try {
+      if (!supabase) {
+        toast.error("Supabase is not configured for this environment.");
+        return;
+      }
+
       const { type, provider } = options;
       const redirectURL = window.location.origin + "/api/auth/callback";
 
@@ -52,37 +61,49 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
       <Header />
-      <main className="p-8 md:p-24" data-theme={config.colors.theme}>
-        <div className="text-center mb-4">
-          <Link href="/" className="btn btn-ghost btn-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M15 10a.75.75 0 01-.75.75H7.612l2.158 1.96a.75.75 0 11-1.04 1.08l-3.5-3.25a.75.75 0 010-1.08l3.5-3.25a.75.75 0 111.04 1.08L7.612 9.25h6.638A.75.75 0 0115 10z"
-                clipRule="evenodd"
-              />
-            </svg>
+      <main className="px-4 py-10 md:py-16" data-theme={config.colors.theme}>
+        <div className="mx-auto max-w-xl">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-2xl border-2 border-[#E5E5E5] bg-white px-4 py-2 text-sm font-extrabold text-[#777]"
+            style={{ boxShadow: "0 3px 0 #E5E5E5" }}
+          >
+            <Home className="h-4 w-4" strokeWidth={2.5} />
             Home
           </Link>
-        </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center mb-12">
-          Sign in to {config.appName}
-        </h1>
 
-        <div className="space-y-8 max-w-xl mx-auto">
+          <section className="mt-6 rounded-2xl border-2 border-[#E5E5E5] bg-white p-6 md:p-8" style={{ boxShadow: "0 5px 0 #E5E5E5" }}>
+            <span className="inline-flex items-center gap-2 rounded-full border-2 border-[#DDF4FE] bg-[#F2FBFF] px-4 py-1.5 text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6]">
+              <ShieldCheck className="h-4 w-4" strokeWidth={2.5} />
+              Secure access
+            </span>
+            <h1 className="mt-4 text-4xl font-extrabold tracking-tight">
+              Sign in to {config.appName}
+            </h1>
+            <p className="mt-2 text-sm font-bold leading-6 text-[#777]">
+              Continue to your dashboard, self exams, bookmarks, and subscription.
+            </p>
+
+        {!hasSupabaseBrowserConfig && (
+          <div className="mt-6 rounded-2xl border-2 border-[#FFBABA] bg-[#FFE3E3] p-4 text-sm font-bold text-[#CC3C3C]">
+            <span>
+              Supabase is not configured for this local environment. Add
+              NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to
+              .env.local to enable sign in.
+            </span>
+          </div>
+        )}
+
+        <div className="mt-8 space-y-8">
           <button
-            className="btn btn-block"
+            className="flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-[#E5E5E5] bg-white px-5 py-4 text-sm font-extrabold uppercase tracking-wide text-[#3C3C3C] transition hover:border-[#AFAFAF]"
+            style={{ boxShadow: "0 4px 0 #E5E5E5" }}
             onClick={(e) =>
               handleSignup(e, { type: "oauth", provider: "google" })
             }
-            disabled={isLoading}
+            disabled={isLoading || !hasSupabaseBrowserConfig}
           >
             {isLoading ? (
               <span className="loading loading-spinner loading-xs"></span>
@@ -114,10 +135,14 @@ export default function Login() {
           </button>
         </div>
 
-        <div className="divider text-xs text-base-content/50 font-medium">OR</div>
+        <div className="my-8 flex items-center gap-3 text-xs font-extrabold uppercase tracking-wide text-[#AFAFAF]">
+          <div className="h-0.5 flex-1 bg-[#E5E5E5]" />
+          OR
+          <div className="h-0.5 flex-1 bg-[#E5E5E5]" />
+        </div>
 
         <form
-          className="form-control w-full space-y-4 max-w-xl mx-auto"
+          className="space-y-4"
           onSubmit={(e) => handleSignup(e, { type: "magic_link" })}
         >
           <input
@@ -126,22 +151,27 @@ export default function Login() {
             value={email}
             autoComplete="email"
             placeholder="tom@cruise.com"
-            className="input input-bordered w-full placeholder:opacity-60"
+            className="w-full rounded-2xl border-2 border-[#E5E5E5] bg-white px-4 py-4 font-bold text-[#3C3C3C] placeholder:text-[#AFAFAF] focus:border-[#58CC02] focus:outline-none"
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <button
-            className="btn btn-primary btn-block"
-            disabled={isLoading || isDisabled}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#58CC02] px-8 py-4 text-base font-extrabold uppercase tracking-wide text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:bg-[#AFAFAF]"
+            style={{ boxShadow: "0 4px 0 #46A302" }}
+            disabled={isLoading || isDisabled || !hasSupabaseBrowserConfig}
             type="submit"
           >
             {isLoading && (
               <span className="loading loading-spinner loading-xs"></span>
             )}
+            <Mail className="h-4 w-4" strokeWidth={2.5} />
             Send Magic Link
+            <ChevronRight className="h-4 w-4" strokeWidth={3} />
           </button>
         </form>
+          </section>
+        </div>
       </main>
-    </>
+    </div>
   );
 }
