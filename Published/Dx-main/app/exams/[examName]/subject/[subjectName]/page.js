@@ -49,6 +49,15 @@ async function getAccessAndUser(supabase, examName) {
   return { user, hasAccess };
 }
 
+async function getSubjectQuestions(supabase, examName, subjectName) {
+  return supabase
+    .from("qs")
+    .select(questionColumns)
+    .eq("examname", examName)
+    .eq("subject", subjectName)
+    .order("id", { ascending: true });
+}
+
 function LockedSubject({ examName }) {
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
@@ -82,20 +91,26 @@ export default async function SubjectQuizPage({ params }) {
   const examName = decodeURIComponent(params.examName);
   const subjectName = decodeURIComponent(params.subjectName);
   const supabase = createServerComponentClient({ cookies });
-  const { user, hasAccess } = await getAccessAndUser(supabase, examName);
+  const [accessState, questionsState] = await Promise.allSettled([
+    getAccessAndUser(supabase, examName),
+    getSubjectQuestions(supabase, examName, subjectName),
+  ]);
+  const { user = null, hasAccess = false } =
+    accessState.status === "fulfilled" ? accessState.value : {};
+  const { data: questions = null, error } =
+    questionsState.status === "fulfilled" ? questionsState.value : {};
 
   if (!hasAccess) {
+    if (accessState.status === "rejected") {
+      console.error("Error checking access status:", accessState.reason);
+    }
     return <LockedSubject examName={examName} />;
   }
 
-  const { data: questions, error } = await supabase
-    .from("qs")
-    .select(questionColumns)
-    .eq("examname", examName)
-    .eq("subject", subjectName)
-    .order("id", { ascending: true });
-
-  if (error) {
+  if (questionsState.status === "rejected" || error) {
+    if (questionsState.status === "rejected") {
+      console.error("Error loading questions:", questionsState.reason);
+    }
     return (
       <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
         <Header />

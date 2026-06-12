@@ -49,6 +49,15 @@ async function getAccessAndUser(supabase, examName) {
   return { user, hasAccess };
 }
 
+async function getQuizQuestions(supabase, examName, fileName) {
+  return supabase
+    .from("qs")
+    .select(questionColumns)
+    .eq("examname", examName)
+    .eq("file_name", fileName)
+    .order("id", { ascending: true });
+}
+
 function LockedQuiz({ examName }) {
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
@@ -82,20 +91,42 @@ export default async function QuizPage({ params }) {
   const examName = decodeURIComponent(params.examName);
   const fileName = decodeURIComponent(params.file_name);
   const supabase = createServerComponentClient({ cookies });
-  const { user, hasAccess } = await getAccessAndUser(supabase, examName);
+  const [accessState, questionsState] = await Promise.allSettled([
+    getAccessAndUser(supabase, examName),
+    getQuizQuestions(supabase, examName, fileName),
+  ]);
 
-  if (!hasAccess) {
+  const { user = null, hasAccess = false } =
+    accessState.status === "fulfilled" ? accessState.value : {};
+  const { data: questions = null, error } =
+    questionsState.status === "fulfilled" ? questionsState.value : {};
+
+  const isAccessChecked = accessState.status === "fulfilled";
+  const accessResult = accessState.status === "fulfilled" ? accessState.value : {};
+
+  if (!isAccessChecked || !hasAccess) {
+    if (accessState.status === "rejected") {
+      console.error("Error checking access status:", accessState.reason);
+    }
+    if (accessResult.error) {
+      return (
+        <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
+          <Header />
+          <main className="mx-auto max-w-3xl px-4 py-12">
+            <div className="rounded-2xl border-2 border-[#FFBABA] bg-[#FFE3E3] p-6 font-extrabold text-[#CC3C3C]">
+              Error loading exam access. Please try again later.
+            </div>
+          </main>
+        </div>
+      );
+    }
     return <LockedQuiz examName={examName} />;
   }
 
-  const { data: questions, error } = await supabase
-    .from("qs")
-    .select(questionColumns)
-    .eq("examname", examName)
-    .eq("file_name", fileName)
-    .order("id", { ascending: true });
-
-  if (error) {
+  if (questionsState.status === "rejected" || error) {
+    if (questionsState.status === "rejected") {
+      console.error("Error loading quiz questions:", questionsState.reason);
+    }
     return (
       <div className="min-h-screen bg-[#FAFAFA] text-[#3C3C3C]">
         <Header />

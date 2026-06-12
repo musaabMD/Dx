@@ -103,6 +103,7 @@ export default function ExamHomeClient({ exams = [], error }) {
             return (
               <Link
                 key={exam.id}
+                prefetch={true}
                 href={`/exams/${encodeURIComponent(exam.initials)}`}
                 className="group rounded-2xl border-2 bg-white p-5 transition-transform hover:-translate-y-1"
                 style={{

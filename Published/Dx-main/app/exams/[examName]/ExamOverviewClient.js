@@ -186,6 +186,7 @@ export default function ExamOverviewClient({ examName, overview, error }) {
                   overview.quizzes.map((quiz) => (
                     <Link
                       key={quiz.file_name}
+                      prefetch={true}
                       href={`/exams/${encodeURIComponent(examName)}/${encodeURIComponent(quiz.file_name)}`}
                       onClick={handleQuizAccess}
                       className="group flex items-center justify-between gap-4 rounded-2xl border-2 border-[#E5E5E5] bg-white p-4 transition-transform hover:-translate-y-0.5"
@@ -233,6 +234,7 @@ export default function ExamOverviewClient({ examName, overview, error }) {
                   overview.subjects.map((subject) => (
                     <Link
                       key={subject.name}
+                      prefetch={true}
                       href={`/exams/${encodeURIComponent(examName)}/subject/${encodeURIComponent(subject.name)}`}
                       onClick={handleQuizAccess}
                       className="group flex items-center justify-between gap-4 rounded-2xl border-2 border-[#E5E5E5] bg-white p-4 transition-transform hover:-translate-y-0.5"
